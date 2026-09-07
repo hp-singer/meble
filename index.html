@@ -1,735 +1,621 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>KORZEŃ — Pracownia mebli autorskich | Polska jakość od 2008</title>
-<meta name="description" content="Autorskie meble tapicerowane i z litego drewna. Polska pracownia z 15-letnim doświadczeniem. Gwarancja 5 lat. Realizacja w całej Europie.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#070a18">
+<title>SolarLab Pro v3.1 · Kraków</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#f5f3ef;
-  --bg2:#ebe6dc;
-  --ink:#1a1714;
-  --ink2:#3d3630;
-  --muted:#7a7066;
-  --accent:#8b6f4e;
-  --accent2:#a68b6e;
-  --line:rgba(26,23,20,.08);
-  --ease:cubic-bezier(.22,1,.36,1);
-  --max:1440px;
-  --radius:2px;
+:root{--bg:#070a18;--glass:rgba(14,18,36,.72);--glass-strong:rgba(14,18,36,.92);--border:rgba(255,255,255,.10);--border-strong:rgba(255,255,255,.18);--cyan:#22e4ff;--green:#3dffa8;--amber:#ffc24b;--purple:#b388ff;--red:#ff6b9d;--t1:#fff;--t2:rgba(255,255,255,.82);--t3:rgba(255,255,255,.65);--t4:rgba(255,255,255,.35);--shadow-md:0 8px 24px rgba(0,0,0,.4);--glow-cyan:0 0 20px rgba(34,228,255,.5);--radius-md:14px;--radius-lg:20px;--ease:cubic-bezier(.25,.46,.45,.94);--ease-spring:cubic-bezier(.34,1.56,.64,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',-apple-system,sans-serif;color:var(--t1);min-height:100vh;background:radial-gradient(1000px 600px at 90% -10%,rgba(90,140,255,.12),transparent 60%),radial-gradient(900px 500px at 10% 110%,rgba(34,228,255,.08),transparent 60%),var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;overscroll-behavior-y:contain}
+.mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+.skip-link{position:absolute;top:-40px;left:0;padding:8px 16px;background:var(--cyan);color:#000;z-index:9999;font-weight:700;transition:top .2s}
+.skip-link:focus{top:0}
+.container{max-width:1280px;margin:0 auto;padding:12px 12px 60px;padding-bottom:max(60px,env(safe-area-inset-bottom))}
+
+/* HEADER — compact */
+.header{display:flex;justify-content:space-between;align-items:center;padding:8px 4px;margin-bottom:12px;gap:8px}
+.logo{display:flex;align-items:center;gap:8px}
+.logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--cyan),var(--green));display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:var(--glow-cyan)}
+.logo-text{font-weight:800;letter-spacing:1.5px;font-size:12px}
+.logo-text .gradient{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.logo-text small{display:block;font-weight:400;font-size:8px;color:var(--t3);margin-top:1px}
+.header-actions{display:flex;gap:6px;align-items:center}
+.header-meta{display:none}
+.icon-btn{width:34px;height:34px;border-radius:8px;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--border);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s var(--ease)}
+.icon-btn:hover{background:rgba(255,255,255,.08);color:var(--t1)}
+
+/* HERO — compact */
+.hero{margin-bottom:14px;padding:0 4px}
+.hero h1{font-size:clamp(18px,5vw,28px);font-weight:800;letter-spacing:-.02em;margin-bottom:4px;line-height:1.15}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--cyan) 0%,var(--green) 50%,var(--amber) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--t2);font-size:11px;max-width:100%}
+
+/* GLASS */
+.glass{background:var(--glass);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-md),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden}
+.glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);pointer-events:none;z-index:1}
+
+/* GRID — desktop */
+.lab{display:grid;gap:12px;grid-template-columns:1fr 84px;grid-template-areas:"panels panels" "scene season" "time time" "stats stats"}
+.a-panels{grid-area:panels}.a-scene{grid-area:scene}.a-season{grid-area:season}.a-time{grid-area:time}.a-stats{grid-area:stats}
+
+/* STAGE */
+.a-scene{display:flex;min-height:560px}
+.stage{position:relative;flex:1;min-height:560px;border-radius:var(--radius-lg);overflow:hidden}
+.stage-svg,.stage-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.stage-canvas{pointer-events:none}
+
+@keyframes sunSpin{to{transform:rotate(360deg)}}
+@keyframes sunPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.92}}
+#sunRays{animation:sunSpin 60s linear infinite;transform-box:fill-box;transform-origin:center;will-change:transform}
+#sunCoreCircle{animation:sunPulse 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+
+.chip-top{position:absolute;top:10px;left:10px;z-index:5;padding:6px 10px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--border);backdrop-filter:blur(16px);font-size:10px;color:var(--t2);display:flex;align-items:center;gap:8px}
+.chip-top .sep{width:1px;height:10px;background:var(--border-strong)}
+.chip-top .ct{color:var(--cyan);font-weight:700;font-family:'JetBrains Mono',monospace}
+
+/* Weather panel */
+.weather-panel{position:absolute;top:10px;right:10px;z-index:6;width:180px;background:var(--glass-strong);border:1px solid var(--border);border-radius:var(--radius-md);backdrop-filter:blur(16px);padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.weather-top{display:flex;align-items:center;gap:8px}
+.weather-em{font-size:24px;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.weather-info{flex:1;min-width:0}
+.weather-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px;color:var(--cyan);line-height:1;font-variant-numeric:tabular-nums}
+.weather-unit{font-size:8px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;display:inline;margin-left:2px}
+.weather-name{font-size:9px;color:var(--t2);margin-top:1px}
+.weather-max{font-size:8px;color:var(--t4)}
+.weather-track{position:relative;width:100%;height:30px;border-radius:15px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(90deg,#3a5fa8 0%,#5b8cff 25%,#22e4ff 50%,#3dffa8 75%,#ffc24b 100%);box-shadow:inset 0 0 0 1px var(--border),0 2px 8px rgba(0,0,0,.3)}
+.weather-track::after{content:'';position:absolute;inset:3px 0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.3) 0 1px,transparent 1px calc(100%/6));pointer-events:none}
+.weather-thumb{position:absolute;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 12px rgba(255,255,255,.5),0 2px 6px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:11px;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
+.weather-track.dragging .weather-thumb{transform:translateY(-50%) scale(1.15)}
+.weather-track.dragging{cursor:grabbing}
+.weather-labels{display:flex;justify-content:space-between;font-size:10px;padding:0 2px}
+
+/* Tilt control */
+.tilt-ctrl{position:absolute;left:10px;bottom:10px;z-index:6;width:40px}
+.tilt-track{position:relative;width:38px;height:120px;border-radius:19px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(180deg,transparent 0 30%,rgba(91,140,255,.7) 30% 38%,transparent 38% 64%,rgba(61,255,168,.65) 64% 72%,transparent 72%),linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));box-shadow:inset 0 0 0 1px var(--border),0 4px 12px rgba(0,0,0,.3)}
+.tilt-thumb{position:absolute;left:50%;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 14px rgba(255,255,255,.45),0 3px 8px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:700;color:#0a2a3a;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
+.tilt-track.dragging .tilt-thumb{transform:translateX(-50%) scale(1.15)}
+.tilt-track.dragging{cursor:grabbing}
+.tilt-label{font-size:7px;color:var(--t3);text-align:center;margin-top:3px;letter-spacing:1px;text-transform:uppercase}
+
+/* Readout */
+.readout{position:absolute;right:10px;bottom:10px;z-index:5;background:var(--glass-strong);border:1px solid var(--border);padding:10px 14px;border-radius:var(--radius-md);backdrop-filter:blur(16px)}
+.readout .lbl{font-size:8px;letter-spacing:2px;color:var(--t3);text-transform:uppercase;margin-bottom:3px;font-weight:600}
+.readout .pw{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(22px,5vw,40px);color:var(--cyan);text-shadow:var(--glow-cyan);line-height:1;font-variant-numeric:tabular-nums}
+.readout .pw small{font-size:.35em;color:var(--t2);margin-left:4px}
+.readout .extra{display:flex;gap:10px;margin-top:6px;font-size:9px;color:var(--t2);justify-content:flex-end}
+.readout .extra b{color:var(--green);margin-right:2px;font-family:'JetBrains Mono',monospace}
+
+/* Controls */
+.ctrl{padding:12px;display:flex;flex-direction:column}
+.ctrl-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:6px;flex-wrap:wrap}
+.c-title{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);font-weight:600;display:flex;align-items:center;gap:5px}
+.c-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;display:flex;align-items:baseline;gap:3px}
+.c-val.cyan{color:var(--cyan)}
+.c-unit{font-size:10px;color:var(--t3)}
+.c-badge{font-size:9px;color:var(--t2);padding:3px 8px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:999px;white-space:nowrap;font-family:'JetBrains Mono',monospace;cursor:pointer;transition:all .2s var(--ease)}
+.c-badge:hover{border-color:var(--cyan);color:var(--t1);background:rgba(34,228,255,.1)}
+.c-sub{font-size:9px;color:var(--t3);margin-top:4px;line-height:1.4}
+.c-sub b{color:var(--t2)}
+.slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;outline:none;cursor:pointer;background:rgba(255,255,255,.1);touch-action:manipulation}
+.slider.gradient{background:linear-gradient(90deg,rgba(34,228,255,.25),rgba(61,255,168,.5),rgba(255,194,75,.5))}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--cyan));box-shadow:var(--glow-cyan);border:2px solid rgba(255,255,255,.8);cursor:grab}
+.slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--cyan);box-shadow:var(--glow-cyan);border:2px solid rgba(255,255,255,.8);cursor:grab}
+
+/* Season */
+.season{padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.season .s-title{font-size:8px;letter-spacing:1.5px;color:var(--t3);text-transform:uppercase;font-weight:600}
+.season .s-track{position:relative;flex:1;width:42px;min-height:200px;border-radius:21px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(180deg,#7fb2ff 0%,#9ff0c0 28%,#ffc24b 52%,#ff7a3d 78%,#7fb2ff 100%);box-shadow:inset 0 0 0 1px var(--border),0 4px 12px rgba(0,0,0,.3)}
+.season .s-track::after{content:'';position:absolute;inset:5px 0;background:repeating-linear-gradient(180deg,rgba(255,255,255,.35) 0 1px,transparent 1px calc(100%/12));pointer-events:none}
+.season .s-labels{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-around;padding:8px 0;pointer-events:none}
+.season .s-labels div{text-align:center;font-size:14px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.season .s-thumb{position:absolute;left:50%;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 18px rgba(255,255,255,.5),0 4px 10px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:16px;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
+.season .s-track.dragging .s-thumb{transform:translateX(-50%) scale(1.15)}
+.season .s-track.dragging{cursor:grabbing}
+.season .s-cur{font-family:'JetBrains Mono',monospace;font-size:9px;text-align:center;font-weight:700}
+.season .s-cur small{display:block;font-size:7.5px;color:var(--t3);font-weight:400;letter-spacing:1px;margin-top:1px}
+
+/* Time */
+.ctrl-time{padding:12px}
+.time-row{display:flex;gap:5px;flex-wrap:wrap}
+.sun-path{position:relative;height:44px;margin:8px 0}
+.sun-path svg{position:absolute;inset:0;width:100%;height:100%}
+.sun-path .slider{position:absolute;inset:0;width:100%;height:100%;background:transparent;margin:0;z-index:2}
+.sun-path .slider::-webkit-slider-runnable-track{height:100%;background:transparent}
+.sun-path .slider::-webkit-slider-thumb{width:24px;height:24px;margin-top:-12px;background:radial-gradient(circle at 35% 30%,#fff,#ffd54a 70%,#ff9800);box-shadow:0 0 18px rgba(255,205,80,.8)}
+.sun-path .slider::-moz-range-thumb{width:24px;height:24px;background:#ffd54a;box-shadow:0 0 18px rgba(255,205,80,.8)}
+.t-labels{display:flex;justify-content:space-between;font-size:8.5px;color:var(--t3);font-family:'JetBrains Mono',monospace;margin-top:4px}
+.t-labels b{color:var(--amber);font-weight:600}
+
+/* Stats */
+.stats{display:grid;gap:8px;padding:12px;grid-template-columns:repeat(6,1fr)}
+.stat{padding:10px 8px;text-align:center;background:rgba(255,255,255,.02);border-radius:var(--radius-md);transition:transform .2s var(--ease)}
+.stat:hover{background:rgba(255,255,255,.04);transform:translateY(-2px)}
+.stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:clamp(13px,2.2vw,18px);font-weight:700;margin-bottom:2px;font-variant-numeric:tabular-nums}
+.stat:nth-child(1) b{color:var(--cyan)}.stat:nth-child(2) b{color:var(--green)}.stat:nth-child(3) b{color:var(--amber)}
+.stat:nth-child(4) b{color:var(--purple)}.stat:nth-child(5) b{color:var(--cyan)}.stat:nth-child(6) b{color:var(--green)}
+.stat span{font-size:7.5px;letter-spacing:1px;color:var(--t3);text-transform:uppercase;font-weight:600}
+
+/* Chart */
+.chart-wrap{padding:12px;margin-top:8px}
+.chart-title{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);font-weight:600;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+.chart{position:relative;width:100%;height:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:6px 4px}
+.chart svg{width:100%;height:100%;display:block;overflow:visible}
+.chart-labels{display:flex;justify-content:space-between;font-size:7.5px;color:var(--t4);font-family:'JetBrains Mono',monospace;margin-top:3px;padding:0 2px}
+
+/* Tooltip */
+.tooltip{position:fixed;z-index:100;pointer-events:none;background:var(--glass-strong);border:1px solid var(--border);backdrop-filter:blur(16px);padding:6px 12px;border-radius:8px;font-size:10px;box-shadow:var(--shadow-md);opacity:0;transition:opacity .2s;white-space:nowrap;transform:translate(-50%,-100%)}
+.tooltip.show{opacity:1}
+
+.footer{margin-top:16px;padding:12px 10px;text-align:center;color:var(--t3);font-size:9px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+/* ============================================================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ — ключевые исправления
+============================================================================ */
+@media(max-width:960px){
+  .lab{grid-template-columns:1fr;grid-template-areas:"panels" "scene" "time" "stats" "season";gap:10px}
+  
+  /* Сцена: фиксированная высота вместо гигантской */
+  .a-scene{display:block;min-height:0}
+  .stage{min-height:0;height:55vw;max-height:400px}
+  
+  /* Сезон: горизонтальный и компактный */
+  .season{flex-direction:row;gap:10px;padding:10px 12px;align-items:center}
+  .season .s-title{writing-mode:vertical-rl;transform:rotate(180deg);font-size:7px}
+  .season .s-track{height:40px;width:auto;flex:1;min-height:0;border-radius:20px;background:linear-gradient(90deg,#7fb2ff 0%,#9ff0c0 28%,#ffc24b 52%,#ff7a3d 78%,#7fb2ff 100%)}
+  .season .s-track::after{background:repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 1px,transparent 1px calc(100%/12))}
+  .season .s-labels{flex-direction:row;padding:0 8px}
+  .season .s-labels div{font-size:12px}
+  .season .s-thumb{top:50%;left:0;transform:translateY(-50%);width:32px;height:32px;font-size:14px}
+  .season .s-track.dragging .s-thumb{transform:translateY(-50%) scale(1.15)}
+  .season .s-cur{min-width:50px}
+  
+  /* Статистика: 3 колонки */
+  .stats{grid-template-columns:repeat(3,1fr)}
+  
+  /* Виджет погоды: меньше */
+  .weather-panel{width:150px;padding:8px 10px;top:8px;right:8px}
+  .weather-em{font-size:20px}
+  .weather-val{font-size:16px}
+  .weather-name{font-size:8px}
+  .weather-max{font-size:7px}
+  .weather-track{height:26px}
+  .weather-thumb{width:22px;height:22px;font-size:10px}
+  .weather-labels{font-size:9px}
+  
+  /* Tilt: меньше */
+  .tilt-ctrl{left:8px;bottom:8px;width:34px}
+  .tilt-track{width:32px;height:90px;border-radius:16px}
+  .tilt-thumb{width:26px;height:26px;font-size:9px}
+  .tilt-label{font-size:6px}
+  
+  /* Readout: компактнее */
+  .readout{right:8px;bottom:8px;padding:8px 12px}
+  .readout .pw{font-size:clamp(20px,6vw,32px)}
+  .readout .extra{font-size:8px;gap:8px}
+  
+  /* Chip */
+  .chip-top{top:8px;left:8px;padding:5px 8px;font-size:9px}
+  
+  /* Header */
+  .header-meta{display:none}
 }
-[data-theme="dark"]{
-  --bg:#0f0d0c;
-  --bg2:#1a1714;
-  --ink:#e8e3d9;
-  --ink2:#c4bfb5;
-  --muted:#7a7268;
-  --accent:#c9a876;
-  --accent2:#b8956a;
-  --line:rgba(232,227,217,.08);
+
+/* Очень маленькие экраны (iPhone SE, 320px) */
+@media(max-width:380px){
+  .container{padding:8px 8px 50px}
+  .hero h1{font-size:16px}
+  .hero p{font-size:10px}
+  .stage{height:50vw;max-height:300px}
+  .weather-panel{width:130px;padding:6px 8px}
+  .weather-val{font-size:14px}
+  .weather-track{height:22px}
+  .weather-thumb{width:20px;height:20px;font-size:9px}
+  .readout{padding:6px 10px}
+  .readout .pw{font-size:20px}
+  .readout .extra{font-size:7px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:6px;padding:8px}
+  .stat{padding:8px 6px}
+  .stat b{font-size:12px}
+  .stat span{font-size:7px}
+  .chart{height:60px}
+  .tilt-track{height:70px}
+  .season .s-track{height:36px}
+  .season .s-thumb{width:28px;height:28px;font-size:12px}
+  .ctrl-time{padding:10px}
+  .sun-path{height:36px}
+  .c-badge{font-size:8px;padding:2px 6px}
 }
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;font-size:16px}
-body{
-  font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);
-  overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;
-  transition:background .6s var(--ease),color .6s var(--ease);
+
+/* Средние телефоны (375-430px) */
+@media(min-width:381px) and (max-width:430px){
+  .stage{height:52vw;max-height:340px}
+  .weather-panel{width:140px}
+  .stats{grid-template-columns:repeat(3,1fr)}
 }
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
-::selection{background:var(--ink);color:var(--bg)}
 
-/* Loader */
-.loader{
-  position:fixed;inset:0;z-index:10000;background:var(--ink);
-  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:32px;
-  animation:autoHide 3s ease forwards;
-}
-@keyframes autoHide{0%,75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
-.loader.js-hidden{opacity:0;visibility:hidden;transition:opacity .5s}
-.loader-brand{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(56px,12vw,140px);color:var(--bg);letter-spacing:-.02em}
-.loader-bar{width:140px;height:1px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:1px}
-.loader-bar i{display:block;width:0;height:100%;background:var(--accent);animation:fillBar 2s ease forwards}
-@keyframes fillBar{to{width:100%}}
-
-/* Scroll progress */
-.scroll-bar{position:fixed;top:0;left:0;height:1px;background:var(--ink);z-index:200;width:0;transition:width 50ms linear}
-
-/* Nav */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:20px 48px;display:flex;align-items:center;justify-content:space-between;
-  transition:all .5s var(--ease);
-}
-.nav.scrolled{padding:14px 48px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-.logo{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;font-weight:500;display:flex;align-items:center;gap:10px}
-.logo i{width:6px;height:6px;background:var(--accent);border-radius:50%;display:block;animation:pulse 3s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.nav-links{display:flex;gap:32px;list-style:none}
-.nav-links a{font-size:13px;font-weight:400;position:relative;padding:4px 0;transition:color .3s}
-.nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:currentColor;transition:width .4s var(--ease)}
-.nav-links a:hover::after{width:100%}
-.nav-r{display:flex;align-items:center;gap:14px}
-.ibtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:all .3s;font-size:13px}
-.ibtn:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.nav-cta{font-size:12px;font-weight:500;padding:10px 20px;border:1px solid var(--ink);border-radius:100px;transition:all .3s;display:inline-flex;align-items:center;gap:6px}
-.nav-cta:hover{background:var(--ink);color:var(--bg)}
-.nav-cta b{width:5px;height:5px;background:var(--accent);border-radius:50%;display:block}
-.burger{display:none;flex-direction:column;gap:5px;padding:8px}
-.burger span{width:22px;height:1.5px;background:var(--ink);display:block;transition:all .3s}
-
-/* Hero */
-.hero{min-height:100vh;padding:140px 48px 72px;max-width:var(--max);margin:0 auto;display:flex;flex-direction:column;justify-content:space-between}
-.hero-meta{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-.hero-meta strong{color:var(--ink);font-weight:500;display:block;margin-bottom:4px}
-.hero h1{
-  font-family:'Cormorant Garamond',serif;font-weight:400;font-style:italic;
-  font-size:clamp(48px,10vw,140px);line-height:.92;letter-spacing:-.02em;
-  margin:60px 0 40px;
-}
-.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:top}
-.hero h1 .w span{display:inline-block;transform:translateY(110%);animation:wUp 1s var(--ease) forwards}
-.hero h1 .w:nth-child(2) span{animation-delay:.08s}
-.hero h1 .w:nth-child(3) span{animation-delay:.16s}
-.hero h1 .w:nth-child(4) span{animation-delay:.24s}
-.hero h1 .w:nth-child(5) span{animation-delay:.32s}
-@keyframes wUp{to{transform:translateY(0)}}
-.hero h1 em{font-style:normal;color:var(--accent)}
-.hero-foot{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:40px;align-items:end;padding-top:32px;border-top:1px solid var(--line)}
-.hero-desc{font-size:15px;color:var(--ink2);max-width:340px;line-height:1.65;opacity:0;animation:fadeUp .8s var(--ease) .8s forwards;transform:translateY(16px)}
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-.hero-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:14px 26px;background:var(--ink);color:var(--bg);
-  border-radius:100px;font-size:13px;font-weight:500;
-  transition:all .4s var(--ease);width:fit-content;
-  opacity:0;animation:fadeUp .8s var(--ease) 1s forwards;transform:translateY(16px);
-}
-.hero-btn:hover{background:var(--accent)}
-.hero-btn .arr{transition:transform .4s var(--ease)}
-.hero-btn:hover .arr{transform:translateX(4px)}
-.hero-scroll{
-  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;
-  color:var(--muted);display:flex;align-items:center;gap:10px;
-  opacity:0;animation:fadeUp .8s var(--ease) 1.2s forwards;transform:translateY(16px);
-}
-.hero-scroll::after{content:'';width:28px;height:1px;background:var(--muted)}
-
-/* Marquee */
-.marquee{padding:32px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap}
-.marquee-t{display:inline-flex;gap:56px;animation:mq 45s linear infinite}
-.marquee-t span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(32px,5vw,56px);display:inline-flex;align-items:center;gap:56px}
-.marquee-t span::after{content:'✦';color:var(--accent);font-size:.45em;font-style:normal}
-@keyframes mq{to{transform:translateX(-50%)}}
-
-/* Shared */
-.sec{padding:100px 48px;max-width:var(--max);margin:0 auto}
-.sec-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;margin-bottom:20px}
-.sec-label::before{content:'';width:20px;height:1px;background:var(--accent)}
-.sec-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(32px,5vw,72px);line-height:1;letter-spacing:-.02em}
-.sec-title em{font-style:italic;color:var(--accent)}
-
-/* Manifesto */
-.manifesto{padding:120px 48px;text-align:center;max-width:var(--max);margin:0 auto}
-.manifesto p{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,48px);line-height:1.2;letter-spacing:-.01em;max-width:900px;margin:0 auto}
-.manifesto p em{font-style:italic;color:var(--accent)}
-.manifesto small{display:block;margin-top:40px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-
-/* Featured sticky */
-.feat{position:relative;height:280vh}
-.feat-stick{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;background:var(--bg2)}
-.feat-img{overflow:hidden}
-.feat-img img{width:100%;height:100%;object-fit:cover;transition:opacity .5s}
-.feat-info{padding:50px 50px 50px 40px;display:flex;flex-direction:column;justify-content:center}
-.feat-cnt{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
-.feat-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(36px,4.5vw,64px);line-height:1;letter-spacing:-.02em;margin-bottom:16px;transition:opacity .4s}
-.feat-desc{font-size:14px;color:var(--ink2);max-width:360px;line-height:1.65;margin-bottom:32px;transition:opacity .4s}
-.feat-specs{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:20px;border-top:1px solid var(--line);max-width:360px;transition:opacity .4s}
-.feat-specs .sl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.feat-specs .sv{font-size:13px;font-weight:500}
-.feat-price{margin-top:32px;display:flex;align-items:baseline;gap:8px}
-.feat-price small{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-.feat-price strong{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:32px;font-weight:400}
-.feat-warranty{margin-top:12px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
-.feat-warranty::before{content:'✓';color:var(--accent);font-weight:600}
-
-/* Collection */
-.coll{padding:100px 0;overflow:hidden}
-.coll-head{padding:0 48px;max-width:var(--max);margin:0 auto 50px;display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap}
-.coll-wrap{overflow:hidden}
-.coll-track{display:flex;gap:18px;padding:0 48px;transition:transform .7s var(--ease)}
-.coll-card{flex:0 0 360px;position:relative}
-.coll-card-img{aspect-ratio:3/4;overflow:hidden;background:var(--bg2);margin-bottom:16px;border-radius:var(--radius)}
-.coll-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
-.coll-card:hover .coll-card-img img{transform:scale(1.04)}
-.coll-card-tag{position:absolute;top:14px;left:14px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);padding:5px 10px;border-radius:100px}
-.coll-card h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;margin-bottom:4px}
-.coll-card-foot{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
-.coll-card-foot b{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--ink);font-weight:400}
-.coll-nav{display:flex;gap:8px;justify-content:flex-end;padding:0 48px;max-width:var(--max);margin:40px auto 0}
-.coll-nav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:all .3s;font-size:14px}
-.coll-nav button:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.coll-nav button:disabled{opacity:.25;pointer-events:none}
-
-/* Craft */
-.craft-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:56px}
-.craft-vis{aspect-ratio:4/5;overflow:hidden;border-radius:var(--radius)}
-.craft-vis img{width:100%;height:100%;object-fit:cover;transform:scale(1.12);transition:transform 1.6s var(--ease)}
-.craft-vis.in img{transform:scale(1)}
-.craft-txt h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(26px,3.5vw,40px);line-height:1.1;margin-bottom:20px}
-.craft-txt p{font-size:14px;color:var(--ink2);line-height:1.7;margin-bottom:14px;max-width:420px}
-.craft-steps{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:0}
-.craft-step{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}
-.craft-step span:first-child{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-
-/* Materials */
-.mats{background:var(--bg2);padding:100px 48px}
-.mats-in{max-width:var(--max);margin:0 auto}
-.mats-tabs{display:flex;gap:4px;margin:40px 0;border-bottom:1px solid var(--line);overflow-x:auto}
-.mats-tab{padding:12px 18px;font-size:13px;font-weight:500;position:relative;color:var(--muted);transition:color .3s;white-space:nowrap}
-.mats-tab::after{content:'';position:absolute;left:0;bottom:-1px;width:100%;height:1px;background:var(--ink);transform:scaleX(0);transition:transform .4s var(--ease)}
-.mats-tab.on{color:var(--ink)}
-.mats-tab.on::after{transform:scaleX(1)}
-.mats-body{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-.mats-img{aspect-ratio:1;overflow:hidden;border-radius:var(--radius)}
-.mats-img img{width:100%;height:100%;object-fit:cover;transition:opacity .4s}
-.mats-info h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(28px,4vw,48px);line-height:1;margin-bottom:16px}
-.mats-info p{font-size:14px;color:var(--ink2);line-height:1.7;margin-bottom:24px;max-width:420px}
-.mats-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-top:20px;border-top:1px solid var(--line)}
-.mats-meta .ml{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.mats-meta .mv{font-size:13px;font-weight:500}
-
-/* Atelier */
-.atel-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:56px;align-items:start}
-.atel-txt p{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.5vw,28px);line-height:1.35;margin-bottom:28px}
-.atel-txt p em{font-style:italic;color:var(--accent)}
-.atel-stats{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.stat{padding:24px 0;border-top:1px solid var(--line)}
-.stat-n{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(42px,5vw,64px);line-height:1;margin-bottom:6px}
-.stat-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
-
-/* Blog */
-.blog{padding:100px 48px;max-width:var(--max);margin:0 auto}
-.blog-head{margin-bottom:50px}
-.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.blog-card{background:var(--bg2);border-radius:var(--radius);overflow:hidden;transition:transform .4s var(--ease)}
-.blog-card:hover{transform:translateY(-4px)}
-.blog-card-img{aspect-ratio:16/10;overflow:hidden}
-.blog-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
-.blog-card:hover .blog-card-img img{transform:scale(1.05)}
-.blog-card-content{padding:24px}
-.blog-card-meta{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;gap:12px}
-.blog-card h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;line-height:1.3;margin-bottom:10px;transition:color .3s}
-.blog-card:hover h3{color:var(--accent)}
-.blog-card p{font-size:13px;color:var(--ink2);line-height:1.6}
-
-/* Blog Article */
-.article{max-width:800px;margin:0 auto;padding:120px 48px 80px}
-.article-header{margin-bottom:48px;text-align:center}
-.article-meta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.article h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(32px,5vw,56px);line-height:1.1;margin-bottom:24px}
-.article-lead{font-size:17px;color:var(--ink2);line-height:1.7;max-width:600px;margin:0 auto}
-.article-content{font-size:15px;line-height:1.8;color:var(--ink2)}
-.article-content h2{font-family:'Cormorant Garamond',serif;font-size:28px;margin:40px 0 16px;font-weight:400}
-.article-content h3{font-family:'Cormorant Garamond',serif;font-size:22px;margin:32px 0 12px;font-weight:400;font-style:italic;color:var(--accent)}
-.article-content p{margin-bottom:20px}
-.article-content ul{margin:20px 0 20px 24px}
-.article-content li{margin-bottom:10px}
-.article-content strong{color:var(--ink);font-weight:600}
-.article-content blockquote{border-left:2px solid var(--accent);padding-left:20px;margin:32px 0;font-style:italic;color:var(--ink2)}
-.article-img{margin:32px 0;border-radius:var(--radius);overflow:hidden}
-.article-img img{width:100%;height:auto}
-
-/* CTA */
-.cta{padding:100px 48px;text-align:center;max-width:var(--max);margin:0 auto}
-.cta h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(36px,6vw,88px);line-height:1;letter-spacing:-.02em;margin-bottom:28px}
-.cta h2 em{color:var(--accent)}
-.cta>p{font-size:14px;color:var(--ink2);max-width:420px;margin:0 auto 32px;line-height:1.65}
-.cta-form{max-width:480px;margin:0 auto;display:flex;gap:8px;padding:5px;background:var(--bg2);border-radius:100px;border:1px solid var(--line)}
-.cta-form input{flex:1;padding:13px 18px;background:transparent;border:none;outline:none;font:inherit;font-size:13px;color:var(--ink)}
-.cta-form input::placeholder{color:var(--muted)}
-.cta-form button{padding:13px 24px;background:var(--ink);color:var(--bg);border-radius:100px;font-size:13px;font-weight:500;transition:all .3s;display:inline-flex;align-items:center;gap:6px}
-.cta-form button:hover{background:var(--accent)}
-
-/* Footer */
-footer{padding:64px 48px 32px;border-top:1px solid var(--line)}
-.f-in{max-width:var(--max);margin:0 auto}
-.f-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px}
-.f-brand h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:44px;line-height:1;margin-bottom:14px}
-.f-brand p{max-width:280px;font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:20px}
-.f-soc{display:flex;gap:6px}
-.f-soc a{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:500;transition:all .3s}
-.f-soc a:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.f-col h5{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-.f-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-.f-col a{font-size:13px;transition:color .3s}
-.f-col a:hover{color:var(--accent)}
-.f-bot{display:flex;justify-content:space-between;padding-top:20px;border-top:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);flex-wrap:wrap;gap:14px}
-.f-big{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(72px,16vw,240px);line-height:.85;letter-spacing:-.03em;text-align:center;padding:50px 0 16px;opacity:.06;pointer-events:none}
-
-/* Reveal */
-.rv{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
-.rv.in{opacity:1;transform:translateY(0)}
-.rv-d>*{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.rv-d.in>*{opacity:1;transform:translateY(0)}
-.rv-d.in>*:nth-child(1){transition-delay:.05s}
-.rv-d.in>*:nth-child(2){transition-delay:.12s}
-.rv-d.in>*:nth-child(3){transition-delay:.19s}
-.rv-d.in>*:nth-child(4){transition-delay:.26s}
-
-/* Mobile */
-@media(max-width:1024px){
-  .nav{padding:16px 24px}.nav.scrolled{padding:12px 24px}
-  .nav-links{display:none}.burger{display:flex}
-  .burger.active span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
-  .burger.active span:nth-child(2){opacity:0}
-  .burger.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
-  .hero{padding:110px 24px 48px}.hero-foot{grid-template-columns:1fr;gap:24px}
-  .hero h1{font-size:clamp(40px,12vw,72px)}
-  .sec{padding:80px 24px}.manifesto{padding:80px 24px}
-  .feat{height:auto}.feat-stick{position:relative;height:auto;grid-template-columns:1fr}
-  .feat-img{aspect-ratio:4/3}.feat-info{padding:28px 24px}
-  .craft-grid,.atel-grid,.mats-body{grid-template-columns:1fr;gap:32px}
-  .blog-grid{grid-template-columns:1fr}
-  .coll-card{flex:0 0 280px}
-  .coll-head,.coll-nav{padding:0 24px}.coll-track{padding:0 24px}
-  .f-top{grid-template-columns:1fr 1fr;gap:28px}
-  .mats{padding:80px 24px}footer{padding:56px 24px 24px}
-  .cta{padding:80px 24px}
-  .cta-form{flex-direction:column;border-radius:16px;background:transparent;border:none;padding:0;gap:8px}
-  .cta-form input{background:var(--bg2);border-radius:100px;border:1px solid var(--line)}
-  .cta-form button{width:100%;justify-content:center}
-  .article{padding:100px 24px 60px}
-}
-@media(max-width:600px){
-  html{font-size:15px}
-  .hero-meta{flex-direction:column;gap:8px;text-align:left}
-  .hero-meta div:last-child{text-align:left}
-  .marquee-t span{font-size:28px}
-  .f-top{grid-template-columns:1fr}.atel-stats{grid-template-columns:1fr}
-  .mats-meta{grid-template-columns:1fr}.feat-specs{grid-template-columns:1fr}
-  .article-content h2{font-size:24px}
-  .article-content h3{font-size:20px}
+/* Планшеты */
+@media(min-width:431px) and (max-width:960px){
+  .stage{height:48vw;max-height:420px}
+  .weather-panel{width:160px}
+  .stats{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Перейти к содержимому</a>
+<div class="container">
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon" aria-hidden="true">⚡</div>
+      <div class="logo-text"><span class="gradient">SOLARLAB PRO</span><small>v3.1 · Kraków</small></div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="btnExport" title="Экспорт" aria-label="Экспорт данных">📊</button>
+      <button class="icon-btn" id="btnShare" title="Ссылка" aria-label="Поделиться">🔗</button>
+      <button class="icon-btn" id="btnReset" title="Сброс" aria-label="Сбросить">↻</button>
+    </div>
+  </header>
 
-<!-- Loader -->
-<div class="loader" id="loader">
-  <div class="loader-brand">Korzeń</div>
-  <div class="loader-bar"><i></i></div>
-</div>
+  <section class="hero">
+    <h1>Симулятор <span class="gradient">солнечной электростанции</span></h1>
+    <p>Краков · 50.06°N · NOAA SPA · Инвертор · Экономика</p>
+  </section>
 
-<div class="scroll-bar" id="scrollBar"></div>
-
-<nav class="nav" id="nav">
-  <a href="#" class="logo"><i></i>Korzeń</a>
-  <ul class="nav-links">
-    <li><a href="#kolekcja">Kolekcja</a></li>
-    <li><a href="#proces">Proces</a></li>
-    <li><a href="#materialy">Materiały</a></li>
-    <li><a href="#blog">Blog</a></li>
-    <li><a href="#atelier">Atelier</a></li>
-    <li><a href="#kontakt">Kontakt</a></li>
-  </ul>
-  <div class="nav-r">
-    <button class="ibtn" id="themeBtn" aria-label="Motyw">◐</button>
-    <a href="#kontakt" class="nav-cta"><b></b>Kontakt</a>
-    <div class="burger" id="burger"><span></span><span></span><span></span></div>
-  </div>
-</nav>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-meta">
-    <div><strong>Est. 2008</strong>Warszawa · Polska · Europa</div>
-    <div style="text-align:right"><strong>Kolekcja 2025</strong>Wiosna / Lato</div>
-  </div>
-  <h1>
-    <span class="w"><span>Meble,</span></span>
-    <span class="w"><span>które</span></span>
-    <span class="w"><span>zapraszają</span></span>
-    <span class="w"><span>do</span></span>
-    <span class="w"><em><span>odpoczynku.</span></em></span>
-  </h1>
-  <div class="hero-foot">
-    <p class="hero-desc">Autorska pracownia mebli tapicerowanych i z litego drewna. 15 lat doświadczenia. Realizacje w Polsce i całej Europie. Gwarancja 5 lat.</p>
-    <a href="#kolekcja" class="hero-btn">Odkryj kolekcję <span class="arr">→</span></a>
-    <div class="hero-scroll">Przewiń</div>
-  </div>
-</section>
-
-<!-- Marquee -->
-<div class="marquee"><div class="marquee-t">
-  <span>Lite drewno dębowe</span><span>Tapicerka z wełny</span><span>Skóra roślinna</span><span>Polska jakość</span><span>Gwarancja 5 lat</span>
-  <span>Lite drewno dębowe</span><span>Tapicerka z wełny</span><span>Skóra roślinna</span><span>Polska jakość</span><span>Gwarancja 5 lat</span>
-</div></div>
-
-<!-- Manifesto -->
-<section class="manifesto rv">
-  <p>Wierzymy, że <em>dobry mebel</em> jest jak dobry przyjaciel — nie krzyczy, nie narzuca się. Po prostu jest. Czekając, aż usiądziesz, położysz książkę, zamkniesz oczy.</p>
-  <small>— Manifest Korzeń</small>
-</section>
-
-<!-- Featured sticky -->
-<section class="feat" id="feat">
-  <div class="feat-stick">
-    <div class="feat-img"><img id="fImg" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80" alt=""></div>
-    <div class="feat-info">
-      <div class="feat-cnt" id="fCnt">01 / 05</div>
-      <h2 class="feat-name" id="fName">Łóżko Aurora</h2>
-      <p class="feat-desc" id="fDesc">Miękkie wezgłowie z naturalnego lnu, dębowe nogi olejowane ręcznie. Zaproszenie do snu, które trwa lata.</p>
-      <div class="feat-specs" id="fSpecs">
-        <div><div class="sl">Materiał</div><div class="sv">Dąb + Len</div></div>
-        <div><div class="sl">Wymiary</div><div class="sv">180 × 220 cm</div></div>
-        <div><div class="sl">Realizacja</div><div class="sv">8–10 tygodni</div></div>
-        <div><div class="sl">Gwarancja</div><div class="sv">5 lat</div></div>
+  <main class="lab" id="main-content">
+    <div class="glass ctrl a-panels">
+      <div class="ctrl-header">
+        <div class="c-title">⚡ Панели</div>
+        <div class="c-val cyan"><span id="panelCount">4</span><span class="c-unit">шт</span></div>
+        <div class="c-badge" id="panelSys">2.16 kWp</div>
       </div>
-      <div class="feat-price"><small>Cena od</small><strong id="fPrice">8 900 zł</strong></div>
-      <div class="feat-warranty">5 lat gwarancji na konstrukcję i tapicerkę</div>
+      <input type="range" id="panelSlider" class="slider gradient" min="1" max="24" value="4" aria-label="Количество панелей">
     </div>
-  </div>
-</section>
 
-<!-- Collection -->
-<section class="coll" id="kolekcja">
-  <div class="coll-head rv">
-    <div><div class="sec-label">Kolekcja 2025</div><h2 class="sec-title">Rzeczy, do których <em>chce się wracać.</em></h2></div>
-    <p style="max-width:320px;font-size:14px;color:var(--ink2);line-height:1.6">Siedem modeli, które definiują charakter sypialni i salonu. Wszystkie z 5-letnią gwarancją.</p>
-  </div>
-  <div class="coll-wrap"><div class="coll-track" id="cTrack">
-    <article class="coll-card"><div class="coll-card-img"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80" alt=""><span class="coll-card-tag">Sypialnia</span></div><h3>Aurora</h3><div class="coll-card-foot"><span>Łóżko tapicerowane</span><b>8 900 zł</b></div></article>
-    <article class="coll-card"><div class="coll-card-img"><img src="https://images.unsplash.com/photo-1617325269665-34a0a182a1ad?w=800&q=80" alt=""><span class="coll-card-tag">Sypialnia</span></div><h3>Nimbus</h3><div class="coll-card-foot"><span>Wysokie wezgłowie</span><b>11 500 zł</b></div></article>
-    <article class="coll-card"><div class="coll-card-img"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80" alt=""><span class="coll-card-tag">Sypialnia</span></div><h3>Luna</h3><div class="coll-card-foot"><span>Naturalny len</span><b>7 600 zł</b></div></article>
-    <article class="coll-card"><div class="coll-card-img"><img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=80" alt=""><span class="coll-card-tag">Sypialnia</span></div><h3>Velvet</h3><div class="coll-card-foot"><span>Aksamit</span><b>10 200 zł</b></div></article>
-    <article class="coll-card"><div class="coll-card-img"><img src="https://images.unsplash.com/photo-1616594039962-48c5b529a96c?w=800&q=80" alt=""><span class="coll-card-tag">Salon</span></div><h3>Orbita</h3><div class="coll-card-foot"><span>Fotel</span><b>6 400 zł</b></div></article>
-    <article class="coll-card"><div class="coll-card-img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" alt=""><span class="coll-card-tag">Salon</span></div><h3>Moduł</h3><div class="coll-card-foot"><span>Sofa modułowa</span><b>18 900 zł</b></div></article>
-  </div></div>
-  <div class="coll-nav"><button id="cPrev">←</button><button id="cNext">→</button></div>
-</section>
-
-<!-- Craft -->
-<section class="sec" id="proces">
-  <div class="sec-label rv">Proces</div>
-  <h2 class="sec-title rv">Od deski do <em>dotyku.</em></h2>
-  <div class="craft-grid">
-    <div class="craft-vis rv"><img src="https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=1000&q=80" alt=""></div>
-    <div class="craft-txt rv">
-      <h3>Każdy mebel powstaje w 47 krokach. Żaden nie jest przypadkowy.</h3>
-      <p>Zaczynamy od ręcznego wyboru każdej deski. Kończymy olejowaniem w trzech warstwach, które ujawnia rysunek drewna.</p>
-      <p>Między tym — 30 do 90 dni pracy w warsztacie pod Warszawą. Jakość, którą czuć.</p>
-      <div class="craft-steps">
-        <div class="craft-step"><span>01 — Selekcja</span><span>Dzień 1–3</span></div>
-        <div class="craft-step"><span>02 — Konstrukcja</span><span>Dzień 4–21</span></div>
-        <div class="craft-step"><span>03 — Tapicerka</span><span>Dzień 22–45</span></div>
-        <div class="craft-step"><span>04 — Wykończenie</span><span>Dzień 46–60</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Materials -->
-<section class="mats" id="materialy">
-  <div class="mats-in">
-    <div class="sec-label rv">Materiały</div>
-    <h2 class="sec-title rv">To, czego <em>dotykasz.</em></h2>
-    <div class="mats-tabs rv-d">
-      <button class="mats-tab on" data-m="oak">Dąb europejski</button>
-      <button class="mats-tab" data-m="lin">Len naturalny</button>
-      <button class="mats-tab" data-m="skora">Skóra roślinna</button>
-      <button class="mats-tab" data-m="welna">Wełna czesankowa</button>
-    </div>
-    <div class="mats-body">
-      <div class="mats-img"><img id="mImg" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1000&q=80" alt=""></div>
-      <div class="mats-info">
-        <h3 id="mName">Dąb europejski</h3>
-        <p id="mDesc">Sprowadzamy go z lasów FSC w Polsce i na Litwie. Sezonujemy minimum 18 miesięcy. Olejujemy ręcznie — trzy warstwy.</p>
-        <div class="mats-meta">
-          <div><div class="ml">Pochodzenie</div><div class="mv" id="mOr">Polska / Litwa</div></div>
-          <div><div class="ml">Twardość</div><div class="mv" id="mHa">3.7 BN</div></div>
-          <div><div class="ml">Wykończenie</div><div class="mv" id="mFi">Olej naturalny</div></div>
+    <div class="a-scene">
+      <div class="glass stage" id="stageBox">
+        <svg class="stage-svg" id="sceneSvg" viewBox="0 0 1000 625" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop id="st1" offset="0"/><stop id="st2" offset=".55"/><stop id="st3" offset="1"/></linearGradient>
+            <radialGradient id="sunCore" cx=".36" cy=".34" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="#fff6c9"/><stop offset=".55" stop-color="#ffd54a"/><stop offset="1" stop-color="#ff9800"/></radialGradient>
+            <radialGradient id="sunHalo"><stop offset="0" stop-color="rgba(255,205,80,.55)"/><stop offset=".5" stop-color="rgba(255,152,0,.18)"/><stop offset="1" stop-color="rgba(255,152,0,0)"/></radialGradient>
+            <linearGradient id="cellGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a7fd4"/><stop offset=".5" stop-color="#2a56c4"/><stop offset="1" stop-color="#1a3a8a"/></linearGradient>
+            <linearGradient id="frameGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8f0fa"/><stop offset=".5" stop-color="#8ba0bf"/><stop offset="1" stop-color="#4a5870"/></linearGradient>
+            <linearGradient id="sideGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4658"/><stop offset="1" stop-color="#0e1624"/></linearGradient>
+            <linearGradient id="fieldG" x1="0" y1="0" x2="0" y2="1"><stop id="fieldStop1" offset="0" stop-color="#2a4d33"/><stop id="fieldStop2" offset="1" stop-color="#0a140e"/></linearGradient>
+            <linearGradient id="shineG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,255,255,0)"/><stop offset=".5" stop-color="rgba(255,255,255,.4)"/><stop offset="1" stop-color="rgba(255,255,255,0)"/></linearGradient>
+            <linearGradient id="beamGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(255,220,120,.35)"/><stop offset="1" stop-color="rgba(255,220,120,.02)"/></linearGradient>
+            <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter>
+            <filter id="soft2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="8"/></filter>
+            <clipPath id="faceClip"><path id="faceClipP" d=""/></clipPath>
+          </defs>
+          <rect id="skyR" width="1000" height="625" fill="url(#sky)"/>
+          <g id="starsG" opacity="0"></g>
+          <g id="sunG" opacity="0">
+            <circle r="130" fill="url(#sunHalo)"/>
+            <g id="sunRays" stroke="rgba(255,222,130,.4)" stroke-width="3" stroke-linecap="round">
+              <line y1="-70" y2="-100"/><line y1="70" y2="100"/><line x1="-70" x2="-100"/><line x1="70" x2="100"/>
+              <line x1="50" y1="50" x2="72" y2="72"/><line x1="-50" y1="-50" x2="-72" y2="-72"/>
+              <line x1="50" y1="-50" x2="72" y2="-72"/><line x1="-50" y1="50" x2="-72" y2="72"/>
+            </g>
+            <circle id="sunCoreCircle" r="48" fill="url(#sunCore)"/>
+          </g>
+          <g id="beamG" opacity="0"><path id="beam1" fill="url(#beamGrad)" filter="url(#soft2)"/><path id="beam2" fill="rgba(255,220,120,.08)" filter="url(#soft2)"/></g>
+          <g id="raysG" stroke="rgba(255,210,110,.5)" stroke-width="2" stroke-linecap="round" stroke-dasharray="8 12" opacity="0"><line/><line/><line/><line/><line/></g>
+          <g id="cloudsG"></g>
+          <g id="landG"></g>
+          <rect id="groundShade" y="450" height="175" fill="#060a14" opacity="0"/>
+          <g id="panelG"></g>
+          <g id="snowmanG" opacity="0">
+            <circle cx="720" cy="530" r="22" fill="#fff" stroke="#dde8f5"/><circle cx="720" cy="498" r="16" fill="#fff" stroke="#dde8f5"/><circle cx="720" cy="474" r="12" fill="#fff" stroke="#dde8f5"/>
+            <circle cx="716" cy="471" r="2" fill="#333"/><circle cx="724" cy="471" r="2" fill="#333"/>
+            <path d="M716 477 L720 479 L724 477" stroke="#ff6b35" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <line x1="704" y1="498" x2="690" y2="488" stroke="#8b5a2b" stroke-width="3" stroke-linecap="round"/>
+            <line x1="736" y1="498" x2="750" y2="488" stroke="#8b5a2b" stroke-width="3" stroke-linecap="round"/>
+            <rect x="708" y="460" width="24" height="4" rx="2" fill="#333"/><rect x="712" y="448" width="16" height="12" rx="2" fill="#333"/>
+          </g>
+        </svg>
+        <canvas class="stage-canvas" id="stageCanvas" aria-hidden="true"></canvas>
+        <div class="sr-only" id="sceneDescription" aria-live="polite"></div>
+        <div class="chip-top"><span id="chipDate">—</span><span class="sep"></span><span class="ct" id="chipSun">☀ 60°</span></div>
+        <div class="weather-panel">
+          <div class="weather-top">
+            <span class="weather-em" id="wEmoji">☀️</span>
+            <div class="weather-info">
+              <span class="weather-val" id="wIrr">940</span><span class="weather-unit">Вт/м²</span>
+              <div class="weather-name" id="wLabel">ясно</div>
+              <div class="weather-max" id="wMax">макс: 940</div>
+            </div>
+          </div>
+          <div class="weather-track" id="weatherTrack" role="slider" tabindex="0" aria-label="Погода" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" aria-valuetext="Ясно">
+            <div class="weather-thumb" id="weatherThumb">☀️</div>
+          </div>
+          <div class="weather-labels"><span>🌧️</span><span>⛅</span><span>☀️</span></div>
+        </div>
+        <div class="tilt-ctrl">
+          <div class="tilt-track" id="tiltTrack" role="slider" tabindex="0" aria-label="Угол наклона" aria-valuemin="0" aria-valuemax="90" aria-valuenow="35" aria-valuetext="35°" aria-orientation="vertical">
+            <div class="tilt-thumb" id="tiltThumb">35°</div>
+          </div>
+          <div class="tilt-label">Угол</div>
+        </div>
+        <div class="readout" aria-live="polite" aria-atomic="true">
+          <div class="lbl">Мощность</div>
+          <div class="pw"><span id="powerVal">0</span><small>Вт</small></div>
+          <div class="extra"><div><b id="rI">0.0</b>A</div><div><b id="rV">0.0</b>V</div><div><b id="rE">0</b>%</div></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- Blog -->
-<section class="blog" id="blog">
-  <div class="blog-head rv">
-    <div class="sec-label">Blog</div>
-    <h2 class="sec-title">Wiedza i <em>inspiracje.</em></h2>
-  </div>
-  <div class="blog-grid rv-d">
-    <article class="blog-card">
-      <div class="blog-card-img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" alt=""></div>
-      <div class="blog-card-content">
-        <div class="blog-card-meta"><span>Pielęgnacja</span><span>8 min czytania</span></div>
-        <h3>Jak dbać o tapicerkę z naturalnego lnu?</h3>
-        <p>Len wymaga delikatności, ale odwdzięcza się pięknem. Poznaj zasady pielęgnacji, które sprawią, że mebel będzie służył lata.</p>
+    <div class="glass season a-season">
+      <div class="s-title">Месяц</div>
+      <div class="s-track" id="sTrack" role="slider" tabindex="0" aria-label="Месяц" aria-valuemin="0" aria-valuemax="11" aria-valuenow="6" aria-valuetext="Июль">
+        <div class="s-labels"><div>❄️</div><div>🌱</div><div>☀️</div><div>🍂</div></div>
+        <div class="s-thumb" id="sThumb">☀️</div>
       </div>
-    </article>
-    <article class="blog-card">
-      <div class="blog-card-img"><img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=80" alt=""></div>
-      <div class="blog-card-content">
-        <div class="blog-card-meta"><span>Czyszczenie</span><span>6 min czytania</span></div>
-        <h3>Domowe sposoby na plamy na aksamycie</h3>
-        <p>Aksamit wygląda luksusowo, ale bywa kapryśny. Oto sprawdzone metody czyszczenia, które nie uszkodzą tkaniny.</p>
-      </div>
-    </article>
-    <article class="blog-card">
-      <div class="blog-card-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt=""></div>
-      <div class="blog-card-content">
-        <div class="blog-card-meta"><span>Fakty</span><span>5 min czytania</span></div>
-        <h3>Dlaczego drewno musi sezonować 18 miesięcy?</h3>
-        <p>Czas to najważniejszy materiał. Bez odpowiedniego sezonowania dąb pęka i pracuje. Wyjaśniamy dlaczego nie idziemy na skróty.</p>
-      </div>
-    </article>
-    <article class="blog-card">
-      <div class="blog-card-img"><img src="https://images.unsplash.com/photo-1616594039962-48c5b529a96c?w=800&q=80" alt=""></div>
-      <div class="blog-card-content">
-        <div class="blog-card-meta"><span>Pielęgnacja</span><span>7 min czytania</span></div>
-        <h3>Czym czyścić skórę roślinną?</h3>
-        <p>Skóra garbowana roślinnie starzeje się pięknie, ale potrzebuje odpowiedniej troski. Poznaj najlepsze produkty i techniki.</p>
-      </div>
-    </article>
-    <article class="blog-card">
-      <div class="blog-card-img"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80" alt=""></div>
-      <div class="blog-card-content">
-        <div class="blog-card-meta"><span>Porady</span><span>10 min czytania</span></div>
-        <h3>Jak dobrać materac do łóżka tapicerowanego?</h3>
-        <p>Wybór materaca to klucz do dobrego snu. Podpowiadamy, na co zwrócić uwagę przy łóżkach z wysokim wezgłowiem.</p>
-      </div>
-    </article>
-    <article class="blog-card">
-      <div class="blog-card-img"><img src="https://images.unsplash.com/photo-1617325269665-34a0a182a1ad?w=800&q=80" alt=""></div>
-      <div class="blog-card-content">
-        <div class="blog-card-meta"><span>Fakty</span><span>6 min czytania</span></div>
-        <h3>Wełna czesankowa vs zwykła — różnice</h3>
-        <p>Nie każda wełna jest taka sama. Wyjaśniamy dlaczego czesanka jest droższa, ale warta każdej złotówki.</p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- Atelier -->
-<section class="sec" id="atelier">
-  <div class="sec-label rv">Atelier</div>
-  <h2 class="sec-title rv">Piętnaście lat <em>tej samej roboty.</em></h2>
-  <div class="atel-grid">
-    <div class="atel-txt rv">
-      <p>Zaczynaliśmy w garażu pod Warszawą — <em>dwóch stolarzy i jedna szlifierka.</em> Dziś pracujemy w 800-metrowym warsztacie, realizujemy projekty w Polsce, Niemczech, Francji i Skandynawii.</p>
-      <p>Nie produkujemy masowo. Każdy egzemplarz powstaje na zamówienie — dla konkretnego domu, konkretnego człowieka. Jakość, którą czuć i która trwa.</p>
+      <div class="s-cur" id="sCur">ИЮЛЬ<small>лето</small></div>
     </div>
-    <div class="atel-stats rv-d">
-      <div class="stat"><div class="stat-n" data-count="15">0</div><div class="stat-l">Lat doświadczenia</div></div>
-      <div class="stat"><div class="stat-n" data-count="3200">0</div><div class="stat-l">Zrealizowanych projektów</div></div>
-      <div class="stat"><div class="stat-n" data-count="28">0</div><div class="stat-l">Rzemieślników w zespole</div></div>
-      <div class="stat"><div class="stat-n" data-count="5">0</div><div class="stat-l">Lat gwarancji</div></div>
+
+    <div class="glass ctrl ctrl-time a-time">
+      <div class="ctrl-header">
+        <div class="c-title">🕐 Время</div>
+        <div class="time-row">
+          <button class="c-badge" id="btnNow">⏰ сейчас</button>
+          <button class="c-badge" id="btnDemo">🎬 демо</button>
+        </div>
+      </div>
+      <div class="sun-path">
+        <svg viewBox="0 0 400 52" preserveAspectRatio="none"><path d="M 20 42 Q 200 -6 380 42" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.5" stroke-dasharray="3 4"/></svg>
+        <input type="range" id="timeSlider" class="slider" min="0" max="24" step="0.25" value="13" aria-label="Время суток">
+      </div>
+      <div class="t-labels"><span>восход <b id="lblSr">06:10</b></span><span><b>12:00</b></span><span>закат <b id="lblSs">19:30</b></span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;align-items:center">
+        <button class="c-badge" data-h="8">🌅</button>
+        <button class="c-badge" data-h="13">☀️</button>
+        <button class="c-badge" data-h="19">🌇</button>
+        <span class="c-sub" id="azInfo"></span>
+        <span class="c-sub" id="optHint"></span>
+      </div>
     </div>
-  </div>
-</section>
 
-<!-- CTA -->
-<section class="cta rv" id="kontakt">
-  <h2>Opowiedz nam o swoim <em>domu.</em></h2>
-  <p>Zostaw e-mail — odezwiemy się w 24h, żeby porozmawiać o projekcie i umówić bezpłatny pomiar.</p>
-  <form class="cta-form" onsubmit="event.preventDefault();this.querySelector('button').textContent='Dziękujemy ✓'">
-    <input type="email" placeholder="twoj@email.com" required>
-    <button type="submit">Wyślij →</button>
-  </form>
-</section>
+    <div class="a-stats">
+      <div class="glass stats">
+        <div class="stat"><b id="statPeak">2.16</b><span>kW пик</span></div>
+        <div class="stat"><b id="statDay">0.0</b><span id="statDayLbl">kWh/день</span></div>
+        <div class="stat"><b id="statMonth">0</b><span>kWh/мес</span></div>
+        <div class="stat"><b id="statYear">0</b><span>kWh/год</span></div>
+        <div class="stat"><b id="statNPV">0</b><span>NPV 25л €</span></div>
+        <div class="stat"><b id="statPay">0.0</b><span>лет окуп.</span></div>
+      </div>
+      <div class="glass chart-wrap">
+        <div class="chart-title"><span>📊 Выработка</span><span class="c-badge" id="chartTotal">0.0 kWh</span></div>
+        <div class="chart"><svg id="chartSvg" viewBox="0 0 1000 100" preserveAspectRatio="none"></svg></div>
+        <div class="chart-labels" id="chartLabels"></div>
+      </div>
+    </div>
+  </main>
 
-<!-- Footer -->
-<footer><div class="f-in">
-  <div class="f-top">
-    <div class="f-brand"><h3>Korzeń.</h3><p>Autorska pracownia mebli tapicerowanych i z litego drewna. Warszawa, od 2008. Realizacje w Polsce i Europie.</p><div class="f-soc"><a href="#">IG</a><a href="#">PI</a><a href="#">FB</a><a href="#">LI</a></div></div>
-    <div class="f-col"><h5>Kolekcja</h5><ul><li><a href="#">Sypialnia</a></li><li><a href="#">Salon</a></li><li><a href="#">Jadalnia</a></li><li><a href="#">Na zamówienie</a></li></ul></div>
-    <div class="f-col"><h5>Atelier</h5><ul><li><a href="#">O nas</a></li><li><a href="#">Proces</a></li><li><a href="#">Materiały</a></li><li><a href="#">Blog</a></li></ul></div>
-    <div class="f-col"><h5>Kontakt</h5><ul><li><a href="tel:+48221234567">+48 22 123 45 67</a></li><li><a href="mailto:hello@korzen.pl">hello@korzen.pl</a></li><li><a href="#">ul. Mokotowska 42<br>00-542 Warszawa</a></li><li><a href="#">Pn–Pt · 10–18<br>Sb · 11–15</a></li></ul></div>
-  </div>
-  <div class="f-bot"><span>© 2025 Korzeń. Wszystkie prawa zastrzeżone.</span><span>Polska jakość · Europa</span></div>
-  <div class="f-big">Korzeń.</div>
-</div></footer>
+  <footer class="footer">
+    <div>⚡ SolarLab Pro v3.1 · Kraków</div>
+    <div id="perfInfo">—</div>
+  </footer>
+</div>
+<div class="tooltip" id="tooltip"></div>
 
 <script>
-(function(){
-  'use strict';
+'use strict';
+/* === CONFIG === */
+const CONFIG=Object.freeze({LOCATION:{lat:50.06,lon:19.94,tz:1,name:'Kraków'},PANEL:{name:'Jinko Tiger Neo 540W',Pmax:540,Vmp:41.7,Imp:13.02,tempCoeff_P:-0.0034,NOCT:45,bifaciality:0.7,cost:350,degradation:0.004,b0_IAM:0.03},INVERTER:{efficiency:0.97,maxPower:3000},SYSTEM:{cableLosses:0.015,mismatchLosses:0.02,soilingLosses:0.03,availability:0.99},ECONOMICS:{electricityPrice:0.22,discountRate:0.06,projectLife:25,annualOPEX:15},SCENE:{PANEL:{LENGTH:200,WIDTH:280,X:380,K:0.5,M:0.22},SUN:{RADIUS:48},BEAM:{WIDTH:60}}});
+const MONTHS=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const MONTH_DAYS=[31,28,31,30,31,30,31,31,30,31,30,31];
+const DAY_OF_YEAR=[15,46,74,105,135,162,197,228,258,288,319,344];
+const AMBIENT_TEMP=[-1,0,4,9,14,17,19,19,15,10,5,1];
+const MAX_GHI_NOON=[195,290,470,630,780,900,940,860,670,450,230,165];
 
-  /* === LOADER === */
-  var loader = document.getElementById('loader');
-  function hideLoader(){
-    if(!loader) return;
-    loader.classList.add('js-hidden');
-    setTimeout(function(){ loader.style.display='none'; },600);
-  }
-  setTimeout(hideLoader, 1800);
+/* === PHYSICS === */
+const Physics=(()=>{const DEG=Math.PI/180,RAD=180/Math.PI;const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const{lat,lon,tz}=CONFIG.LOCATION;
+function refraction(elDeg){if(elDeg<-0.575)return 0;return 1.02/(60*Math.tan((elDeg+10.3/(elDeg+5.11))*DEG))}
+function solarPosition(dayOfYear,clockHour){const latRad=lat*DEG;const gamma=(2*Math.PI/365)*(dayOfYear-1+(clockHour-12)/24);const eqtime=229.18*(0.000075+0.001868*Math.cos(gamma)-0.032077*Math.sin(gamma)-0.014615*Math.cos(2*gamma)-0.040849*Math.sin(2*gamma));const decl=0.006918-0.399912*Math.cos(gamma)+0.070257*Math.sin(gamma)-0.006758*Math.cos(2*gamma)+0.000907*Math.sin(2*gamma)-0.002697*Math.cos(3*gamma)+0.00148*Math.sin(3*gamma);const timeOffset=eqtime+4*lon-60*tz;const tst=clockHour*60+timeOffset;const ha=(tst/4-180)*DEG;const cosZenith=Math.sin(latRad)*Math.sin(decl)+Math.cos(latRad)*Math.cos(decl)*Math.cos(ha);const zenith=Math.acos(clamp(cosZenith,-1,1));let elevation=Math.PI/2-zenith;let elDeg=elevation*RAD;elDeg+=refraction(elDeg);elevation=elDeg*DEG;const sinZenith=Math.sin(zenith);let azimuth=0;if(sinZenith>0.001){const cosAz=(Math.sin(decl)-Math.cos(zenith)*Math.sin(latRad))/(sinZenith*Math.cos(latRad));azimuth=Math.acos(clamp(cosAz,-1,1));if(ha>0)azimuth=2*Math.PI-azimuth}let azFromSouth=azimuth-Math.PI;if(azFromSouth>Math.PI)azFromSouth-=2*Math.PI;if(azFromSouth<-Math.PI)azFromSouth+=2*Math.PI;const cosH0=clamp(-Math.tan(latRad)*Math.tan(decl),-1,1);const H0=Math.acos(cosH0);return{elevation,elevationDeg:elDeg,azimuth,azimuthFromSouth:azFromSouth,azimuthFromSouthDeg:azFromSouth*RAD,declination:decl,hourAngle:ha,sunrise:12-(H0*RAD)/15-timeOffset/60,sunset:12+(H0*RAD)/15-timeOffset/60}}
+function IAM(AOI){if(AOI>=Math.PI/2)return 0;const aR=CONFIG.PANEL.b0_IAM;return(1-Math.exp(-Math.cos(AOI)/aR))/(1-Math.exp(-1/aR))}
+function calculateOutput(params){const{month=6,clock=13,tilt=35,weather=100,panelCount=4}=params;const tiltRad=tilt*DEG;const sol=solarPosition(DAY_OF_YEAR[month],clock);if(sol.elevationDeg<=-0.833)return{power:0,acPower:0,poa:0,ghi:0,dni:0,dhi:0,cosIncidence:0,AOI:0,cellTemp:AMBIENT_TEMP[month],solar:sol,current:0,voltage:0};
+const sinEl=Math.max(0,Math.sin(sol.elevation));const airMass=sinEl>0.001?1/(sinEl+0.50572*Math.pow(Math.max(sol.elevationDeg,0.1)+6.07995,-1.6364)):38;
+const dni_clear=1367*Math.pow(0.7,Math.pow(airMass,0.678));const ghi_clear=dni_clear*sinEl+100*sinEl;
+const wf=weather/100;const weatherAtten=0.12+0.88*Math.pow(wf,1.4);const ghi=ghi_clear*weatherAtten;
+const beamFraction=Math.pow(wf,1.5)*0.85+0.05;const diffuseFraction=1-beamFraction;const dhi=ghi*diffuseFraction;const bhi=ghi*beamFraction;const dni=sinEl>0.01?bhi/sinEl:0;
+const isWinter=month===11||month===0||month===1;const albedo=isWinter?0.6:0.2;
+const cosIncidence=sinEl*Math.cos(tiltRad)+Math.cos(sol.elevation)*Math.sin(tiltRad)*Math.cos(sol.azimuthFromSouth);const AOI=Math.acos(clamp(cosIncidence,-1,1));
+const beamOnPanel=Math.max(0,dni*Math.max(0,cosIncidence)*IAM(AOI));const diffuseOnPanel=dhi*(1+Math.cos(tiltRad))/2;const groundReflected=ghi*albedo*(1-Math.cos(tiltRad))/2;const poa=beamOnPanel+diffuseOnPanel+groundReflected;
+const bifacialGain=1+CONFIG.PANEL.bifaciality*albedo*(1-Math.cos(tiltRad))/2*0.5;
+const ambientTemp=AMBIENT_TEMP[month]+8*wf-2*(1-wf);const Tcell=ambientTemp+poa/(25+6.84*1);const tempFactor=1+CONFIG.PANEL.tempCoeff_P*(Tcell-25);
+const dcPerPanel=Math.max(0,CONFIG.PANEL.Pmax*(poa/1000)*tempFactor*bifacialGain);
+const sysLosses=1-CONFIG.SYSTEM.cableLosses-CONFIG.SYSTEM.mismatchLosses-CONFIG.SYSTEM.soilingLosses;
+const dcTotal=dcPerPanel*panelCount*sysLosses*CONFIG.SYSTEM.availability;
+const acPower=Math.min(dcTotal,CONFIG.INVERTER.maxPower)*CONFIG.INVERTER.efficiency;
+const current=panelCount>0&&poa>0?CONFIG.PANEL.Imp*(poa/1000)*Math.max(0,tempFactor)*panelCount:0;
+return{power:acPower,acPower,dcPower:dcTotal,powerPerPanel:dcPerPanel,poa,ghi,dni,dhi,cosIncidence:Math.max(0,cosIncidence),AOI,cellTemp:Tcell,ambientTemp,tempFactor,bifacialGain,current,voltage:CONFIG.PANEL.Vmp,solar:sol}}
+function optimalTilt(month){const decl=23.45*Math.sin(DEG*(360/365)*(284+DAY_OF_YEAR[month]));return clamp(Math.round(lat-decl*0.9),15,75)}
+const _cache=new Map();
+function integrateHourly(params,targetMonth){const key=`h_${targetMonth}_${params.tilt}_${params.weather}_${params.panelCount}`;if(_cache.has(key))return _cache.get(key);const hourly=new Array(24).fill(0);let daily=0;for(let h=0;h<24;h+=0.5){const out=calculateOutput({...params,month:targetMonth,clock:h});const e=out.power*0.5/1000;daily+=e;hourly[Math.floor(h)]+=e}const result={daily,hourly};if(_cache.size>100)_cache.clear();_cache.set(key,result);return result}
+function integrateYear(params){const key=`y_${params.tilt}_${params.weather}_${params.panelCount}`;if(_cache.has(key))return _cache.get(key);let total=0;for(let m=0;m<12;m++)total+=integrateHourly(params,m).daily*MONTH_DAYS[m];_cache.set(key,total);return total}
+function integrateWithOptimal(params){const optTilt=optimalTilt(params.month);const current=integrateHourly(params,params.month);const optimal=integrateHourly({...params,tilt:optTilt},params.month);return{current,optimal,optTilt,efficiency:optimal.daily>0?current.daily/optimal.daily:0}}
+return{calculateOutput,optimalTilt,integrateHourly,integrateYear,integrateWithOptimal}})();
 
-  /* === THEME === */
-  var btn = document.getElementById('themeBtn');
-  var html = document.documentElement;
-  var saved = localStorage.getItem('theme');
-  if(saved) html.setAttribute('data-theme', saved);
-  if(btn) btn.onclick = function(){
-    var c = html.getAttribute('data-theme');
-    var n = c==='dark'?'light':'dark';
-    html.setAttribute('data-theme',n);
-    localStorage.setItem('theme',n);
-  };
+/* === ECONOMICS === */
+const Economics=(()=>{const{electricityPrice,discountRate,projectLife,annualOPEX}=CONFIG.ECONOMICS;
+function calculateNPV(yearlyYield,panelCount){const initialCost=panelCount*CONFIG.PANEL.cost+800;const annualRevenue=yearlyYield*electricityPrice;const annualCost=(panelCount*CONFIG.PANEL.Pmax/1000)*annualOPEX;let npv=-initialCost;for(let y=1;y<=projectLife;y++){const df=Math.pow(1-CONFIG.PANEL.degradation,y);npv+=(annualRevenue*df-annualCost)/Math.pow(1+discountRate,y)}return npv}
+function calculatePayback(yearlyYield,panelCount){const initialCost=panelCount*CONFIG.PANEL.cost+800;const annualRevenue=yearlyYield*electricityPrice;const annualCost=(panelCount*CONFIG.PANEL.Pmax/1000)*annualOPEX;if(annualRevenue-annualCost<=0)return Infinity;return initialCost/(annualRevenue-annualCost)}
+return{calculateNPV,calculatePayback}})();
 
-  /* === BURGER MENU === */
-  var burger = document.getElementById('burger');
-  var navLinks = document.querySelector('.nav-links');
-  if(burger && navLinks){
-    burger.onclick = function(){
-      burger.classList.toggle('active');
-      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-      if(navLinks.style.display === 'flex'){
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '100%';
-        navLinks.style.left = '0';
-        navLinks.style.right = '0';
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.background = 'var(--bg)';
-        navLinks.style.padding = '20px';
-        navLinks.style.borderBottom = '1px solid var(--line)';
-        navLinks.style.backdropFilter = 'blur(16px)';
-      }
-    };
-  }
+/* === STATE === */
+const Store=(()=>{const STORAGE_KEY='solarlab-v3.1';const defaults=Object.freeze({panels:4,tilt:35,month:6,time:13,weather:100});
+const schema={panels:{min:1,max:24,step:1},tilt:{min:0,max:90,step:1},month:{min:0,max:11,step:1},time:{min:0,max:24,step:0.25},weather:{min:0,max:100,step:1}};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function validate(key,value){const s=schema[key];if(!s)return value;let v=typeof value==='number'?value:parseFloat(value);if(isNaN(v))return s.min;v=clamp(v,s.min,s.max);if(s.step)v=Math.round(v/s.step)*s.step;return v}
+let savedState={...defaults};try{const s=localStorage.getItem(STORAGE_KEY);if(s){const p=JSON.parse(s);Object.keys(defaults).forEach(k=>{if(p[k]!==undefined)savedState[k]=validate(k,p[k])})}}catch(e){}
+const urlParams=new URLSearchParams(window.location.search);Object.keys(defaults).forEach(k=>{if(urlParams.has(k))savedState[k]=validate(k,urlParams.get(k))});
+const state={...savedState};const listeners=new Set();let isNotifying=false;let saveTimeout=null;
+function subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn)}
+function notify(){if(isNotifying)return;isNotifying=true;try{listeners.forEach(fn=>{try{fn(state)}catch(e){console.error(e)}})}finally{isNotifying=false}clearTimeout(saveTimeout);saveTimeout=setTimeout(()=>{try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}},500)}
+function set(updates){Object.entries(updates).forEach(([k,v])=>{if(k in schema)state[k]=validate(k,v)});notify()}
+function getShareUrl(){const url=new URL(window.location.href.split('?')[0]);Object.entries(state).forEach(([k,v])=>{if(v!==defaults[k])url.searchParams.set(k,v)});return url.toString()}
+return{state,defaults,set,subscribe,getShareUrl}})();
 
-  /* === SCROLL === */
-  var bar = document.getElementById('scrollBar');
-  var nav = document.getElementById('nav');
-  window.addEventListener('scroll', function(){
-    var h = document.documentElement;
-    var pct = h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
-    if(bar) bar.style.width = pct+'%';
-    if(nav) nav.classList.toggle('scrolled', h.scrollTop>40);
-  }, {passive:true});
+/* === RENDER === */
+const Render=(()=>{const $=id=>document.getElementById(id);const els={};
+['stageBox','sceneSvg','stageCanvas','skyR','st1','st2','st3','starsG','sunG','beamG','beam1','beam2','raysG','cloudsG','landG','groundShade','panelG','faceClipP','snowmanG','fieldStop1','fieldStop2','chipDate','chipSun','wEmoji','wIrr','wLabel','wMax','weatherTrack','weatherThumb','powerVal','rI','rV','rE','panelCount','panelSys','tiltThumb','tiltTrack','sThumb','sTrack','sCur','lblSr','lblSs','azInfo','optHint','panelSlider','timeSlider','statPeak','statDay','statDayLbl','statMonth','statYear','statNPV','statPay','chartSvg','chartTotal','chartLabels','sceneDescription'].forEach(id=>els[id]=$(id));
+const scene={W:1000,H:625,Hy:450,baseY:553,corners:null};let rayLines=[],cloudEls=[],windowEls=[];
+const cloudDefs=[{y:.08,s:.9,dur:62,del:-4},{y:.12,s:1.35,dur:78,del:-30},{y:.18,s:.85,dur:50,del:-18},{y:.22,s:1.15,dur:68,del:-55},{y:.05,s:.75,dur:44,del:-10},{y:.16,s:1.05,dur:58,del:-40},{y:.10,s:.95,dur:66,del:-22},{y:.20,s:1.2,dur:74,del:-48},{y:.14,s:.8,dur:46,del:-14},{y:.24,s:1.0,dur:60,del:-34},{y:.06,s:1.1,dur:52,del:-6},{y:.19,s:.9,dur:56,del:-28}];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const lerp=(a,b,t)=>a+(b-a)*t;const mix=(c1,c2,t)=>c1.map((v,i)=>lerp(v,c2[i],t));const rgb=c=>`rgb(${c.map(Math.round).join(',')})`;const fmtTime=h=>{const hr=Math.floor(h)%24,mn=Math.round((h-Math.floor(h))*60);return`${hr}:${mn<10?'0':''}${mn}`};const isWinter=m=>m===11||m===0||m===1;
 
-  /* === REVEAL === */
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
-    });
-  },{threshold:0.12});
-  document.querySelectorAll('.rv,.rv-d,.craft-vis').forEach(function(el){io.observe(el);});
+function initClouds(){const shape=`<ellipse cx="60" cy="30" rx="34" ry="22"/><ellipse cx="102" cy="16" rx="42" ry="28"/><ellipse cx="150" cy="28" rx="36" ry="22"/><ellipse cx="106" cy="42" rx="78" ry="20"/>`;els.cloudsG.innerHTML=cloudDefs.map(c=>`<g class="cloud"><g class="drift" style="animation-duration:${c.dur}s;animation-delay:${c.del}s"><g class="cw" fill="#fff" filter="url(#soft)" opacity="0">${shape}</g><g class="cd" fill="#2e3854" filter="url(#soft)" opacity="0">${shape}</g></g></g>`).join('');const style=document.createElement('style');style.textContent=`@keyframes drift{from{transform:translateX(-300px)}to{transform:translateX(1300px)}}.drift{animation:drift var(--dur,60s) linear infinite}`;document.head.appendChild(style);cloudEls=Array.from(els.cloudsG.querySelectorAll('.cloud'))}
 
-  /* === FEATURED STICKY === */
-  var fData = [
-    {img:'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80',cnt:'01 / 05',name:'Łóżko Aurora',desc:'Miękkie wezgłowie z naturalnego lnu, dębowe nogi olejowane ręcznie.',price:'8 900 zł',specs:[['Materiał','Dąb + Len'],['Wymiary','180 × 220 cm'],['Realizacja','8–10 tyg.'],['Gwarancja','5 lat']]},
-    {img:'https://images.unsplash.com/photo-1617325269665-34a0a182a1ad?w=1200&q=80',cnt:'02 / 05',name:'Łóżko Nimbus',desc:'Wysokie pikowane wezgłowie z wełny czesankowej. Jak sen w chmurze.',price:'11 500 zł',specs:[['Materiał','Dąb + Wełna'],['Wymiary','180 × 220 cm'],['Realizacja','10–12 tyg.'],['Gwarancja','5 lat']]},
-    {img:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1200&q=80',cnt:'03 / 05',name:'Łóżko Luna',desc:'Minimalistyczna forma, maksymalna wygoda. Naturalny len.',price:'7 600 zł',specs:[['Materiał','Jesion + Len'],['Wymiary','160 × 200 cm'],['Realizacja','8–10 tyg.'],['Gwarancja','5 lat']]},
-    {img:'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1200&q=80',cnt:'04 / 05',name:'Łóżko Velvet',desc:'Aksamit w głębokim odcieniu ziemi. Sypialnia jako sanktuarium.',price:'10 200 zł',specs:[['Materiał','Dąb + Aksamit'],['Wymiary','180 × 220 cm'],['Realizacja','12–14 tyg.'],['Gwarancja','5 lat']]},
-    {img:'https://images.unsplash.com/photo-1616594039962-48c5b529a96c?w=1200&q=80',cnt:'05 / 05',name:'Fotel Orbita',desc:'Okrągła forma, nieskończony komfort. Idealny do czytania.',price:'6 400 zł',specs:[['Materiał','Dąb + Welur'],['Wymiary','Ø 85 cm'],['Realizacja','6–8 tyg.'],['Gwarancja','5 lat']]}
-  ];
-  var feat = document.getElementById('feat');
-  var fImg = document.getElementById('fImg');
-  var fCur = 0;
-  function setFeat(i){
-    if(i===fCur||!feat) return;
-    fCur = i;
-    var d = fData[i];
-    var els = ['fName','fDesc','fSpecs'];
-    els.forEach(function(id){var el=document.getElementById(id);if(el)el.style.opacity='0';});
-    if(fImg) fImg.style.opacity='0';
-    setTimeout(function(){
-      if(fImg){fImg.src=d.img;fImg.style.opacity='1';}
-      var cnt=document.getElementById('fCnt');if(cnt)cnt.textContent=d.cnt;
-      var nm=document.getElementById('fName');if(nm){nm.textContent=d.name;nm.style.opacity='1';}
-      var ds=document.getElementById('fDesc');if(ds){ds.textContent=d.desc;ds.style.opacity='1';}
-      var pr=document.getElementById('fPrice');if(pr)pr.textContent=d.price;
-      var sp=document.getElementById('fSpecs');
-      if(sp){sp.innerHTML=d.specs.map(function(s){return '<div><div class="sl">'+s[0]+'</div><div class="sv">'+s[1]+'</div></div>';}).join('');sp.style.opacity='1';}
-    },350);
-  }
-  if(feat){
-    window.addEventListener('scroll',function(){
-      var r=feat.getBoundingClientRect();
-      var h=feat.offsetHeight-window.innerHeight;
-      if(h<=0)return;
-      var p=Math.max(0,Math.min(1,-r.top/h));
-      var idx=Math.min(fData.length-1,Math.floor(p*fData.length));
-      setFeat(idx);
-    },{passive:true});
-  }
+function buildPanel(tilt){const{LENGTH:L,WIDTH:Wp,X:px,K:k,M:m}=CONFIG.SCENE.PANEL;const T=clamp(tilt,0,90)*Math.PI/180;const gy=scene.baseY-10;const P=(u,v)=>[px+(-v*L*Math.cos(T))+k*((u-0.5)*Wp),gy-(v*L*Math.sin(T))+m*((u-0.5)*Wp)];const b0=P(0,0),b1=P(1,0),t1=P(1,1),t0=P(0,1);els.faceClipP.setAttribute('d',`M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t0[0]} ${t0[1]} Z`);let cells='';for(let r=0;r<4;r++)for(let c=0;c<6;c++){const v0=r/4+.02,v1=(r+1)/4-.02,u0=(c+.06)/6,u1=(c+.94)/6;cells+=`<polygon points="${P(u0,v0).join(',')} ${P(u1,v0).join(',')} ${P(u1,v1).join(',')} ${P(u0,v1).join(',')}" fill="url(#cellGrad)" stroke="rgba(160,200,255,.22)" stroke-width="0.5"/>`}
+const mbx=(b0[0]+b1[0])/2,mby=(b0[1]+b1[1])/2;const minX=Math.min(b0[0],t0[0])-25,minY=Math.min(t0[1],t1[1])-52;const wX=Math.max(b1[0],t1[0])-minX+25,hY=Math.max(b0[1],b1[1])-minY+25;const aDeg=Math.atan2(b0[1]-t0[1],b0[0]-t0[0])*180/Math.PI;const r=40,ax=t0[0]+r,ay=t0[1];const bx2=t0[0]+r*Math.cos(aDeg*Math.PI/180),by2=t0[1]+r*Math.sin(aDeg*Math.PI/180);
+els.panelG.innerHTML=`<ellipse cx="${mbx-40}" cy="${scene.baseY+22}" rx="120" ry="7" fill="rgba(0,0,0,.35)" filter="url(#soft)"/><line x1="${mbx}" y1="${mby}" x2="${mbx-3}" y2="${scene.baseY+16}" stroke="#39465a" stroke-width="8" stroke-linecap="round"/><polygon points="${mbx-50},${scene.baseY+14} ${mbx+45},${scene.baseY+14} ${mbx+55},${scene.baseY+24} ${mbx-60},${scene.baseY+24}" fill="#1a2230"/><path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${b1[0]+4} ${b1[1]+10} L${b0[0]-4} ${b0[1]+10} Z" fill="url(#sideGrad)"/><path d="M${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t1[0]+10} ${t1[1]+4} L${b1[0]+10} ${b1[1]+4} Z" fill="url(#sideGrad)"/><path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t0[0]} ${t0[1]} Z" fill="none" stroke="url(#frameGrad)" stroke-width="4" stroke-linejoin="round"/>${cells}<g clip-path="url(#faceClip)"><rect id="faceGlow" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#bfe3ff" opacity="0"/><rect id="faceDark" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#0a0f1e" opacity="0"/><rect class="shine" id="pShine" x="${minX}" y="${minY}" width="140" height="${hY}" fill="url(#shineG)"/></g><line x1="${t0[0]}" y1="${t0[1]}" x2="${t0[0]+85}" y2="${t0[1]}" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M ${ax} ${ay} A ${r} ${r} 0 0 1 ${bx2} ${by2}" fill="none" stroke="#3dffa8" stroke-width="2.5"/><text x="${t0[0]+52}" y="${t0[1]+20}" fill="#3dffa8" font-size="12" font-family="JetBrains Mono" font-weight="700">${tilt}°</text><g transform="translate(${t0[0]-6},${t0[1]-40})"><rect width="92" height="26" rx="9" fill="rgba(8,12,26,.75)" stroke="rgba(255,255,255,.18)"/><text id="effChipTxt" x="46" y="17" text-anchor="middle" fill="#22e4ff" font-size="11" font-family="JetBrains Mono" font-weight="700">к солнцу 0%</text></g>`;
+scene.corners={tl:t0,tr:t1,bl:b0,br:b1};rayLines=Array.from(els.raysG.querySelectorAll('line'))}
 
-  /* === COLLECTION === */
-  var track=document.getElementById('cTrack');
-  var cIdx=0;
-  function updColl(){
-    if(!track)return;
-    var card=track.querySelector('.coll-card');
-    if(!card)return;
-    var w=card.offsetWidth+18;
-    var vis=Math.floor(track.parentElement.offsetWidth/w);
-    var mx=track.children.length-vis;
-    cIdx=Math.max(0,Math.min(cIdx,mx));
-    track.style.transform='translateX(-'+cIdx*w+'px)';
-    var p=document.getElementById('cPrev'),n=document.getElementById('cNext');
-    if(p)p.disabled=cIdx===0;
-    if(n)n.disabled=cIdx>=mx;
-  }
-  var cp=document.getElementById('cPrev'),cn=document.getElementById('cNext');
-  if(cp)cp.onclick=function(){cIdx--;updColl();};
-  if(cn)cn.onclick=function(){cIdx++;updColl();};
-  window.addEventListener('resize',updColl);
-  setTimeout(updColl,100);
+function buildLand(winter){const tur=(x,s,d)=>`<g transform="translate(${x},${scene.Hy+2}) scale(${s})"><line y2="-65" stroke="#9fb0c4" stroke-width="3"/><g transform="translate(0,-65)"><g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="${d}" repeatCount="indefinite"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round" transform="rotate(120)"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round" transform="rotate(240)"/></g><circle r="3" fill="#dfe7f2"/></g></g>`;const house=(x,s)=>`<g transform="translate(${x},${scene.Hy+4}) scale(${s})"><rect x="-26" y="-30" width="52" height="30" fill="#2b3854"/><polygon points="-30,-30 0,-50 30,-30" fill="${winter?'#e8f4ff':'#1c2740'}"/><rect class="win" x="-17" y="-23" width="10" height="10" fill="#ffd54a"/><rect class="win" x="7" y="-23" width="10" height="10" fill="#ffd54a"/><rect x="-5" y="-12" width="10" height="12" fill="#141d33"/></g>`;
+const fieldFill=winter?'url(#snowFieldG)':'url(#fieldG)';const hill1=winter?'#d8eaf8':'#1b3a26';const hill2=winter?'#c4dcf0':'#142b1d';
+els.landG.innerHTML=`<rect y="${scene.Hy}" width="1000" height="${scene.H-scene.Hy}" fill="${fieldFill}"/><path d="M0 ${scene.Hy+10} Q 250 ${scene.Hy-16} 500 ${scene.Hy+6} T 1000 ${scene.Hy+4} V ${scene.H} H 0 Z" fill="${hill1}" opacity="0.85"/><path d="M0 ${scene.Hy+18} Q 330 ${scene.Hy-4} 660 ${scene.Hy+12} T 1000 ${scene.Hy+10} V ${scene.H} H 0 Z" fill="${hill2}" opacity="0.7"/>${tur(760,1,'6s')}${tur(840,.7,'4.5s')}${tur(920,.85,'5.2s')}${tur(960,.6,'4s')}${house(820,.9)}${house(880,.7)}`;windowEls=Array.from(els.landG.querySelectorAll('.win'))}
 
-  /* === MATERIALS === */
-  var mD={
-    oak:{img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1000&q=80',name:'Dąb europejski',desc:'Sprowadzamy z lasów FSC w Polsce i na Litwie. Sezonujemy 18 miesięcy. Olejujemy ręcznie.',or:'Polska / Litwa',ha:'3.7 BN',fi:'Olej naturalny'},
-    lin:{img:'https://images.unsplash.com/photo-1616594039962-48c5b529a96c?w=1000&q=80',name:'Len naturalny',desc:'Z upraw w Wielkopolsce. Z każdym rokiem len staje się miększy i jaśniejszy.',or:'Wielkopolska',ha:'180 g/m²',fi:'Naturalny'},
-    skora:{img:'https://images.unsplash.com/photo-1605518216938-7c31b7b1e34a?w=1000&q=80',name:'Skóra roślinna',desc:'Garbowana ekstraktami z kastylii we włoskiej garbarni Badalassi Carlo.',or:'Toskania',ha:'1.2 mm',fi:'Roślinna'},
-    welna:{img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&q=80',name:'Wełna czesankowa',desc:'Z owiec merino, czesana i przędzona w Polsce. Naturalnie odporna na zabrudzenia.',or:'Nowa Zelandia',ha:'320 g/m²',fi:'Czesanka'}
-  };
-  document.querySelectorAll('.mats-tab').forEach(function(tab){
-    tab.onclick=function(){
-      document.querySelectorAll('.mats-tab').forEach(function(t){t.classList.remove('on');});
-      tab.classList.add('on');
-      var d=mD[tab.dataset.m];if(!d)return;
-      var img=document.getElementById('mImg');
-      if(img)img.style.opacity='0';
-      setTimeout(function(){
-        if(img){img.src=d.img;img.style.opacity='1';}
-        var el;
-        el=document.getElementById('mName');if(el)el.textContent=d.name;
-        el=document.getElementById('mDesc');if(el)el.textContent=d.desc;
-        el=document.getElementById('mOr');if(el)el.textContent=d.or;
-        el=document.getElementById('mHa');if(el)el.textContent=d.ha;
-        el=document.getElementById('mFi');if(el)el.textContent=d.fi;
-      },300);
-    };
-  });
+function resize(){const rect=els.stageBox.getBoundingClientRect();if(rect.width===0||rect.height===0)return;scene.H=clamp(Math.round(1000*rect.height/rect.width),550,1400);els.sceneSvg.setAttribute('viewBox',`0 0 1000 ${scene.H}`);els.skyR.setAttribute('height',scene.H);scene.Hy=Math.round(scene.H*0.72);scene.baseY=Math.round(scene.H*0.885);els.groundShade.setAttribute('y',scene.Hy);els.groundShade.setAttribute('height',scene.H-scene.Hy);els.starsG.innerHTML=Array.from({length:50},()=>`<circle cx="${Math.random()*1000}" cy="${Math.random()*scene.H*0.45}" r="${(0.6+Math.random()*1.2).toFixed(1)}" fill="#cfe4ff"/>`).join('');cloudEls.forEach((g,i)=>{const c=cloudDefs[i];if(c)g.setAttribute('transform',`translate(0,${Math.round(scene.H*c.y)}) scale(${c.s})`)});const canvas=els.stageCanvas;const dpr=window.devicePixelRatio||1;canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;buildLand(isWinter(Store.state.month));buildPanel(Store.state.tilt)}
 
-  /* === COUNTERS === */
-  var cio=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        var el=e.target,t=+el.dataset.count,c=0,s=t/60;
-        var iv=setInterval(function(){c+=s;if(c>=t){c=t;clearInterval(iv);}el.textContent=Math.floor(c).toLocaleString('pl-PL');},25);
-        cio.unobserve(el);
-      }
-    });
-  },{threshold:0.5});
-  document.querySelectorAll('[data-count]').forEach(function(el){cio.observe(el);});
+function updateThumbPosition(track,thumb,f,size){const rect=track.getBoundingClientRect();if(rect.width===0||rect.height===0)return;const isVert=window.matchMedia('(min-width:961px)').matches;if(isVert){thumb.style.top=`${Math.round((1-f)*(rect.height-size))}px`;thumb.style.left='50%';thumb.style.transform='translateX(-50%)'}else{thumb.style.left=`${Math.round(f*(rect.width-size))}px`;thumb.style.top='50%';thumb.style.transform='translateY(-50%)'}}
+function updateWeatherThumb(f){const rect=els.weatherTrack.getBoundingClientRect();if(rect.width===0)return;els.weatherThumb.style.left=`${Math.round(f*(rect.width-26))}px`;els.weatherThumb.style.top='50%';els.weatherThumb.style.transform='translateY(-50%)'}
 
-  /* === SMOOTH ANCHORS === */
-  document.querySelectorAll('a[href^="#"]').forEach(function(a){
-    a.onclick=function(e){
-      var id=a.getAttribute('href');
-      if(id.length>1){e.preventDefault();var t=document.querySelector(id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}
-    };
-  });
+function update(state){const t0=performance.now();try{
+const output=Physics.calculateOutput({month:state.month,clock:state.time,tilt:state.tilt,weather:state.weather,panelCount:state.panels});
+const sol=output.solar;const elDeg=sol.elevationDeg;const night=elDeg<=0;const deepNight=elDeg<=-6;const wf=state.weather/100;const dark=1-wf;const winter=isWinter(state.month);
 
-})();
+/* Sky */
+const warm=!night?clamp(1-elDeg/25,0,1):0;let c1=mix([10,42,85],[40,55,80],dark),c2=mix([29,77,143],[28,38,58],dark),c3=mix([43,108,176],[16,22,36],dark);if(warm>0){c1=mix(c1,[255,140,80],warm*.5);c2=mix(c2,[255,120,70],warm*.4);c3=mix(c3,[255,90,50],warm*.2)}if(deepNight){c1=[7,11,26];c2=[9,13,30];c3=[11,15,34]}
+els.st1.setAttribute('stop-color',rgb(c1));els.st2.setAttribute('stop-color',rgb(c2));els.st3.setAttribute('stop-color',rgb(c3));els.starsG.setAttribute('opacity',deepNight?0.9:night?0.6:0);
+
+/* Sun */
+const dayFraction=clamp((state.time-sol.sunrise)/(sol.sunset-sol.sunrise),0,1);const sunX=lerp(90,910,dayFraction);const peakY=scene.H*0.12,lowY=scene.Hy-20;const sunY=deepNight?lowY:lerp(lowY,peakY,clamp(elDeg/65,0,1));
+els.sunG.setAttribute('transform',`translate(${sunX},${sunY})`);els.sunG.setAttribute('opacity',night?0:(clamp(Math.sin(sol.elevation)*1.6,.3,1)*(.2+.8*wf)).toFixed(2));
+
+/* Beam */
+if(scene.corners){const{tl,tr,bl,br}=scene.corners;const sunR=CONFIG.SCENE.SUN.RADIUS;const midX=(tl[0]+tr[0]+bl[0]+br[0])/4,midY=(tl[1]+tr[1]+bl[1]+br[1])/4;const dx=midX-sunX,dy=midY-sunY;const dist=Math.sqrt(dx*dx+dy*dy)||1;const edgeX=sunX+(dx/dist)*sunR,edgeY=sunY+(dy/dist)*sunR;const beamW=CONFIG.SCENE.BEAM.WIDTH;const perpX=-(dy/dist)*beamW/2,perpY=(dx/dist)*beamW/2;
+els.beam1.setAttribute('d',`M${edgeX-perpX} ${edgeY-perpY} L${tl[0]} ${tl[1]} L${bl[0]} ${bl[1]} L${edgeX+perpX} ${edgeY+perpY} L${tr[0]} ${tr[1]} Z`);els.beam2.setAttribute('d',`M${edgeX} ${edgeY} L${tl[0]} ${tl[1]} L${tr[0]} ${tr[1]} Z`);els.beamG.setAttribute('opacity',(output.poa/1000*.6).toFixed(2));
+rayLines.forEach((line,i)=>{const f=.1+.8*i/4;line.setAttribute('x1',edgeX);line.setAttribute('y1',edgeY);line.setAttribute('x2',lerp(tl[0],tr[0],f));line.setAttribute('y2',lerp(tl[1],tr[1],f))});
+els.raysG.setAttribute('opacity',(output.poa/1000*.7*(0.3+0.7*output.cosIncidence)).toFixed(2))}
+
+/* Clouds */
+const cloudCount=Math.round(2+10*dark);cloudEls.forEach((g,i)=>{const show=i<cloudCount?clamp(1-i*.05,.3,1):0;const cw=g.querySelector('.cw'),cd=g.querySelector('.cd');if(cw)cw.setAttribute('opacity',(show*(1-dark*.85)).toFixed(2));if(cd)cd.setAttribute('opacity',(show*dark*.95).toFixed(2))});
+
+/* Winter */
+els.snowmanG.setAttribute('opacity',winter?1:0);els.fieldStop1.setAttribute('stop-color',winter?'#e8f4ff':'#2a4d33');els.fieldStop2.setAttribute('stop-color',winter?'#b8d4f0':'#0a140e');
+
+/* Panel effects */
+const faceDark=document.getElementById('faceDark');const faceGlow=document.getElementById('faceGlow');const pShine=document.getElementById('pShine');const effChip=document.getElementById('effChipTxt');
+if(faceDark){faceDark.setAttribute('opacity',(dark*.5+(deepNight?.35:0)).toFixed(2));faceGlow.setAttribute('opacity',(.3*output.cosIncidence*(output.poa/1000)).toFixed(2));pShine.setAttribute('opacity',clamp(output.poa/1000-.2,0,1).toFixed(2))}
+if(effChip)effChip.textContent=`к солнцу ${Math.round(output.cosIncidence*100)}%`;
+els.groundShade.setAttribute('opacity',(dark*.4+(deepNight?.55:0)).toFixed(2));
+windowEls.forEach(w=>{const wOp=clamp(Math.max(sol.sunrise-.5-state.time,state.time-sol.sunset+.5,0)/1.5,0,1)*.9+.05;w.setAttribute('opacity',(wOp*(night?1:.3)).toFixed(2))});
+
+/* UI numbers */
+els.panelCount.textContent=state.panels;els.panelSys.textContent=(state.panels*CONFIG.PANEL.Pmax/1000).toFixed(2)+' kWp';
+els.powerVal.textContent=Math.round(output.power).toLocaleString('ru-RU');els.rI.textContent=output.current.toFixed(1);els.rV.textContent=output.voltage.toFixed(1);els.rE.textContent=Math.round(output.cosIncidence*100);
+els.chipDate.textContent=`${MONTHS[state.month]} · ${fmtTime(state.time)}`;els.chipSun.textContent=`☀ ${Math.round(Math.max(0,elDeg))}°`;
+els.lblSr.textContent=fmtTime(Math.max(0,sol.sunrise));els.lblSs.textContent=fmtTime(Math.min(24,sol.sunset));els.tiltThumb.textContent=state.tilt+'°';
+els.sceneDescription.textContent=`Панель ${state.tilt}°. Солнце ${Math.round(Math.max(0,elDeg))}°. Мощность ${Math.round(output.power)} Вт.`;
+
+/* Weather widget */
+const maxGhi=MAX_GHI_NOON[state.month];const weatherEmoji=night?'🌙':wf>=.85?'☀️':wf>=.6?'🌤️':wf>=.35?'⛅':wf>=.15?'☁️':'🌧️';
+const weatherIdx=night?5:wf>=.85?0:wf>=.6?1:wf>=.35?2:wf>=.15?3:4;const labelList=['ясно','перем.','облачно','пасмурно','дождь','ночь'];
+els.wEmoji.textContent=weatherEmoji;els.wIrr.textContent=Math.round(output.ghi);els.wLabel.textContent=labelList[weatherIdx];els.wMax.textContent=`макс: ${maxGhi}`;els.weatherThumb.textContent=weatherEmoji;updateWeatherThumb(wf);els.weatherTrack.setAttribute('aria-valuenow',state.weather);els.weatherTrack.setAttribute('aria-valuetext',labelList[weatherIdx]);
+
+/* Azimuth & optimal */
+const azDeg=Math.round(sol.azimuthFromSouthDeg);const azDir=azDeg<=-10?'восток':azDeg>=10?'запад':'юг';
+els.azInfo.innerHTML=`☀ ${night?'—':azDir}`;
+const opt=Physics.optimalTilt(state.month);
+if(Math.abs(state.tilt-opt)>2){els.optHint.innerHTML=`Оптимум: <b>${opt}°</b> · <button class="c-badge" id="btnOpt">✓</button>`;setTimeout(()=>{const b=document.getElementById('btnOpt');if(b&&!b._bound){b._bound=true;b.onclick=()=>Store.set({tilt:opt})}},0)}
+else{els.optHint.innerHTML=`<span style="color:var(--green)">✓</span>`}
+
+/* Stats */
+const params={month:state.month,tilt:state.tilt,weather:state.weather,panelCount:state.panels};
+const integration=Physics.integrateWithOptimal(params);
+els.statPeak.textContent=(state.panels*CONFIG.PANEL.Pmax/1000).toFixed(2);
+els.statDay.textContent=integration.current.daily.toFixed(1);
+els.statDayLbl.textContent=`kWh/день`;
+els.statMonth.textContent=Math.round(integration.current.daily*MONTH_DAYS[state.month]);
+const yearly=Physics.integrateYear(params);els.statYear.textContent=Math.round(yearly);
+const npv=Economics.calculateNPV(yearly,state.panels);els.statNPV.textContent=npv>0?`+${Math.round(npv)}`:Math.round(npv);els.statNPV.style.color=npv>0?'var(--green)':'var(--red)';
+const payback=Economics.calculatePayback(yearly,state.panels);els.statPay.textContent=payback===Infinity?'∞':payback.toFixed(1);
+
+/* Chart */
+const{hourly,daily}=integration.current;const max=Math.max(...hourly,.01);const points=hourly.map((h,i)=>`${(i/23)*1000},${100-(h/max)*85}`);
+const areaPath=`M0,100 L${points.join(' L')} L1000,100 Z`;const linePath=`M${points.join(' L')}`;const nowX=(state.time/24)*1000;
+const currentHour=Math.min(Math.floor(state.time),23);const currentVal=hourly[currentHour]||0;const currentY=100-(currentVal/max)*85;
+els.chartSvg.innerHTML=`<defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22e4ff" stop-opacity=".4"/><stop offset="1" stop-color="#22e4ff" stop-opacity=".02"/></linearGradient></defs><path d="${areaPath}" fill="url(#chartGrad)"/><path d="${linePath}" fill="none" stroke="#22e4ff" stroke-width="2" stroke-linejoin="round"/>${daily>0?`<line x1="${nowX}" y1="0" x2="${nowX}" y2="100" stroke="rgba(255,194,75,.5)" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="${nowX}" cy="${currentY}" r="4" fill="#ffc24b" stroke="#fff" stroke-width="1.5"/>`:''}`;
+els.chartTotal.textContent=daily.toFixed(1)+' kWh';els.chartLabels.innerHTML=['00','06','12','18','24'].map(l=>`<span>${l}</span>`).join('');
+
+/* Sliders */
+updateThumbPosition(els.tiltTrack,els.tiltThumb,state.tilt/90,30);updateThumbPosition(els.sTrack,els.sThumb,1-state.month/11,36);
+els.tiltTrack.setAttribute('aria-valuenow',state.tilt);els.tiltTrack.setAttribute('aria-valuetext',`${state.tilt}°`);els.sTrack.setAttribute('aria-valuenow',state.month);els.sTrack.setAttribute('aria-valuetext',MONTHS[state.month]);
+
+const elapsed=performance.now()-t0;document.getElementById('perfInfo').textContent=`${elapsed.toFixed(1)}ms`;
+}catch(e){console.error('Render error:',e)}}
+
+return{els,resize,update,buildPanel,initClouds,updateWeatherThumb}})();
+
+/* === PARTICLES === */
+const ParticleSystem=(()=>{const canvas=Render.els.stageCanvas;const ctx=canvas.getContext('2d');let particles=[],currentMode='clear',animId=null,isRunning=false;
+class Particle{constructor(type,W,H){this.type=type;this.W=W;this.H=H;this.reset()}reset(){if(this.type==='rain'){this.x=Math.random()*this.W;this.y=-10-Math.random()*this.H;this.vy=12+Math.random()*6;this.vx=-1.5;this.len=12+Math.random()*8;this.alpha=.3+Math.random()*.5}else if(this.type==='snow'){this.x=Math.random()*this.W;this.y=-10-Math.random()*this.H;this.vy=.5+Math.random()*1;this.vx=(Math.random()-.5)*.8;this.size=1+Math.random()*2.5;this.alpha=.5+Math.random()*.5;this.sway=Math.random()*Math.PI*2;this.swaySpeed=.01+Math.random()*.02}}update(){if(this.type==='rain'){this.x+=this.vx;this.y+=this.vy;if(this.y>this.H+20)this.reset()}else if(this.type==='snow'){this.sway+=this.swaySpeed;this.x+=this.vx+Math.sin(this.sway)*.3;this.y+=this.vy;if(this.y>this.H+20)this.reset()}}draw(ctx){ctx.globalAlpha=this.alpha;if(this.type==='rain'){ctx.strokeStyle='rgba(180,215,255,.7)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x-this.vx*2,this.y-this.len);ctx.stroke()}else if(this.type==='snow'){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill()}}}
+function setMode(mode){if(mode===currentMode)return;currentMode=mode;particles=[];const rect=canvas.getBoundingClientRect();if(rect.width===0)return;const dpr=window.devicePixelRatio||1;const W=rect.width*dpr,H=rect.height*dpr;if(mode==='rain')for(let i=0;i<80;i++)particles.push(new Particle('rain',W,H));else if(mode==='snow')for(let i=0;i<100;i++)particles.push(new Particle('snow',W,H))}
+function update(state){let mode='clear';const winter=state.month===11||state.month===0||state.month===1;if(winter&&state.weather<.3)mode='snow';else if(state.weather<.15)mode='rain';setMode(mode);if(!isRunning&&particles.length>0)start();if(isRunning&&particles.length===0)stop()}
+function animate(){if(!isRunning)return;if(particles.length===0){stop();return}ctx.clearRect(0,0,canvas.width,canvas.height);for(const p of particles){p.update();p.draw(ctx)}ctx.globalAlpha=1;animId=requestAnimationFrame(animate)}
+function start(){if(isRunning)return;isRunning=true;animate()}function stop(){isRunning=false;if(animId)cancelAnimationFrame(animId);ctx.clearRect(0,0,canvas.width,canvas.height)}
+return{update}})();
+
+/* === UI === */
+const UI=(()=>{let rafPending=false;
+function scheduleUpdate(){if(rafPending)return;rafPending=true;requestAnimationFrame(()=>{Render.update(Store.state);ParticleSystem.update(Store.state);rafPending=false})}
+function bindTrack(track,apply){let dragging=false;const getFraction=e=>{const rect=track.getBoundingClientRect();const isVert=window.matchMedia('(min-width:961px)').matches;let pos;if(e.touches&&e.touches.length>0)pos=isVert?e.touches[0].clientY:e.touches[0].clientX;else pos=isVert?e.clientY:e.clientX;const size=isVert?rect.height:rect.width;const offset=isVert?rect.top:rect.left;if(size===0)return 0;return Math.max(0,Math.min(1,isVert?1-((pos-offset)/size):(pos-offset)/size))};
+const start=e=>{dragging=true;track.classList.add('dragging');apply(getFraction(e));if(e.cancelable)e.preventDefault()};const move=e=>{if(!dragging)return;apply(getFraction(e))};const end=()=>{if(!dragging)return;dragging=false;track.classList.remove('dragging')};
+track.addEventListener('pointerdown',start);window.addEventListener('pointermove',move);window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
+track.addEventListener('touchstart',e=>{if(e.cancelable)e.preventDefault()},{passive:false});track.addEventListener('touchmove',e=>{if(e.cancelable)e.preventDefault()},{passive:false});
+track.addEventListener('keydown',e=>{const step=e.shiftKey?.1:.02;let f=parseFloat(track.dataset.f||.5);if(['ArrowUp','ArrowRight','ArrowLeft','ArrowDown'].includes(e.key)){if(e.key==='ArrowUp'||e.key==='ArrowRight')f=Math.min(1,f+step);else f=Math.max(0,f-step);apply(f);track.dataset.f=f.toFixed(4);e.preventDefault()}})}
+function bindWeatherTrack(){const track=Render.els.weatherTrack;let dragging=false;const getFraction=e=>{const rect=track.getBoundingClientRect();let pos;if(e.touches&&e.touches.length>0)pos=e.touches[0].clientX;else pos=e.clientX;if(rect.width===0)return 0;return Math.max(0,Math.min(1,(pos-rect.left)/rect.width))};
+const start=e=>{dragging=true;track.classList.add('dragging');Store.set({weather:Math.round(getFraction(e)*100)});if(e.cancelable)e.preventDefault()};const move=e=>{if(!dragging)return;Store.set({weather:Math.round(getFraction(e)*100)})};const end=()=>{if(!dragging)return;dragging=false;track.classList.remove('dragging')};
+track.addEventListener('pointerdown',start);window.addEventListener('pointermove',move);window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
+track.addEventListener('touchstart',e=>{if(e.cancelable)e.preventDefault()},{passive:false});track.addEventListener('touchmove',e=>{if(e.cancelable)e.preventDefault()},{passive:false});
+track.addEventListener('keydown',e=>{const step=e.shiftKey?10:2;let w=Store.state.weather;if(e.key==='ArrowRight'||e.key==='ArrowUp')w=Math.min(100,w+step);else if(e.key==='ArrowLeft'||e.key==='ArrowDown')w=Math.max(0,w-step);else return;Store.set({weather:w});e.preventDefault()})}
+function syncMonth(){const SEASONS=['зима','зима','весна','весна','весна','лето','лето','лето','осень','осень','осень','зима'];const SEASON_EMOJI=['❄️','❄️','🌱','🌱','🌱','☀️','☀️','☀️','🍂','🍂','🍂','❄️'];const month=Store.state.month;Render.els.sCur.innerHTML=MONTHS[month].toUpperCase()+`<small>${SEASONS[month]}</small>`;Render.els.sThumb.textContent=SEASON_EMOJI[month]}
+function showTooltip(anchor,text){const tip=document.getElementById('tooltip');tip.textContent=text;tip.classList.add('show');const rect=anchor.getBoundingClientRect();tip.style.top=(rect.top-8)+'px';tip.style.left=(rect.left+rect.width/2)+'px';setTimeout(()=>tip.classList.remove('show'),2000)}
+function init(){
+Render.els.panelSlider.addEventListener('input',e=>Store.set({panels:parseInt(e.target.value)}));
+const timeSlider=Render.els.timeSlider;timeSlider.addEventListener('input',e=>Store.set({time:parseFloat(e.target.value)}));
+document.querySelectorAll('[data-h]').forEach(btn=>btn.addEventListener('click',()=>{Store.set({time:parseFloat(btn.dataset.h)});timeSlider.value=Store.state.time}));
+document.getElementById('btnNow').addEventListener('click',()=>{const now=new Date();Store.set({month:now.getMonth(),time:Math.round((now.getHours()+now.getMinutes()/60)*4)/4});timeSlider.value=Store.state.time;syncMonth()});
+document.getElementById('btnDemo').addEventListener('click',()=>{Store.set({month:6,time:13,weather:100,tilt:30});timeSlider.value=13;Render.buildPanel(30);syncMonth()});
+document.getElementById('btnShare').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(Store.getShareUrl());showTooltip(document.getElementById('btnShare'),'✓ Ссылка скопирована')}catch(e){showTooltip(document.getElementById('btnShare'),'Ошибка')}});
+document.getElementById('btnReset').addEventListener('click',()=>{if(confirm('Сбросить?')){Store.set({...Store.defaults});Render.els.panelSlider.value=Store.defaults.panels;Render.els.timeSlider.value=Store.defaults.time;syncMonth();Render.buildPanel(Store.defaults.tilt)}});
+document.getElementById('btnExport').addEventListener('click',()=>{
+const state=Store.state;const yearly=Physics.integrateYear(state);
+const data={meta:{app:'SolarLab Pro v3.1',location:'Kraków',date:new Date().toISOString()},config:state,results:{yearly_kWh:yearly,npv:Economics.calculateNPV(yearly,state.panels)}};
+const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='solarlab-export.json';a.click();URL.revokeObjectURL(url);
+showTooltip(document.getElementById('btnExport'),'✓ Экспортировано')});
+bindWeatherTrack();
+bindTrack(Render.els.tiltTrack,f=>{const tilt=Math.round(f*90);Store.set({tilt});Render.buildPanel(tilt)});
+bindTrack(Render.els.sTrack,f=>{const month=Math.max(0,Math.min(11,Math.round((1-f)*11)));Store.set({month});syncMonth()});
+Render.els.tiltTrack.dataset.f=(Store.state.tilt/90).toFixed(4);Render.els.sTrack.dataset.f=(1-Store.state.month/11).toFixed(4);
+let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{Render.resize();Render.update(Store.state)},150)});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)ParticleSystem.update({weather:100,month:6})});
+Store.subscribe(scheduleUpdate);syncMonth();
+requestAnimationFrame(()=>requestAnimationFrame(()=>{Render.resize();Render.update(Store.state);console.log('%c☀️ SolarLab Pro v3.1','color:#22e4ff;font-size:14px;font-weight:bold')}))}
+return{init}})();
+
+window.addEventListener('DOMContentLoaded',()=>{Render.initClouds();UI.init()});
+window.addEventListener('error',e=>console.error('Error:',e.message));
 </script>
 </body>
 </html>
