@@ -3,283 +3,373 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="SolarLab Pro v4.0 — профессиональный симулятор солнечных панелей с точной физикой, экономикой и аналитикой">
 <meta name="theme-color" content="#070a18">
-<title>SolarLab Pro v3.1 · Kraków</title>
+<title>SolarLab Pro v4.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#070a18;--glass:rgba(14,18,36,.72);--glass-strong:rgba(14,18,36,.92);--border:rgba(255,255,255,.10);--border-strong:rgba(255,255,255,.18);--cyan:#22e4ff;--green:#3dffa8;--amber:#ffc24b;--purple:#b388ff;--red:#ff6b9d;--t1:#fff;--t2:rgba(255,255,255,.82);--t3:rgba(255,255,255,.65);--t4:rgba(255,255,255,.35);--shadow-md:0 8px 24px rgba(0,0,0,.4);--glow-cyan:0 0 20px rgba(34,228,255,.5);--radius-md:14px;--radius-lg:20px;--ease:cubic-bezier(.25,.46,.45,.94);--ease-spring:cubic-bezier(.34,1.56,.64,1)}
+/* ============================================================================
+   DESIGN SYSTEM — CSS Custom Properties with Theme Support
+============================================================================ */
+:root {
+  /* Colors — Dark theme (default) */
+  --bg: #070a18; --bg-2: #0b0f24;
+  --glass: rgba(14,18,36,.72); --glass-strong: rgba(14,18,36,.92);
+  --border: rgba(255,255,255,.10); --border-strong: rgba(255,255,255,.18);
+  --cyan: #22e4ff; --green: #3dffa8; --amber: #ffc24b; --purple: #b388ff; --red: #ff6b9d;
+  --t1: #fff; --t2: rgba(255,255,255,.82); --t3: rgba(255,255,255,.65); --t4: rgba(255,255,255,.35);
+  
+  /* Spacing scale */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.3);
+  --shadow-md: 0 8px 24px rgba(0,0,0,.4);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,.55);
+  --glow-cyan: 0 0 20px rgba(34,228,255,.5);
+  --glow-green: 0 0 20px rgba(61,255,168,.5);
+  
+  /* Radii */
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 28px;
+  
+  /* Easing */
+  --ease: cubic-bezier(.25,.46,.45,.94);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+  
+  /* Sizing */
+  --touch-min: 44px;
+  
+  /* Theme attribute */
+  color-scheme: dark;
+}
+
+/* Light theme */
+:root[data-theme="light"] {
+  --bg: #f5f7fa; --bg-2: #e8ecf3;
+  --glass: rgba(255,255,255,.75); --glass-strong: rgba(255,255,255,.92);
+  --border: rgba(0,0,0,.10); --border-strong: rgba(0,0,0,.18);
+  --cyan: #0891b2; --green: #059669; --amber: #d97706; --purple: #7c3aed; --red: #dc2626;
+  --t1: #1a1a1a; --t2: rgba(26,26,26,.82); --t3: rgba(26,26,26,.65); --t4: rgba(26,26,26,.45);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.08);
+  --shadow-md: 0 8px 24px rgba(0,0,0,.12);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,.18);
+  --glow-cyan: 0 0 20px rgba(8,145,178,.4);
+  --glow-green: 0 0 20px rgba(5,150,105,.4);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f5f7fa; --bg-2: #e8ecf3;
+    --glass: rgba(255,255,255,.75); --glass-strong: rgba(255,255,255,.92);
+    --border: rgba(0,0,0,.10); --border-strong: rgba(0,0,0,.18);
+    --cyan: #0891b2; --green: #059669; --amber: #d97706; --purple: #7c3aed; --red: #dc2626;
+    --t1: #1a1a1a; --t2: rgba(26,26,26,.82); --t3: rgba(26,26,26,.65); --t4: rgba(26,26,26,.45);
+    color-scheme: light;
+  }
+}
+
+/* Reset */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:'Inter',-apple-system,sans-serif;color:var(--t1);min-height:100vh;background:radial-gradient(1000px 600px at 90% -10%,rgba(90,140,255,.12),transparent 60%),radial-gradient(900px 500px at 10% 110%,rgba(34,228,255,.08),transparent 60%),var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;overscroll-behavior-y:contain}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--t1);min-height:100vh;
+  background:radial-gradient(1000px 600px at 90% -10%,rgba(90,140,255,.12),transparent 60%),
+             radial-gradient(900px 500px at 10% 110%,rgba(34,228,255,.08),transparent 60%),var(--bg);
+  line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  overscroll-behavior-y:contain;
+  transition:background .3s var(--ease), color .3s var(--ease);
+}
+:root[data-theme="light"] body {
+  background:radial-gradient(1000px 600px at 90% -10%,rgba(8,145,178,.08),transparent 60%),
+             radial-gradient(900px 500px at 10% 110%,rgba(5,150,105,.06),transparent 60%),var(--bg);
+}
 .mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
+
+/* Accessibility */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+/* Skip link */
 .skip-link{position:absolute;top:-40px;left:0;padding:8px 16px;background:var(--cyan);color:#000;z-index:9999;font-weight:700;transition:top .2s}
 .skip-link:focus{top:0}
-.container{max-width:1280px;margin:0 auto;padding:12px 12px 60px;padding-bottom:max(60px,env(safe-area-inset-bottom))}
 
-/* HEADER — compact */
-.header{display:flex;justify-content:space-between;align-items:center;padding:8px 4px;margin-bottom:12px;gap:8px}
-.logo{display:flex;align-items:center;gap:8px}
-.logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--cyan),var(--green));display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:var(--glow-cyan)}
-.logo-text{font-weight:800;letter-spacing:1.5px;font-size:12px}
+/* Container */
+.container{max-width:1280px;margin:0 auto;padding:var(--sp-4) var(--sp-5) 80px;
+  padding-bottom:max(80px,env(safe-area-inset-bottom))}
+
+/* Header */
+.header{display:flex;justify-content:space-between;align-items:center;padding:var(--sp-3) var(--sp-2);margin-bottom:var(--sp-5);gap:var(--sp-3);flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:var(--sp-3)}
+.logo-icon{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--green));display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--glow-cyan)}
+.logo-text{font-weight:800;letter-spacing:2px;font-size:15px}
 .logo-text .gradient{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.logo-text small{display:block;font-weight:400;font-size:8px;color:var(--t3);margin-top:1px}
-.header-actions{display:flex;gap:6px;align-items:center}
-.header-meta{display:none}
-.icon-btn{width:34px;height:34px;border-radius:8px;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--border);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s var(--ease)}
-.icon-btn:hover{background:rgba(255,255,255,.08);color:var(--t1)}
+.logo-text small{display:block;font-weight:400;font-size:9.5px;color:var(--t3);margin-top:2px}
+.header-actions{display:flex;gap:var(--sp-2);align-items:center;flex-wrap:wrap}
+.header-meta{color:var(--t3);font-size:11px;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.icon-btn{width:var(--touch-min);height:var(--touch-min);border-radius:10px;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--border);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .2s var(--ease)}
+.icon-btn:hover{background:rgba(255,255,255,.08);color:var(--t1);transform:translateY(-1px)}
+.icon-btn:active{transform:translateY(0)}
 
-/* HERO — compact */
-.hero{margin-bottom:14px;padding:0 4px}
-.hero h1{font-size:clamp(18px,5vw,28px);font-weight:800;letter-spacing:-.02em;margin-bottom:4px;line-height:1.15}
+/* Theme switcher */
+.theme-switcher{display:flex;background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:2px;gap:2px}
+.theme-switcher button{padding:4px 8px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:6px;font-size:12px;transition:all .2s}
+.theme-switcher button.active{background:var(--cyan);color:#000}
+.theme-switcher button:hover:not(.active){color:var(--t1)}
+
+/* Language switcher */
+.lang-switcher{display:flex;background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:2px;gap:2px}
+.lang-switcher button{padding:4px 8px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:6px;font-size:11px;font-weight:600;transition:all .2s}
+.lang-switcher button.active{background:var(--cyan);color:#000}
+.lang-switcher button:hover:not(.active){color:var(--t1)}
+
+/* Hero */
+.hero{margin-bottom:var(--sp-6);padding:0 var(--sp-2)}
+.hero h1{font-size:clamp(24px,4vw,38px);font-weight:800;letter-spacing:-.02em;margin-bottom:var(--sp-2);line-height:1.1}
 .hero h1 .gradient{background:linear-gradient(135deg,var(--cyan) 0%,var(--green) 50%,var(--amber) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{color:var(--t2);font-size:11px;max-width:100%}
+.hero p{color:var(--t2);font-size:14px;max-width:720px}
+.hero .location-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--glass);border:1px solid var(--border);border-radius:999px;font-size:11px;color:var(--t2);margin-top:8px}
+.hero .location-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
 
-/* GLASS */
-.glass{background:var(--glass);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-md),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden}
+/* Glass card */
+.glass{background:var(--glass);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-md),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden;contain:layout style paint}
 .glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);pointer-events:none;z-index:1}
 
-/* GRID — desktop */
-.lab{display:grid;gap:12px;grid-template-columns:1fr 84px;grid-template-areas:"panels panels" "scene season" "time time" "stats stats"}
+/* Grid */
+.lab{display:grid;gap:14px;grid-template-columns:1fr 84px;
+  grid-template-areas:"panels panels" "scene season" "time time" "stats stats"}
 .a-panels{grid-area:panels}.a-scene{grid-area:scene}.a-season{grid-area:season}.a-time{grid-area:time}.a-stats{grid-area:stats}
+@media(max-width:960px){.lab{grid-template-columns:1fr;grid-template-areas:"panels" "scene" "time" "stats" "season"}.stage{aspect-ratio:16/11;min-height:0}}
 
-/* STAGE */
+/* Stage */
 .a-scene{display:flex;min-height:560px}
-.stage{position:relative;flex:1;min-height:560px;border-radius:var(--radius-lg);overflow:hidden}
+.stage{position:relative;flex:1;min-height:560px;border-radius:var(--radius-lg);overflow:hidden;contain:layout style paint}
 .stage-svg,.stage-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .stage-canvas{pointer-events:none}
 
+/* Sun animations */
 @keyframes sunSpin{to{transform:rotate(360deg)}}
 @keyframes sunPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.92}}
 #sunRays{animation:sunSpin 60s linear infinite;transform-box:fill-box;transform-origin:center;will-change:transform}
 #sunCoreCircle{animation:sunPulse 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 
-.chip-top{position:absolute;top:10px;left:10px;z-index:5;padding:6px 10px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--border);backdrop-filter:blur(16px);font-size:10px;color:var(--t2);display:flex;align-items:center;gap:8px}
-.chip-top .sep{width:1px;height:10px;background:var(--border-strong)}
+/* Chip overlays */
+.chip-top{position:absolute;top:14px;left:14px;z-index:5;padding:8px 14px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--border);backdrop-filter:blur(16px);font-size:11px;color:var(--t2);display:flex;align-items:center;gap:10px}
+.chip-top .sep{width:1px;height:12px;background:var(--border-strong)}
 .chip-top .ct{color:var(--cyan);font-weight:700;font-family:'JetBrains Mono',monospace}
 
 /* Weather panel */
-.weather-panel{position:absolute;top:10px;right:10px;z-index:6;width:180px;background:var(--glass-strong);border:1px solid var(--border);border-radius:var(--radius-md);backdrop-filter:blur(16px);padding:10px 12px;display:flex;flex-direction:column;gap:6px}
-.weather-top{display:flex;align-items:center;gap:8px}
-.weather-em{font-size:24px;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.weather-panel{position:absolute;top:14px;right:14px;z-index:6;width:200px;background:var(--glass-strong);border:1px solid var(--border);border-radius:var(--radius-md);backdrop-filter:blur(16px);padding:var(--sp-3) var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-2)}
+.weather-top{display:flex;align-items:center;gap:var(--sp-3)}
+.weather-em{font-size:28px;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
 .weather-info{flex:1;min-width:0}
-.weather-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px;color:var(--cyan);line-height:1;font-variant-numeric:tabular-nums}
-.weather-unit{font-size:8px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;display:inline;margin-left:2px}
-.weather-name{font-size:9px;color:var(--t2);margin-top:1px}
-.weather-max{font-size:8px;color:var(--t4)}
-.weather-track{position:relative;width:100%;height:30px;border-radius:15px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(90deg,#3a5fa8 0%,#5b8cff 25%,#22e4ff 50%,#3dffa8 75%,#ffc24b 100%);box-shadow:inset 0 0 0 1px var(--border),0 2px 8px rgba(0,0,0,.3)}
-.weather-track::after{content:'';position:absolute;inset:3px 0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.3) 0 1px,transparent 1px calc(100%/6));pointer-events:none}
-.weather-thumb{position:absolute;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 12px rgba(255,255,255,.5),0 2px 6px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:11px;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
+.weather-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:22px;color:var(--cyan);line-height:1;font-variant-numeric:tabular-nums}
+.weather-unit{font-size:9px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;display:inline;margin-left:2px}
+.weather-name{font-size:10px;color:var(--t2);margin-top:2px}
+.weather-max{font-size:9px;color:var(--t4)}
+.weather-track{position:relative;width:100%;height:36px;border-radius:18px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(90deg,#3a5fa8 0%,#5b8cff 25%,#22e4ff 50%,#3dffa8 75%,#ffc24b 100%);box-shadow:inset 0 0 0 1px var(--border),0 2px 8px rgba(0,0,0,.3)}
+.weather-track::after{content:'';position:absolute;inset:4px 0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.3) 0 1px,transparent 1px calc(100%/6));pointer-events:none}
+.weather-thumb{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 14px rgba(255,255,255,.5),0 2px 8px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:13px;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
 .weather-track.dragging .weather-thumb{transform:translateY(-50%) scale(1.15)}
 .weather-track.dragging{cursor:grabbing}
-.weather-labels{display:flex;justify-content:space-between;font-size:10px;padding:0 2px}
+.weather-labels{display:flex;justify-content:space-between;font-size:11px;padding:0 2px}
 
 /* Tilt control */
-.tilt-ctrl{position:absolute;left:10px;bottom:10px;z-index:6;width:40px}
-.tilt-track{position:relative;width:38px;height:120px;border-radius:19px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(180deg,transparent 0 30%,rgba(91,140,255,.7) 30% 38%,transparent 38% 64%,rgba(61,255,168,.65) 64% 72%,transparent 72%),linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));box-shadow:inset 0 0 0 1px var(--border),0 4px 12px rgba(0,0,0,.3)}
-.tilt-thumb{position:absolute;left:50%;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 14px rgba(255,255,255,.45),0 3px 8px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:700;color:#0a2a3a;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
+.tilt-ctrl{position:absolute;left:14px;bottom:14px;z-index:6;width:48px}
+.tilt-track{position:relative;width:44px;height:140px;border-radius:22px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(180deg,transparent 0 30%,rgba(91,140,255,.7) 30% 38%,transparent 38% 64%,rgba(61,255,168,.65) 64% 72%,transparent 72%),linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));box-shadow:inset 0 0 0 1px var(--border),0 4px 12px rgba(0,0,0,.3)}
+.tilt-thumb{position:absolute;left:50%;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 16px rgba(255,255,255,.45),0 3px 10px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;color:#0a2a3a;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
 .tilt-track.dragging .tilt-thumb{transform:translateX(-50%) scale(1.15)}
 .tilt-track.dragging{cursor:grabbing}
-.tilt-label{font-size:7px;color:var(--t3);text-align:center;margin-top:3px;letter-spacing:1px;text-transform:uppercase}
+.tilt-label{font-size:8px;color:var(--t3);text-align:center;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
 
 /* Readout */
-.readout{position:absolute;right:10px;bottom:10px;z-index:5;background:var(--glass-strong);border:1px solid var(--border);padding:10px 14px;border-radius:var(--radius-md);backdrop-filter:blur(16px)}
-.readout .lbl{font-size:8px;letter-spacing:2px;color:var(--t3);text-transform:uppercase;margin-bottom:3px;font-weight:600}
-.readout .pw{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(22px,5vw,40px);color:var(--cyan);text-shadow:var(--glow-cyan);line-height:1;font-variant-numeric:tabular-nums}
-.readout .pw small{font-size:.35em;color:var(--t2);margin-left:4px}
-.readout .extra{display:flex;gap:10px;margin-top:6px;font-size:9px;color:var(--t2);justify-content:flex-end}
+.readout{position:absolute;right:16px;bottom:16px;z-index:5;background:var(--glass-strong);border:1px solid var(--border);padding:var(--sp-4) var(--sp-5);border-radius:var(--radius-md);backdrop-filter:blur(16px)}
+.readout .lbl{font-size:9.5px;letter-spacing:2.5px;color:var(--t3);text-transform:uppercase;margin-bottom:4px;font-weight:600}
+.readout .pw{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(28px,5vw,46px);color:var(--cyan);text-shadow:var(--glow-cyan);line-height:1;font-variant-numeric:tabular-nums}
+.readout .pw small{font-size:.35em;color:var(--t2);margin-left:5px}
+.readout .extra{display:flex;gap:14px;margin-top:10px;font-size:10.5px;color:var(--t2);justify-content:flex-end}
 .readout .extra b{color:var(--green);margin-right:2px;font-family:'JetBrains Mono',monospace}
 
 /* Controls */
-.ctrl{padding:12px;display:flex;flex-direction:column}
-.ctrl-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:6px;flex-wrap:wrap}
-.c-title{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);font-weight:600;display:flex;align-items:center;gap:5px}
-.c-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;display:flex;align-items:baseline;gap:3px}
-.c-val.cyan{color:var(--cyan)}
-.c-unit{font-size:10px;color:var(--t3)}
-.c-badge{font-size:9px;color:var(--t2);padding:3px 8px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:999px;white-space:nowrap;font-family:'JetBrains Mono',monospace;cursor:pointer;transition:all .2s var(--ease)}
+.ctrl{padding:var(--sp-4);display:flex;flex-direction:column}
+.ctrl-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-2);gap:var(--sp-2);flex-wrap:wrap}
+.c-title{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--t3);font-weight:600;display:flex;align-items:center;gap:6px}
+.c-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;display:flex;align-items:baseline;gap:4px}
+.c-val.cyan{color:var(--cyan);text-shadow:0 0 10px rgba(34,228,255,.3)}
+.c-unit{font-size:10.5px;color:var(--t3)}
+.c-badge{font-size:9.5px;color:var(--t2);padding:4px 10px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:999px;white-space:nowrap;font-family:'JetBrains Mono',monospace;cursor:pointer;transition:all .2s var(--ease)}
 .c-badge:hover{border-color:var(--cyan);color:var(--t1);background:rgba(34,228,255,.1)}
-.c-sub{font-size:9px;color:var(--t3);margin-top:4px;line-height:1.4}
+.c-sub{font-size:10px;color:var(--t3);margin-top:6px;line-height:1.5}
 .c-sub b{color:var(--t2)}
 .slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;outline:none;cursor:pointer;background:rgba(255,255,255,.1);touch-action:manipulation}
 .slider.gradient{background:linear-gradient(90deg,rgba(34,228,255,.25),rgba(61,255,168,.5),rgba(255,194,75,.5))}
-.slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--cyan));box-shadow:var(--glow-cyan);border:2px solid rgba(255,255,255,.8);cursor:grab}
-.slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--cyan);box-shadow:var(--glow-cyan);border:2px solid rgba(255,255,255,.8);cursor:grab}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--cyan));box-shadow:var(--glow-cyan);border:2px solid rgba(255,255,255,.8);cursor:grab}
+.slider::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--cyan);box-shadow:var(--glow-cyan);border:2px solid rgba(255,255,255,.8);cursor:grab}
 
 /* Season */
-.season{padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:6px}
-.season .s-title{font-size:8px;letter-spacing:1.5px;color:var(--t3);text-transform:uppercase;font-weight:600}
-.season .s-track{position:relative;flex:1;width:42px;min-height:200px;border-radius:21px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(180deg,#7fb2ff 0%,#9ff0c0 28%,#ffc24b 52%,#ff7a3d 78%,#7fb2ff 100%);box-shadow:inset 0 0 0 1px var(--border),0 4px 12px rgba(0,0,0,.3)}
-.season .s-track::after{content:'';position:absolute;inset:5px 0;background:repeating-linear-gradient(180deg,rgba(255,255,255,.35) 0 1px,transparent 1px calc(100%/12));pointer-events:none}
-.season .s-labels{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-around;padding:8px 0;pointer-events:none}
-.season .s-labels div{text-align:center;font-size:14px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
-.season .s-thumb{position:absolute;left:50%;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 18px rgba(255,255,255,.5),0 4px 10px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:16px;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
+.season{padding:var(--sp-3) var(--sp-2);display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)}
+.season .s-title{font-size:8.5px;letter-spacing:1.8px;color:var(--t3);text-transform:uppercase;font-weight:600}
+.season .s-track{position:relative;flex:1;width:46px;min-height:220px;border-radius:23px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(180deg,#7fb2ff 0%,#9ff0c0 28%,#ffc24b 52%,#ff7a3d 78%,#7fb2ff 100%);box-shadow:inset 0 0 0 1px var(--border),0 4px 12px rgba(0,0,0,.3)}
+.season .s-track::after{content:'';position:absolute;inset:6px 0;background:repeating-linear-gradient(180deg,rgba(255,255,255,.35) 0 1px,transparent 1px calc(100%/12));pointer-events:none}
+.season .s-labels{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-around;padding:10px 0;pointer-events:none}
+.season .s-labels div{text-align:center;font-size:16px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.season .s-thumb{position:absolute;left:50%;transform:translateX(-50%);width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 20px rgba(255,255,255,.5),0 4px 12px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:18px;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
 .season .s-track.dragging .s-thumb{transform:translateX(-50%) scale(1.15)}
 .season .s-track.dragging{cursor:grabbing}
-.season .s-cur{font-family:'JetBrains Mono',monospace;font-size:9px;text-align:center;font-weight:700}
-.season .s-cur small{display:block;font-size:7.5px;color:var(--t3);font-weight:400;letter-spacing:1px;margin-top:1px}
+.season .s-cur{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-align:center;font-weight:700}
+.season .s-cur small{display:block;font-size:8.5px;color:var(--t3);font-weight:400;letter-spacing:1px;margin-top:2px}
 
 /* Time */
-.ctrl-time{padding:12px}
-.time-row{display:flex;gap:5px;flex-wrap:wrap}
-.sun-path{position:relative;height:44px;margin:8px 0}
+.ctrl-time{padding:var(--sp-4)}
+.time-row{display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.sun-path{position:relative;height:52px;margin:var(--sp-3) 0}
 .sun-path svg{position:absolute;inset:0;width:100%;height:100%}
 .sun-path .slider{position:absolute;inset:0;width:100%;height:100%;background:transparent;margin:0;z-index:2}
 .sun-path .slider::-webkit-slider-runnable-track{height:100%;background:transparent}
-.sun-path .slider::-webkit-slider-thumb{width:24px;height:24px;margin-top:-12px;background:radial-gradient(circle at 35% 30%,#fff,#ffd54a 70%,#ff9800);box-shadow:0 0 18px rgba(255,205,80,.8)}
-.sun-path .slider::-moz-range-thumb{width:24px;height:24px;background:#ffd54a;box-shadow:0 0 18px rgba(255,205,80,.8)}
-.t-labels{display:flex;justify-content:space-between;font-size:8.5px;color:var(--t3);font-family:'JetBrains Mono',monospace;margin-top:4px}
+.sun-path .slider::-webkit-slider-thumb{width:28px;height:28px;margin-top:-14px;background:radial-gradient(circle at 35% 30%,#fff,#ffd54a 70%,#ff9800);box-shadow:0 0 22px rgba(255,205,80,.8),0 0 40px rgba(255,152,0,.3)}
+.sun-path .slider::-moz-range-thumb{width:28px;height:28px;background:#ffd54a;box-shadow:0 0 22px rgba(255,205,80,.8)}
+.t-labels{display:flex;justify-content:space-between;font-size:9.5px;color:var(--t3);font-family:'JetBrains Mono',monospace;margin-top:6px}
 .t-labels b{color:var(--amber);font-weight:600}
 
 /* Stats */
-.stats{display:grid;gap:8px;padding:12px;grid-template-columns:repeat(6,1fr)}
-.stat{padding:10px 8px;text-align:center;background:rgba(255,255,255,.02);border-radius:var(--radius-md);transition:transform .2s var(--ease)}
+.stats{display:grid;gap:var(--sp-3);padding:var(--sp-4);grid-template-columns:repeat(6,1fr)}
+.stat{padding:var(--sp-3) var(--sp-3);text-align:center;background:rgba(255,255,255,.02);border-radius:var(--radius-md);transition:transform .2s var(--ease),background .2s}
 .stat:hover{background:rgba(255,255,255,.04);transform:translateY(-2px)}
-.stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:clamp(13px,2.2vw,18px);font-weight:700;margin-bottom:2px;font-variant-numeric:tabular-nums}
+.stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:clamp(15px,2.4vw,20px);font-weight:700;margin-bottom:2px;font-variant-numeric:tabular-nums}
 .stat:nth-child(1) b{color:var(--cyan)}.stat:nth-child(2) b{color:var(--green)}.stat:nth-child(3) b{color:var(--amber)}
 .stat:nth-child(4) b{color:var(--purple)}.stat:nth-child(5) b{color:var(--cyan)}.stat:nth-child(6) b{color:var(--green)}
-.stat span{font-size:7.5px;letter-spacing:1px;color:var(--t3);text-transform:uppercase;font-weight:600}
+.stat span{font-size:8.5px;letter-spacing:1.2px;color:var(--t3);text-transform:uppercase;font-weight:600}
 
 /* Chart */
-.chart-wrap{padding:12px;margin-top:8px}
-.chart-title{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);font-weight:600;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
-.chart{position:relative;width:100%;height:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:6px 4px}
+.chart-wrap{padding:var(--sp-4);margin-top:var(--sp-3)}
+.chart-title{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--t3);font-weight:600;margin-bottom:var(--sp-3);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--sp-2)}
+.chart{position:relative;width:100%;height:100px;background:rgba(0,0,0,.2);border-radius:var(--radius-sm);padding:var(--sp-2) var(--sp-1)}
 .chart svg{width:100%;height:100%;display:block;overflow:visible}
-.chart-labels{display:flex;justify-content:space-between;font-size:7.5px;color:var(--t4);font-family:'JetBrains Mono',monospace;margin-top:3px;padding:0 2px}
+.chart-labels{display:flex;justify-content:space-between;font-size:8.5px;color:var(--t4);font-family:'JetBrains Mono',monospace;margin-top:var(--sp-1);padding:0 var(--sp-1)}
 
 /* Tooltip */
-.tooltip{position:fixed;z-index:100;pointer-events:none;background:var(--glass-strong);border:1px solid var(--border);backdrop-filter:blur(16px);padding:6px 12px;border-radius:8px;font-size:10px;box-shadow:var(--shadow-md);opacity:0;transition:opacity .2s;white-space:nowrap;transform:translate(-50%,-100%)}
+.tooltip{position:fixed;z-index:100;pointer-events:none;background:var(--glass-strong);border:1px solid var(--border);backdrop-filter:blur(16px);padding:8px 14px;border-radius:var(--radius-sm);font-size:11px;box-shadow:var(--shadow-md);opacity:0;transition:opacity .2s;white-space:nowrap;transform:translate(-50%,-100%)}
 .tooltip.show{opacity:1}
 
-.footer{margin-top:16px;padding:12px 10px;text-align:center;color:var(--t3);font-size:9px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+/* Info tips */
+.info-tip{cursor:help;border-bottom:1px dotted var(--t4)}
+.info-tip:hover{border-color:var(--cyan)}
 
-/* ============================================================================
-   МОБИЛЬНАЯ АДАПТАЦИЯ — ключевые исправления
-============================================================================ */
+/* Footer */
+.footer{margin-top:var(--sp-6);padding:var(--sp-5) var(--sp-4);text-align:center;color:var(--t3);font-size:11px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-3)}
+
+/* Performance monitor */
+.perf-badge{position:fixed;bottom:10px;right:10px;background:var(--glass-strong);border:1px solid var(--border);padding:4px 10px;border-radius:999px;font-size:9px;color:var(--t4);z-index:1000;font-family:'JetBrains Mono',monospace;display:flex;gap:10px}
+.perf-badge .item{display:flex;align-items:center;gap:4px}
+.perf-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+
+/* Onboarding */
+.onboarding-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px}
+.onboarding-overlay.active{display:flex}
+.onboarding-card{max-width:500px;background:var(--glass-strong);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;text-align:center;box-shadow:var(--shadow-lg)}
+.onboarding-card h2{font-size:24px;margin-bottom:12px;background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.onboarding-card p{color:var(--t2);margin-bottom:24px;line-height:1.6}
+.onboarding-card .features{display:grid;gap:12px;text-align:left;margin-bottom:24px}
+.onboarding-card .feature{display:flex;gap:12px;align-items:flex-start}
+.onboarding-card .feature-icon{font-size:20px;flex-shrink:0}
+.onboarding-card .feature-text{font-size:13px;color:var(--t2)}
+.onboarding-card .feature-text b{color:var(--t1)}
+.onboarding-btn{padding:12px 32px;background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;border:none;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;transition:transform .2s}
+.onboarding-btn:hover{transform:translateY(-2px);box-shadow:var(--glow-cyan)}
+
+/* Loading */
+.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--glass);z-index:100;border-radius:var(--radius-lg)}
+.loading-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Notification */
+.notification{position:fixed;top:20px;right:20px;z-index:10001;background:var(--glass-strong);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 20px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:12px;font-size:13px;transform:translateX(calc(100% + 30px));transition:transform .3s var(--ease-out);max-width:400px}
+.notification.show{transform:translateX(0)}
+.notification.success{border-color:var(--green)}
+.notification.error{border-color:var(--red)}
+.notification-icon{font-size:20px}
+.notification-close{background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;margin-left:auto;padding:4px}
+
+/* Keyboard shortcuts hint */
+.shortcuts-hint{position:fixed;bottom:40px;right:10px;background:var(--glass-strong);border:1px solid var(--border);padding:8px 14px;border-radius:var(--radius-sm);font-size:10px;color:var(--t3);z-index:999;font-family:'JetBrains Mono',monospace;display:none}
+.shortcuts-hint.show{display:block}
+.shortcuts-hint kbd{background:rgba(255,255,255,.1);padding:2px 6px;border-radius:4px;font-size:9px;border:1px solid var(--border)}
+
+/* Responsive */
 @media(max-width:960px){
-  .lab{grid-template-columns:1fr;grid-template-areas:"panels" "scene" "time" "stats" "season";gap:10px}
-  
-  /* Сцена: фиксированная высота вместо гигантской */
-  .a-scene{display:block;min-height:0}
-  .stage{min-height:0;height:55vw;max-height:400px}
-  
-  /* Сезон: горизонтальный и компактный */
-  .season{flex-direction:row;gap:10px;padding:10px 12px;align-items:center}
-  .season .s-title{writing-mode:vertical-rl;transform:rotate(180deg);font-size:7px}
-  .season .s-track{height:40px;width:auto;flex:1;min-height:0;border-radius:20px;background:linear-gradient(90deg,#7fb2ff 0%,#9ff0c0 28%,#ffc24b 52%,#ff7a3d 78%,#7fb2ff 100%)}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .season{flex-direction:row;gap:var(--sp-4);padding:var(--sp-4)}
+  .season .s-title{writing-mode:vertical-rl;transform:rotate(180deg)}
+  .season .s-track{height:46px;width:auto;flex:1;min-height:0;border-radius:23px;background:linear-gradient(90deg,#7fb2ff 0%,#9ff0c0 28%,#ffc24b 52%,#ff7a3d 78%,#7fb2ff 100%)}
   .season .s-track::after{background:repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 1px,transparent 1px calc(100%/12))}
-  .season .s-labels{flex-direction:row;padding:0 8px}
-  .season .s-labels div{font-size:12px}
-  .season .s-thumb{top:50%;left:0;transform:translateY(-50%);width:32px;height:32px;font-size:14px}
+  .season .s-labels{flex-direction:row;padding:0 10px}
+  .season .s-thumb{top:50%;left:0;transform:translateY(-50%);width:38px;height:38px}
   .season .s-track.dragging .s-thumb{transform:translateY(-50%) scale(1.15)}
-  .season .s-cur{min-width:50px}
-  
-  /* Статистика: 3 колонки */
-  .stats{grid-template-columns:repeat(3,1fr)}
-  
-  /* Виджет погоды: меньше */
-  .weather-panel{width:150px;padding:8px 10px;top:8px;right:8px}
-  .weather-em{font-size:20px}
-  .weather-val{font-size:16px}
-  .weather-name{font-size:8px}
-  .weather-max{font-size:7px}
-  .weather-track{height:26px}
-  .weather-thumb{width:22px;height:22px;font-size:10px}
-  .weather-labels{font-size:9px}
-  
-  /* Tilt: меньше */
-  .tilt-ctrl{left:8px;bottom:8px;width:34px}
-  .tilt-track{width:32px;height:90px;border-radius:16px}
-  .tilt-thumb{width:26px;height:26px;font-size:9px}
-  .tilt-label{font-size:6px}
-  
-  /* Readout: компактнее */
-  .readout{right:8px;bottom:8px;padding:8px 12px}
-  .readout .pw{font-size:clamp(20px,6vw,32px)}
-  .readout .extra{font-size:8px;gap:8px}
-  
-  /* Chip */
-  .chip-top{top:8px;left:8px;padding:5px 8px;font-size:9px}
-  
-  /* Header */
   .header-meta{display:none}
+  .tilt-ctrl{left:10px;bottom:10px}.tilt-track{height:100px;width:36px}.tilt-thumb{width:30px;height:30px;font-size:9px}
+  .weather-panel{width:170px;padding:var(--sp-3)}
+  .weather-em{font-size:22px}.weather-val{font-size:18px}
 }
-
-/* Очень маленькие экраны (iPhone SE, 320px) */
-@media(max-width:380px){
-  .container{padding:8px 8px 50px}
-  .hero h1{font-size:16px}
-  .hero p{font-size:10px}
-  .stage{height:50vw;max-height:300px}
-  .weather-panel{width:130px;padding:6px 8px}
-  .weather-val{font-size:14px}
-  .weather-track{height:22px}
-  .weather-thumb{width:20px;height:20px;font-size:9px}
-  .readout{padding:6px 10px}
-  .readout .pw{font-size:20px}
-  .readout .extra{font-size:7px}
-  .stats{grid-template-columns:repeat(2,1fr);gap:6px;padding:8px}
-  .stat{padding:8px 6px}
-  .stat b{font-size:12px}
-  .stat span{font-size:7px}
-  .chart{height:60px}
-  .tilt-track{height:70px}
-  .season .s-track{height:36px}
-  .season .s-thumb{width:28px;height:28px;font-size:12px}
-  .ctrl-time{padding:10px}
-  .sun-path{height:36px}
-  .c-badge{font-size:8px;padding:2px 6px}
-}
-
-/* Средние телефоны (375-430px) */
-@media(min-width:381px) and (max-width:430px){
-  .stage{height:52vw;max-height:340px}
-  .weather-panel{width:140px}
-  .stats{grid-template-columns:repeat(3,1fr)}
-}
-
-/* Планшеты */
-@media(min-width:431px) and (max-width:960px){
-  .stage{height:48vw;max-height:420px}
-  .weather-panel{width:160px}
-  .stats{grid-template-columns:repeat(3,1fr)}
-}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.container{padding:var(--sp-3) var(--sp-3) 60px}}
+@media(max-width:360px){.weather-panel{width:140px}.weather-val{font-size:15px}.readout .pw{font-size:22px}}
 </style>
 </head>
 <body>
-<a href="#main-content" class="skip-link">Перейти к содержимому</a>
+<a href="#main-content" class="skip-link" data-i18n="skip">Перейти к содержимому</a>
+
 <div class="container">
   <header class="header">
     <div class="logo">
       <div class="logo-icon" aria-hidden="true">⚡</div>
-      <div class="logo-text"><span class="gradient">SOLARLAB PRO</span><small>v3.1 · Kraków</small></div>
+      <div class="logo-text"><span class="gradient">SOLARLAB PRO</span><small>v4.0 · <span id="locName">Kraków, Poland</span></small></div>
     </div>
     <div class="header-actions">
-      <button class="icon-btn" id="btnExport" title="Экспорт" aria-label="Экспорт данных">📊</button>
-      <button class="icon-btn" id="btnShare" title="Ссылка" aria-label="Поделиться">🔗</button>
-      <button class="icon-btn" id="btnReset" title="Сброс" aria-label="Сбросить">↻</button>
+      <div class="header-meta mono"><span class="live-dot" aria-hidden="true"></span><span id="metaInfo">50.06°N</span></div>
+      <div class="theme-switcher" role="group" aria-label="Theme">
+        <button id="themeLight" title="Light">☀️</button>
+        <button id="themeSystem" title="System" class="active">💻</button>
+        <button id="themeDark" title="Dark">🌙</button>
+      </div>
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button id="langRU" class="active">RU</button>
+        <button id="langEN">EN</button>
+        <button id="langPL">PL</button>
+      </div>
+      <button class="icon-btn" id="btnExport" title="Export" aria-label="Export">📊</button>
+      <button class="icon-btn" id="btnPDF" title="Export PDF" aria-label="Export PDF">📄</button>
+      <button class="icon-btn" id="btnShare" title="Share" aria-label="Share">🔗</button>
+      <button class="icon-btn" id="btnReset" title="Reset" aria-label="Reset">↻</button>
+      <button class="icon-btn" id="btnHelp" title="Shortcuts" aria-label="Shortcuts">⌨️</button>
     </div>
   </header>
 
   <section class="hero">
-    <h1>Симулятор <span class="gradient">солнечной электростанции</span></h1>
-    <p>Краков · 50.06°N · NOAA SPA · Инвертор · Экономика</p>
+    <h1 data-i18n="heroTitle">Симулятор <span class="gradient">солнечной электростанции</span></h1>
+    <p id="heroDesc">NOAA SPA + Sandia PV Model + Perez diffuse · Инвертор, температура, деградация, экономика</p>
+    <div class="location-badge"><span class="dot"></span><span id="heroLocation">Kraków, Poland · 50.06°N, 19.94°E</span></div>
   </section>
 
   <main class="lab" id="main-content">
+    <!-- PANELS -->
     <div class="glass ctrl a-panels">
       <div class="ctrl-header">
-        <div class="c-title">⚡ Панели</div>
-        <div class="c-val cyan"><span id="panelCount">4</span><span class="c-unit">шт</span></div>
+        <div class="c-title">⚡ <span data-i18n="panels">Панели в системе</span></div>
+        <div class="c-val cyan"><span id="panelCount">4</span><span class="c-unit" data-i18n="pcs">шт</span></div>
         <div class="c-badge" id="panelSys">2.16 kWp</div>
       </div>
-      <input type="range" id="panelSlider" class="slider gradient" min="1" max="24" value="4" aria-label="Количество панелей">
+      <input type="range" id="panelSlider" class="slider gradient" min="1" max="24" value="4" aria-label="Panels count">
     </div>
 
+    <!-- SCENE -->
     <div class="a-scene">
       <div class="glass stage" id="stageBox">
         <svg class="stage-svg" id="sceneSvg" viewBox="0 0 1000 625" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -321,81 +411,90 @@ body{font-family:'Inter',-apple-system,sans-serif;color:var(--t1);min-height:100
             <line x1="704" y1="498" x2="690" y2="488" stroke="#8b5a2b" stroke-width="3" stroke-linecap="round"/>
             <line x1="736" y1="498" x2="750" y2="488" stroke="#8b5a2b" stroke-width="3" stroke-linecap="round"/>
             <rect x="708" y="460" width="24" height="4" rx="2" fill="#333"/><rect x="712" y="448" width="16" height="12" rx="2" fill="#333"/>
+            <circle cx="720" cy="494" r="2" fill="#333"/><circle cx="720" cy="502" r="2" fill="#333"/>
           </g>
         </svg>
         <canvas class="stage-canvas" id="stageCanvas" aria-hidden="true"></canvas>
         <div class="sr-only" id="sceneDescription" aria-live="polite"></div>
+        
         <div class="chip-top"><span id="chipDate">—</span><span class="sep"></span><span class="ct" id="chipSun">☀ 60°</span></div>
+
         <div class="weather-panel">
           <div class="weather-top">
             <span class="weather-em" id="wEmoji">☀️</span>
             <div class="weather-info">
-              <span class="weather-val" id="wIrr">940</span><span class="weather-unit">Вт/м²</span>
-              <div class="weather-name" id="wLabel">ясно</div>
-              <div class="weather-max" id="wMax">макс: 940</div>
+              <span class="weather-val" id="wIrr">940</span><span class="weather-unit" data-i18n="wpm2">Вт/м²</span>
+              <div class="weather-name" id="wLabel" data-i18n="clear">ясно</div>
+              <div class="weather-max" id="wMax">макс: 940 Вт/м²</div>
             </div>
           </div>
-          <div class="weather-track" id="weatherTrack" role="slider" tabindex="0" aria-label="Погода" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" aria-valuetext="Ясно">
+          <div class="weather-track" id="weatherTrack" role="slider" tabindex="0" aria-label="Weather" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" aria-valuetext="Clear">
             <div class="weather-thumb" id="weatherThumb">☀️</div>
           </div>
           <div class="weather-labels"><span>🌧️</span><span>⛅</span><span>☀️</span></div>
         </div>
+
         <div class="tilt-ctrl">
-          <div class="tilt-track" id="tiltTrack" role="slider" tabindex="0" aria-label="Угол наклона" aria-valuemin="0" aria-valuemax="90" aria-valuenow="35" aria-valuetext="35°" aria-orientation="vertical">
+          <div class="tilt-track" id="tiltTrack" role="slider" tabindex="0" aria-label="Tilt" aria-valuemin="0" aria-valuemax="90" aria-valuenow="35" aria-valuetext="35 degrees" aria-orientation="vertical">
             <div class="tilt-thumb" id="tiltThumb">35°</div>
           </div>
-          <div class="tilt-label">Угол</div>
+          <div class="tilt-label" data-i18n="tilt">Угол</div>
         </div>
+
         <div class="readout" aria-live="polite" aria-atomic="true">
-          <div class="lbl">Мощность</div>
-          <div class="pw"><span id="powerVal">0</span><small>Вт</small></div>
-          <div class="extra"><div><b id="rI">0.0</b>A</div><div><b id="rV">0.0</b>V</div><div><b id="rE">0</b>%</div></div>
+          <div class="lbl" data-i18n="outputPower">Выходная мощность</div>
+          <div class="pw"><span id="powerVal">0</span><small>W</small></div>
+          <div class="extra"><div><b id="rI">0.0</b>A</div><div><b id="rV">0.0</b>V</div><div><b id="rE">0</b>% <span data-i18n="toSun">к солнцу</span></div></div>
         </div>
       </div>
     </div>
 
+    <!-- SEASON -->
     <div class="glass season a-season">
-      <div class="s-title">Месяц</div>
-      <div class="s-track" id="sTrack" role="slider" tabindex="0" aria-label="Месяц" aria-valuemin="0" aria-valuemax="11" aria-valuenow="6" aria-valuetext="Июль">
+      <div class="s-title" data-i18n="month">Месяц</div>
+      <div class="s-track" id="sTrack" role="slider" tabindex="0" aria-label="Month" aria-valuemin="0" aria-valuemax="11" aria-valuenow="6" aria-valuetext="July" aria-orientation="vertical">
         <div class="s-labels"><div>❄️</div><div>🌱</div><div>☀️</div><div>🍂</div></div>
         <div class="s-thumb" id="sThumb">☀️</div>
       </div>
       <div class="s-cur" id="sCur">ИЮЛЬ<small>лето</small></div>
     </div>
 
+    <!-- TIME -->
     <div class="glass ctrl ctrl-time a-time">
       <div class="ctrl-header">
-        <div class="c-title">🕐 Время</div>
+        <div class="c-title">🕐 <span data-i18n="timeOfDay">Время суток</span></div>
         <div class="time-row">
-          <button class="c-badge" id="btnNow">⏰ сейчас</button>
-          <button class="c-badge" id="btnDemo">🎬 демо</button>
+          <button class="c-badge" id="btnNow">⏰ <span data-i18n="now">сейчас</span></button>
+          <button class="c-badge" id="btnDemo">🎬 <span data-i18n="demo">демо</span></button>
+          <button class="c-badge" id="btnPlay">▶️ <span data-i18n="play">играть</span></button>
         </div>
       </div>
       <div class="sun-path">
         <svg viewBox="0 0 400 52" preserveAspectRatio="none"><path d="M 20 42 Q 200 -6 380 42" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.5" stroke-dasharray="3 4"/></svg>
-        <input type="range" id="timeSlider" class="slider" min="0" max="24" step="0.25" value="13" aria-label="Время суток">
+        <input type="range" id="timeSlider" class="slider" min="0" max="24" step="0.25" value="13" aria-label="Time of day">
       </div>
-      <div class="t-labels"><span>восход <b id="lblSr">06:10</b></span><span><b>12:00</b></span><span>закат <b id="lblSs">19:30</b></span></div>
-      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;align-items:center">
-        <button class="c-badge" data-h="8">🌅</button>
-        <button class="c-badge" data-h="13">☀️</button>
-        <button class="c-badge" data-h="19">🌇</button>
+      <div class="t-labels"><span><span data-i18n="sunrise">восход</span> <b id="lblSr">06:10</b></span><span><b>12:00</b> <span data-i18n="noon">полдень</span></span><span><span data-i18n="sunset">закат</span> <b id="lblSs">19:30</b></span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center">
+        <button class="c-badge" data-h="8">🌅 <span data-i18n="morning">утро</span></button>
+        <button class="c-badge" data-h="13">☀️ <span data-i18n="noonShort">полдень</span></button>
+        <button class="c-badge" data-h="19">🌇 <span data-i18n="evening">вечер</span></button>
         <span class="c-sub" id="azInfo"></span>
         <span class="c-sub" id="optHint"></span>
       </div>
     </div>
 
+    <!-- STATS -->
     <div class="a-stats">
       <div class="glass stats">
-        <div class="stat"><b id="statPeak">2.16</b><span>kW пик</span></div>
-        <div class="stat"><b id="statDay">0.0</b><span id="statDayLbl">kWh/день</span></div>
-        <div class="stat"><b id="statMonth">0</b><span>kWh/мес</span></div>
-        <div class="stat"><b id="statYear">0</b><span>kWh/год</span></div>
-        <div class="stat"><b id="statNPV">0</b><span>NPV 25л €</span></div>
-        <div class="stat"><b id="statPay">0.0</b><span>лет окуп.</span></div>
+        <div class="stat"><b id="statPeak">2.16</b><span>kW <span data-i18n="peak">пик</span></span></div>
+        <div class="stat"><b id="statDay">0.0</b><span id="statDayLbl">kWh / <span data-i18n="day">день</span></span></div>
+        <div class="stat"><b id="statMonth">0</b><span>kWh / <span data-i18n="monthShort">мес</span></span></div>
+        <div class="stat"><b id="statYear">0</b><span>kWh / <span data-i18n="year">год</span></span></div>
+        <div class="stat"><b id="statNPV">0</b><span>NPV 25<span data-i18n="years">лет</span>, €</span></div>
+        <div class="stat"><b id="statPay">0.0</b><span><span data-i18n="paybackYears">лет окуп.</span></span></div>
       </div>
       <div class="glass chart-wrap">
-        <div class="chart-title"><span>📊 Выработка</span><span class="c-badge" id="chartTotal">0.0 kWh</span></div>
+        <div class="chart-title"><span>📊 <span data-i18n="dailyOutput">Выработка за сутки</span></span><span class="c-badge" id="chartTotal">0.0 kWh</span></div>
         <div class="chart"><svg id="chartSvg" viewBox="0 0 1000 100" preserveAspectRatio="none"></svg></div>
         <div class="chart-labels" id="chartLabels"></div>
       </div>
@@ -403,219 +502,2330 @@ body{font-family:'Inter',-apple-system,sans-serif;color:var(--t1);min-height:100
   </main>
 
   <footer class="footer">
-    <div>⚡ SolarLab Pro v3.1 · Kraków</div>
-    <div id="perfInfo">—</div>
+    <div>⚡ SolarLab Pro v4.0 · NOAA SPA · Perez · Sandia IAM · Faiman</div>
+    <div id="perfInfo">FPS: 60 · Render: 0ms</div>
   </footer>
 </div>
+
 <div class="tooltip" id="tooltip"></div>
+<div class="notification" id="notification"><span class="notification-icon" id="notifIcon"></span><span id="notifText"></span><button class="notification-close" id="notifClose">×</button></div>
+<div class="onboarding-overlay" id="onboarding">
+  <div class="onboarding-card">
+    <h2 data-i18n="welcomeTitle">Добро пожаловать в SolarLab Pro</h2>
+    <p data-i18n="welcomeDesc">Профессиональный симулятор солнечных электростанций с точной физикой и экономикой</p>
+    <div class="features">
+      <div class="feature"><span class="feature-icon">🌍</span><span class="feature-text"><b>Геолокация</b> — автоматическое определение координат</span></div>
+      <div class="feature"><span class="feature-icon">🌤️</span><span class="feature-text"><b>Реальные данные</b> — метеоданные через Open-Meteo API</span></div>
+      <div class="feature"><span class="feature-icon">📊</span><span class="feature-text"><b>ROI анализ</b> — NPV, окупаемость, деградация</span></div>
+      <div class="feature"><span class="feature-icon">⌨️</span><span class="feature-text"><b>Горячие клавиши</b> — Space для play, R для reset</span></div>
+    </div>
+    <button class="onboarding-btn" id="btnOnboardStart" data-i18n="getStarted">Начать</button>
+  </div>
+</div>
+<div class="shortcuts-hint" id="shortcutsHint">
+  <kbd>Space</kbd> play/pause · <kbd>R</kbd> reset · <kbd>Ctrl+Z</kbd> undo
+</div>
 
 <script>
 'use strict';
-/* === CONFIG === */
-const CONFIG=Object.freeze({LOCATION:{lat:50.06,lon:19.94,tz:1,name:'Kraków'},PANEL:{name:'Jinko Tiger Neo 540W',Pmax:540,Vmp:41.7,Imp:13.02,tempCoeff_P:-0.0034,NOCT:45,bifaciality:0.7,cost:350,degradation:0.004,b0_IAM:0.03},INVERTER:{efficiency:0.97,maxPower:3000},SYSTEM:{cableLosses:0.015,mismatchLosses:0.02,soilingLosses:0.03,availability:0.99},ECONOMICS:{electricityPrice:0.22,discountRate:0.06,projectLife:25,annualOPEX:15},SCENE:{PANEL:{LENGTH:200,WIDTH:280,X:380,K:0.5,M:0.22},SUN:{RADIUS:48},BEAM:{WIDTH:60}}});
-const MONTHS=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-const MONTH_DAYS=[31,28,31,30,31,30,31,31,30,31,30,31];
-const DAY_OF_YEAR=[15,46,74,105,135,162,197,228,258,288,319,344];
-const AMBIENT_TEMP=[-1,0,4,9,14,17,19,19,15,10,5,1];
-const MAX_GHI_NOON=[195,290,470,630,780,900,940,860,670,450,230,165];
+/* ============================================================================
+   SOLARLAB PRO v4.0 — Production-Ready Solar Simulator
+   Architecture: Utils → EventBus → i18n → Physics → State → Render → UI → App
+============================================================================ */
 
-/* === PHYSICS === */
-const Physics=(()=>{const DEG=Math.PI/180,RAD=180/Math.PI;const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const{lat,lon,tz}=CONFIG.LOCATION;
-function refraction(elDeg){if(elDeg<-0.575)return 0;return 1.02/(60*Math.tan((elDeg+10.3/(elDeg+5.11))*DEG))}
-function solarPosition(dayOfYear,clockHour){const latRad=lat*DEG;const gamma=(2*Math.PI/365)*(dayOfYear-1+(clockHour-12)/24);const eqtime=229.18*(0.000075+0.001868*Math.cos(gamma)-0.032077*Math.sin(gamma)-0.014615*Math.cos(2*gamma)-0.040849*Math.sin(2*gamma));const decl=0.006918-0.399912*Math.cos(gamma)+0.070257*Math.sin(gamma)-0.006758*Math.cos(2*gamma)+0.000907*Math.sin(2*gamma)-0.002697*Math.cos(3*gamma)+0.00148*Math.sin(3*gamma);const timeOffset=eqtime+4*lon-60*tz;const tst=clockHour*60+timeOffset;const ha=(tst/4-180)*DEG;const cosZenith=Math.sin(latRad)*Math.sin(decl)+Math.cos(latRad)*Math.cos(decl)*Math.cos(ha);const zenith=Math.acos(clamp(cosZenith,-1,1));let elevation=Math.PI/2-zenith;let elDeg=elevation*RAD;elDeg+=refraction(elDeg);elevation=elDeg*DEG;const sinZenith=Math.sin(zenith);let azimuth=0;if(sinZenith>0.001){const cosAz=(Math.sin(decl)-Math.cos(zenith)*Math.sin(latRad))/(sinZenith*Math.cos(latRad));azimuth=Math.acos(clamp(cosAz,-1,1));if(ha>0)azimuth=2*Math.PI-azimuth}let azFromSouth=azimuth-Math.PI;if(azFromSouth>Math.PI)azFromSouth-=2*Math.PI;if(azFromSouth<-Math.PI)azFromSouth+=2*Math.PI;const cosH0=clamp(-Math.tan(latRad)*Math.tan(decl),-1,1);const H0=Math.acos(cosH0);return{elevation,elevationDeg:elDeg,azimuth,azimuthFromSouth:azFromSouth,azimuthFromSouthDeg:azFromSouth*RAD,declination:decl,hourAngle:ha,sunrise:12-(H0*RAD)/15-timeOffset/60,sunset:12+(H0*RAD)/15-timeOffset/60}}
-function IAM(AOI){if(AOI>=Math.PI/2)return 0;const aR=CONFIG.PANEL.b0_IAM;return(1-Math.exp(-Math.cos(AOI)/aR))/(1-Math.exp(-1/aR))}
-function calculateOutput(params){const{month=6,clock=13,tilt=35,weather=100,panelCount=4}=params;const tiltRad=tilt*DEG;const sol=solarPosition(DAY_OF_YEAR[month],clock);if(sol.elevationDeg<=-0.833)return{power:0,acPower:0,poa:0,ghi:0,dni:0,dhi:0,cosIncidence:0,AOI:0,cellTemp:AMBIENT_TEMP[month],solar:sol,current:0,voltage:0};
-const sinEl=Math.max(0,Math.sin(sol.elevation));const airMass=sinEl>0.001?1/(sinEl+0.50572*Math.pow(Math.max(sol.elevationDeg,0.1)+6.07995,-1.6364)):38;
-const dni_clear=1367*Math.pow(0.7,Math.pow(airMass,0.678));const ghi_clear=dni_clear*sinEl+100*sinEl;
-const wf=weather/100;const weatherAtten=0.12+0.88*Math.pow(wf,1.4);const ghi=ghi_clear*weatherAtten;
-const beamFraction=Math.pow(wf,1.5)*0.85+0.05;const diffuseFraction=1-beamFraction;const dhi=ghi*diffuseFraction;const bhi=ghi*beamFraction;const dni=sinEl>0.01?bhi/sinEl:0;
-const isWinter=month===11||month===0||month===1;const albedo=isWinter?0.6:0.2;
-const cosIncidence=sinEl*Math.cos(tiltRad)+Math.cos(sol.elevation)*Math.sin(tiltRad)*Math.cos(sol.azimuthFromSouth);const AOI=Math.acos(clamp(cosIncidence,-1,1));
-const beamOnPanel=Math.max(0,dni*Math.max(0,cosIncidence)*IAM(AOI));const diffuseOnPanel=dhi*(1+Math.cos(tiltRad))/2;const groundReflected=ghi*albedo*(1-Math.cos(tiltRad))/2;const poa=beamOnPanel+diffuseOnPanel+groundReflected;
-const bifacialGain=1+CONFIG.PANEL.bifaciality*albedo*(1-Math.cos(tiltRad))/2*0.5;
-const ambientTemp=AMBIENT_TEMP[month]+8*wf-2*(1-wf);const Tcell=ambientTemp+poa/(25+6.84*1);const tempFactor=1+CONFIG.PANEL.tempCoeff_P*(Tcell-25);
-const dcPerPanel=Math.max(0,CONFIG.PANEL.Pmax*(poa/1000)*tempFactor*bifacialGain);
-const sysLosses=1-CONFIG.SYSTEM.cableLosses-CONFIG.SYSTEM.mismatchLosses-CONFIG.SYSTEM.soilingLosses;
-const dcTotal=dcPerPanel*panelCount*sysLosses*CONFIG.SYSTEM.availability;
-const acPower=Math.min(dcTotal,CONFIG.INVERTER.maxPower)*CONFIG.INVERTER.efficiency;
-const current=panelCount>0&&poa>0?CONFIG.PANEL.Imp*(poa/1000)*Math.max(0,tempFactor)*panelCount:0;
-return{power:acPower,acPower,dcPower:dcTotal,powerPerPanel:dcPerPanel,poa,ghi,dni,dhi,cosIncidence:Math.max(0,cosIncidence),AOI,cellTemp:Tcell,ambientTemp,tempFactor,bifacialGain,current,voltage:CONFIG.PANEL.Vmp,solar:sol}}
-function optimalTilt(month){const decl=23.45*Math.sin(DEG*(360/365)*(284+DAY_OF_YEAR[month]));return clamp(Math.round(lat-decl*0.9),15,75)}
-const _cache=new Map();
-function integrateHourly(params,targetMonth){const key=`h_${targetMonth}_${params.tilt}_${params.weather}_${params.panelCount}`;if(_cache.has(key))return _cache.get(key);const hourly=new Array(24).fill(0);let daily=0;for(let h=0;h<24;h+=0.5){const out=calculateOutput({...params,month:targetMonth,clock:h});const e=out.power*0.5/1000;daily+=e;hourly[Math.floor(h)]+=e}const result={daily,hourly};if(_cache.size>100)_cache.clear();_cache.set(key,result);return result}
-function integrateYear(params){const key=`y_${params.tilt}_${params.weather}_${params.panelCount}`;if(_cache.has(key))return _cache.get(key);let total=0;for(let m=0;m<12;m++)total+=integrateHourly(params,m).daily*MONTH_DAYS[m];_cache.set(key,total);return total}
-function integrateWithOptimal(params){const optTilt=optimalTilt(params.month);const current=integrateHourly(params,params.month);const optimal=integrateHourly({...params,tilt:optTilt},params.month);return{current,optimal,optTilt,efficiency:optimal.daily>0?current.daily/optimal.daily:0}}
-return{calculateOutput,optimalTilt,integrateHourly,integrateYear,integrateWithOptimal}})();
+// ============================================================================
+// 1. UTILITIES — SafeMath, ErrorBoundary, PerfMonitor
+// ============================================================================
+const SafeMath = (() => {
+  const EPS = 1e-10;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  
+  const safeAcos = (v) => {
+    if (!Number.isFinite(v)) return Math.PI / 2;
+    return Math.acos(clamp(v, -1 + EPS, 1 - EPS));
+  };
+  
+  const safeAsin = (v) => {
+    if (!Number.isFinite(v)) return 0;
+    return Math.asin(clamp(v, -1 + EPS, 1 - EPS));
+  };
+  
+  const safeDiv = (a, b, fallback = 0) => {
+    if (!Number.isFinite(a) || !Number.isFinite(b) || Math.abs(b) < EPS) return fallback;
+    const r = a / b;
+    return Number.isFinite(r) ? r : fallback;
+  };
+  
+  const safeSqrt = (v) => {
+    if (!Number.isFinite(v) || v < 0) return 0;
+    return Math.sqrt(v);
+  };
+  
+  const isFiniteNum = (v) => Number.isFinite(v);
+  
+  return { clamp, safeAcos, safeAsin, safeDiv, safeSqrt, isFiniteNum };
+})();
 
-/* === ECONOMICS === */
-const Economics=(()=>{const{electricityPrice,discountRate,projectLife,annualOPEX}=CONFIG.ECONOMICS;
-function calculateNPV(yearlyYield,panelCount){const initialCost=panelCount*CONFIG.PANEL.cost+800;const annualRevenue=yearlyYield*electricityPrice;const annualCost=(panelCount*CONFIG.PANEL.Pmax/1000)*annualOPEX;let npv=-initialCost;for(let y=1;y<=projectLife;y++){const df=Math.pow(1-CONFIG.PANEL.degradation,y);npv+=(annualRevenue*df-annualCost)/Math.pow(1+discountRate,y)}return npv}
-function calculatePayback(yearlyYield,panelCount){const initialCost=panelCount*CONFIG.PANEL.cost+800;const annualRevenue=yearlyYield*electricityPrice;const annualCost=(panelCount*CONFIG.PANEL.Pmax/1000)*annualOPEX;if(annualRevenue-annualCost<=0)return Infinity;return initialCost/(annualRevenue-annualCost)}
-return{calculateNPV,calculatePayback}})();
+class ValidationError extends Error {
+  constructor(field, value, reason) {
+    super(`Validation failed for ${field}: ${reason}`);
+    this.name = 'ValidationError';
+    this.field = field;
+    this.value = value;
+  }
+}
 
-/* === STATE === */
-const Store=(()=>{const STORAGE_KEY='solarlab-v3.1';const defaults=Object.freeze({panels:4,tilt:35,month:6,time:13,weather:100});
-const schema={panels:{min:1,max:24,step:1},tilt:{min:0,max:90,step:1},month:{min:0,max:11,step:1},time:{min:0,max:24,step:0.25},weather:{min:0,max:100,step:1}};
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-function validate(key,value){const s=schema[key];if(!s)return value;let v=typeof value==='number'?value:parseFloat(value);if(isNaN(v))return s.min;v=clamp(v,s.min,s.max);if(s.step)v=Math.round(v/s.step)*s.step;return v}
-let savedState={...defaults};try{const s=localStorage.getItem(STORAGE_KEY);if(s){const p=JSON.parse(s);Object.keys(defaults).forEach(k=>{if(p[k]!==undefined)savedState[k]=validate(k,p[k])})}}catch(e){}
-const urlParams=new URLSearchParams(window.location.search);Object.keys(defaults).forEach(k=>{if(urlParams.has(k))savedState[k]=validate(k,urlParams.get(k))});
-const state={...savedState};const listeners=new Set();let isNotifying=false;let saveTimeout=null;
-function subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn)}
-function notify(){if(isNotifying)return;isNotifying=true;try{listeners.forEach(fn=>{try{fn(state)}catch(e){console.error(e)}})}finally{isNotifying=false}clearTimeout(saveTimeout);saveTimeout=setTimeout(()=>{try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}},500)}
-function set(updates){Object.entries(updates).forEach(([k,v])=>{if(k in schema)state[k]=validate(k,v)});notify()}
-function getShareUrl(){const url=new URL(window.location.href.split('?')[0]);Object.entries(state).forEach(([k,v])=>{if(v!==defaults[k])url.searchParams.set(k,v)});return url.toString()}
-return{state,defaults,set,subscribe,getShareUrl}})();
+class CalculationError extends Error {
+  constructor(message, context) {
+    super(message);
+    this.name = 'CalculationError';
+    this.context = context;
+  }
+}
 
-/* === RENDER === */
-const Render=(()=>{const $=id=>document.getElementById(id);const els={};
-['stageBox','sceneSvg','stageCanvas','skyR','st1','st2','st3','starsG','sunG','beamG','beam1','beam2','raysG','cloudsG','landG','groundShade','panelG','faceClipP','snowmanG','fieldStop1','fieldStop2','chipDate','chipSun','wEmoji','wIrr','wLabel','wMax','weatherTrack','weatherThumb','powerVal','rI','rV','rE','panelCount','panelSys','tiltThumb','tiltTrack','sThumb','sTrack','sCur','lblSr','lblSs','azInfo','optHint','panelSlider','timeSlider','statPeak','statDay','statDayLbl','statMonth','statYear','statNPV','statPay','chartSvg','chartTotal','chartLabels','sceneDescription'].forEach(id=>els[id]=$(id));
-const scene={W:1000,H:625,Hy:450,baseY:553,corners:null};let rayLines=[],cloudEls=[],windowEls=[];
-const cloudDefs=[{y:.08,s:.9,dur:62,del:-4},{y:.12,s:1.35,dur:78,del:-30},{y:.18,s:.85,dur:50,del:-18},{y:.22,s:1.15,dur:68,del:-55},{y:.05,s:.75,dur:44,del:-10},{y:.16,s:1.05,dur:58,del:-40},{y:.10,s:.95,dur:66,del:-22},{y:.20,s:1.2,dur:74,del:-48},{y:.14,s:.8,dur:46,del:-14},{y:.24,s:1.0,dur:60,del:-34},{y:.06,s:1.1,dur:52,del:-6},{y:.19,s:.9,dur:56,del:-28}];
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const lerp=(a,b,t)=>a+(b-a)*t;const mix=(c1,c2,t)=>c1.map((v,i)=>lerp(v,c2[i],t));const rgb=c=>`rgb(${c.map(Math.round).join(',')})`;const fmtTime=h=>{const hr=Math.floor(h)%24,mn=Math.round((h-Math.floor(h))*60);return`${hr}:${mn<10?'0':''}${mn}`};const isWinter=m=>m===11||m===0||m===1;
+const ErrorBoundary = (() => {
+  function wrap(fn, fallback = null, label = '') {
+    return function(...args) {
+      try {
+        return fn.apply(this, args);
+      } catch (err) {
+        console.error(`[${label}] Error:`, err);
+        if (typeof fallback === 'function') return fallback(err, args);
+        return fallback;
+      }
+    };
+  }
+  
+  function asyncWrap(fn, fallback = null, label = '') {
+    return async function(...args) {
+      try {
+        return await fn.apply(this, args);
+      } catch (err) {
+        console.error(`[${label}] Async error:`, err);
+        if (typeof fallback === 'function') return fallback(err, args);
+        return fallback;
+      }
+    };
+  }
+  
+  return { wrap, asyncWrap };
+})();
 
-function initClouds(){const shape=`<ellipse cx="60" cy="30" rx="34" ry="22"/><ellipse cx="102" cy="16" rx="42" ry="28"/><ellipse cx="150" cy="28" rx="36" ry="22"/><ellipse cx="106" cy="42" rx="78" ry="20"/>`;els.cloudsG.innerHTML=cloudDefs.map(c=>`<g class="cloud"><g class="drift" style="animation-duration:${c.dur}s;animation-delay:${c.del}s"><g class="cw" fill="#fff" filter="url(#soft)" opacity="0">${shape}</g><g class="cd" fill="#2e3854" filter="url(#soft)" opacity="0">${shape}</g></g></g>`).join('');const style=document.createElement('style');style.textContent=`@keyframes drift{from{transform:translateX(-300px)}to{transform:translateX(1300px)}}.drift{animation:drift var(--dur,60s) linear infinite}`;document.head.appendChild(style);cloudEls=Array.from(els.cloudsG.querySelectorAll('.cloud'))}
+const PerfMonitor = (() => {
+  const metrics = {
+    render: [], physics: [], total: [], fps: 60
+  };
+  const MAX_SAMPLES = 60;
+  let lastFrameTime = performance.now();
+  let frameCount = 0;
+  let fpsAccumulator = 0;
+  
+  function measure(label, fn) {
+    const start = performance.now();
+    const result = fn();
+    const elapsed = performance.now() - start;
+    
+    if (!metrics[label]) metrics[label] = [];
+    metrics[label].push(elapsed);
+    if (metrics[label].length > MAX_SAMPLES) metrics[label].shift();
+    
+    return { result, elapsed };
+  }
+  
+  function measureAsync(label, fn) {
+    const start = performance.now();
+    return Promise.resolve(fn()).then(result => {
+      const elapsed = performance.now() - start;
+      if (!metrics[label]) metrics[label] = [];
+      metrics[label].push(elapsed);
+      if (metrics[label].length > MAX_SAMPLES) metrics[label].shift();
+      return { result, elapsed };
+    });
+  }
+  
+  function updateFPS() {
+    const now = performance.now();
+    const delta = now - lastFrameTime;
+    lastFrameTime = now;
+    frameCount++;
+    fpsAccumulator += delta;
+    
+    if (fpsAccumulator >= 1000) {
+      metrics.fps = Math.round((frameCount * 1000) / fpsAccumulator);
+      frameCount = 0;
+      fpsAccumulator = 0;
+    }
+  }
+  
+  function getAverage(label) {
+    const arr = metrics[label];
+    if (!arr || arr.length === 0) return 0;
+    return arr.reduce((a, b) => a + b, 0) / arr.length;
+  }
+  
+  function getMax(label) {
+    const arr = metrics[label];
+    if (!arr || arr.length === 0) return 0;
+    return Math.max(...arr);
+  }
+  
+  function getStats() {
+    return {
+      fps: metrics.fps,
+      render: { avg: getAverage('render').toFixed(1), max: getMax('render').toFixed(1) },
+      physics: { avg: getAverage('physics').toFixed(1), max: getMax('physics').toFixed(1) },
+      total: { avg: getAverage('total').toFixed(1), max: getMax('total').toFixed(1) }
+    };
+  }
+  
+  return { measure, measureAsync, updateFPS, getStats, getAverage };
+})();
 
-function buildPanel(tilt){const{LENGTH:L,WIDTH:Wp,X:px,K:k,M:m}=CONFIG.SCENE.PANEL;const T=clamp(tilt,0,90)*Math.PI/180;const gy=scene.baseY-10;const P=(u,v)=>[px+(-v*L*Math.cos(T))+k*((u-0.5)*Wp),gy-(v*L*Math.sin(T))+m*((u-0.5)*Wp)];const b0=P(0,0),b1=P(1,0),t1=P(1,1),t0=P(0,1);els.faceClipP.setAttribute('d',`M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t0[0]} ${t0[1]} Z`);let cells='';for(let r=0;r<4;r++)for(let c=0;c<6;c++){const v0=r/4+.02,v1=(r+1)/4-.02,u0=(c+.06)/6,u1=(c+.94)/6;cells+=`<polygon points="${P(u0,v0).join(',')} ${P(u1,v0).join(',')} ${P(u1,v1).join(',')} ${P(u0,v1).join(',')}" fill="url(#cellGrad)" stroke="rgba(160,200,255,.22)" stroke-width="0.5"/>`}
-const mbx=(b0[0]+b1[0])/2,mby=(b0[1]+b1[1])/2;const minX=Math.min(b0[0],t0[0])-25,minY=Math.min(t0[1],t1[1])-52;const wX=Math.max(b1[0],t1[0])-minX+25,hY=Math.max(b0[1],b1[1])-minY+25;const aDeg=Math.atan2(b0[1]-t0[1],b0[0]-t0[0])*180/Math.PI;const r=40,ax=t0[0]+r,ay=t0[1];const bx2=t0[0]+r*Math.cos(aDeg*Math.PI/180),by2=t0[1]+r*Math.sin(aDeg*Math.PI/180);
-els.panelG.innerHTML=`<ellipse cx="${mbx-40}" cy="${scene.baseY+22}" rx="120" ry="7" fill="rgba(0,0,0,.35)" filter="url(#soft)"/><line x1="${mbx}" y1="${mby}" x2="${mbx-3}" y2="${scene.baseY+16}" stroke="#39465a" stroke-width="8" stroke-linecap="round"/><polygon points="${mbx-50},${scene.baseY+14} ${mbx+45},${scene.baseY+14} ${mbx+55},${scene.baseY+24} ${mbx-60},${scene.baseY+24}" fill="#1a2230"/><path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${b1[0]+4} ${b1[1]+10} L${b0[0]-4} ${b0[1]+10} Z" fill="url(#sideGrad)"/><path d="M${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t1[0]+10} ${t1[1]+4} L${b1[0]+10} ${b1[1]+4} Z" fill="url(#sideGrad)"/><path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t0[0]} ${t0[1]} Z" fill="none" stroke="url(#frameGrad)" stroke-width="4" stroke-linejoin="round"/>${cells}<g clip-path="url(#faceClip)"><rect id="faceGlow" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#bfe3ff" opacity="0"/><rect id="faceDark" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#0a0f1e" opacity="0"/><rect class="shine" id="pShine" x="${minX}" y="${minY}" width="140" height="${hY}" fill="url(#shineG)"/></g><line x1="${t0[0]}" y1="${t0[1]}" x2="${t0[0]+85}" y2="${t0[1]}" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M ${ax} ${ay} A ${r} ${r} 0 0 1 ${bx2} ${by2}" fill="none" stroke="#3dffa8" stroke-width="2.5"/><text x="${t0[0]+52}" y="${t0[1]+20}" fill="#3dffa8" font-size="12" font-family="JetBrains Mono" font-weight="700">${tilt}°</text><g transform="translate(${t0[0]-6},${t0[1]-40})"><rect width="92" height="26" rx="9" fill="rgba(8,12,26,.75)" stroke="rgba(255,255,255,.18)"/><text id="effChipTxt" x="46" y="17" text-anchor="middle" fill="#22e4ff" font-size="11" font-family="JetBrains Mono" font-weight="700">к солнцу 0%</text></g>`;
-scene.corners={tl:t0,tr:t1,bl:b0,br:b1};rayLines=Array.from(els.raysG.querySelectorAll('line'))}
+// ============================================================================
+// 2. EVENT BUS
+// ============================================================================
+const EventBus = (() => {
+  const events = new Map();
+  
+  function on(event, callback, priority = 0) {
+    if (!events.has(event)) events.set(event, []);
+    const handlers = events.get(event);
+    handlers.push({ callback, priority });
+    handlers.sort((a, b) => b.priority - a.priority);
+    return () => off(event, callback);
+  }
+  
+  function off(event, callback) {
+    if (!events.has(event)) return;
+    const handlers = events.get(event);
+    const idx = handlers.findIndex(h => h.callback === callback);
+    if (idx !== -1) handlers.splice(idx, 1);
+  }
+  
+  function emit(event, data) {
+    if (!events.has(event)) return;
+    const handlers = events.get(event);
+    for (const { callback } of handlers) {
+      try {
+        callback(data);
+      } catch (err) {
+        console.error(`EventBus error in "${event}":`, err);
+      }
+    }
+  }
+  
+  function once(event, callback) {
+    const wrapper = (data) => {
+      off(event, wrapper);
+      callback(data);
+    };
+    on(event, wrapper);
+  }
+  
+  return { on, off, emit, once };
+})();
 
-function buildLand(winter){const tur=(x,s,d)=>`<g transform="translate(${x},${scene.Hy+2}) scale(${s})"><line y2="-65" stroke="#9fb0c4" stroke-width="3"/><g transform="translate(0,-65)"><g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="${d}" repeatCount="indefinite"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round" transform="rotate(120)"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round" transform="rotate(240)"/></g><circle r="3" fill="#dfe7f2"/></g></g>`;const house=(x,s)=>`<g transform="translate(${x},${scene.Hy+4}) scale(${s})"><rect x="-26" y="-30" width="52" height="30" fill="#2b3854"/><polygon points="-30,-30 0,-50 30,-30" fill="${winter?'#e8f4ff':'#1c2740'}"/><rect class="win" x="-17" y="-23" width="10" height="10" fill="#ffd54a"/><rect class="win" x="7" y="-23" width="10" height="10" fill="#ffd54a"/><rect x="-5" y="-12" width="10" height="12" fill="#141d33"/></g>`;
-const fieldFill=winter?'url(#snowFieldG)':'url(#fieldG)';const hill1=winter?'#d8eaf8':'#1b3a26';const hill2=winter?'#c4dcf0':'#142b1d';
-els.landG.innerHTML=`<rect y="${scene.Hy}" width="1000" height="${scene.H-scene.Hy}" fill="${fieldFill}"/><path d="M0 ${scene.Hy+10} Q 250 ${scene.Hy-16} 500 ${scene.Hy+6} T 1000 ${scene.Hy+4} V ${scene.H} H 0 Z" fill="${hill1}" opacity="0.85"/><path d="M0 ${scene.Hy+18} Q 330 ${scene.Hy-4} 660 ${scene.Hy+12} T 1000 ${scene.Hy+10} V ${scene.H} H 0 Z" fill="${hill2}" opacity="0.7"/>${tur(760,1,'6s')}${tur(840,.7,'4.5s')}${tur(920,.85,'5.2s')}${tur(960,.6,'4s')}${house(820,.9)}${house(880,.7)}`;windowEls=Array.from(els.landG.querySelectorAll('.win'))}
+// ============================================================================
+// 3. I18N — Internationalization
+// ============================================================================
+const i18n = (() => {
+  const translations = {
+    ru: {
+      skip: 'Перейти к содержимому',
+      heroTitle: 'Симулятор <span class="gradient">солнечной электростанции</span>',
+      panels: 'Панели в системе',
+      pcs: 'шт',
+      wpm2: 'Вт/м²',
+      clear: 'ясно',
+      partlyCloudy: 'перем.',
+      cloudy: 'облачно',
+      overcast: 'пасмурно',
+      rain: 'дождь',
+      night: 'ночь',
+      tilt: 'Угол',
+      outputPower: 'Выходная мощность',
+      toSun: 'к солнцу',
+      month: 'Месяц',
+      timeOfDay: 'Время суток',
+      now: 'сейчас',
+      demo: 'демо',
+      play: 'играть',
+      pause: 'пауза',
+      sunrise: 'восход',
+      sunset: 'закат',
+      noon: 'полдень',
+      morning: 'утро',
+      noonShort: 'полдень',
+      evening: 'вечер',
+      peak: 'пик',
+      day: 'день',
+      monthShort: 'мес',
+      year: 'год',
+      years: 'лет',
+      paybackYears: 'лет окуп.',
+      dailyOutput: 'Выработка за сутки',
+      months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+      seasons: ['зима','зима','весна','весна','весна','лето','лето','лето','осень','осень','осень','зима'],
+      seasonShort: ['ЗИМА','ЗИМА','ВЕСНА','ВЕСНА','ВЕСНА','ЛЕТО','ЛЕТО','ЛЕТО','ОСЕНЬ','ОСЕНЬ','ОСЕНЬ','ЗИМА'],
+      welcomeTitle: 'Добро пожаловать в SolarLab Pro',
+      welcomeDesc: 'Профессиональный симулятор солнечных электростанций с точной физикой и экономикой',
+      getStarted: 'Начать',
+      optimal: 'Оптимум',
+      set: 'поставить',
+      optimalAngle: 'Угол оптимален',
+      locationDetected: 'Местоположение определено',
+      dataExported: 'Данные экспортированы',
+      pdfExported: 'PDF создан',
+      linkCopied: 'Ссылка скопирована',
+      copyFailed: 'Не удалось скопировать',
+      resetConfirm: 'Сбросить все настройки?',
+      weatherLoading: 'Загрузка погоды...',
+      weatherLoaded: 'Погода загружена',
+      weatherFailed: 'Используются усреднённые данные',
+      winter: 'зима', spring: 'весна', summer: 'лето', autumn: 'осень'
+    },
+    en: {
+      skip: 'Skip to content',
+      heroTitle: 'Solar Power Plant <span class="gradient">Simulator</span>',
+      panels: 'Panels in system',
+      pcs: 'pcs',
+      wpm2: 'W/m²',
+      clear: 'clear',
+      partlyCloudy: 'partly cloudy',
+      cloudy: 'cloudy',
+      overcast: 'overcast',
+      rain: 'rain',
+      night: 'night',
+      tilt: 'Tilt',
+      outputPower: 'Output power',
+      toSun: 'to sun',
+      month: 'Month',
+      timeOfDay: 'Time of day',
+      now: 'now',
+      demo: 'demo',
+      play: 'play',
+      pause: 'pause',
+      sunrise: 'sunrise',
+      sunset: 'sunset',
+      noon: 'noon',
+      morning: 'morning',
+      noonShort: 'noon',
+      evening: 'evening',
+      peak: 'peak',
+      day: 'day',
+      monthShort: 'mo',
+      year: 'year',
+      years: 'y',
+      paybackYears: 'years payback',
+      dailyOutput: 'Daily output',
+      months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+      seasons: ['winter','winter','spring','spring','spring','summer','summer','summer','autumn','autumn','autumn','winter'],
+      seasonShort: ['WINTER','WINTER','SPRING','SPRING','SPRING','SUMMER','SUMMER','SUMMER','AUTUMN','AUTUMN','AUTUMN','WINTER'],
+      welcomeTitle: 'Welcome to SolarLab Pro',
+      welcomeDesc: 'Professional solar power plant simulator with accurate physics and economics',
+      getStarted: 'Get Started',
+      optimal: 'Optimal',
+      set: 'apply',
+      optimalAngle: 'Angle is optimal',
+      locationDetected: 'Location detected',
+      dataExported: 'Data exported',
+      pdfExported: 'PDF generated',
+      linkCopied: 'Link copied',
+      copyFailed: 'Failed to copy',
+      resetConfirm: 'Reset all settings?',
+      weatherLoading: 'Loading weather...',
+      weatherLoaded: 'Weather loaded',
+      weatherFailed: 'Using average data',
+      winter: 'winter', spring: 'spring', summer: 'summer', autumn: 'autumn'
+    },
+    pl: {
+      skip: 'Przejdź do treści',
+      heroTitle: 'Symulator <span class="gradient">elektrowni słonecznej</span>',
+      panels: 'Panele w systemie',
+      pcs: 'szt',
+      wpm2: 'W/m²',
+      clear: 'bezchmurnie',
+      partlyCloudy: 'częściowo',
+      cloudy: 'pochmurno',
+      overcast: 'zachmurzenie',
+      rain: 'deszcz',
+      night: 'noc',
+      tilt: 'Kąt',
+      outputPower: 'Moc wyjściowa',
+      toSun: 'do słońca',
+      month: 'Miesiąc',
+      timeOfDay: 'Pora dnia',
+      now: 'teraz',
+      demo: 'demo',
+      play: 'graj',
+      pause: 'pauza',
+      sunrise: 'wschód',
+      sunset: 'zachód',
+      noon: 'południe',
+      morning: 'rano',
+      noonShort: 'południe',
+      evening: 'wieczór',
+      peak: 'szczyt',
+      day: 'dzień',
+      monthShort: 'mies',
+      year: 'rok',
+      years: 'lat',
+      paybackYears: 'lat zwrotu',
+      dailyOutput: 'Dzienna produkcja',
+      months: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
+      seasons: ['zima','zima','wiosna','wiosna','wiosna','lato','lato','lato','jesień','jesień','jesień','zima'],
+      seasonShort: ['ZIMA','ZIMA','WIOSNA','WIOSNA','WIOSNA','LATO','LATO','LATO','JESIEŃ','JESIEŃ','JESIEŃ','ZIMA'],
+      welcomeTitle: 'Witaj w SolarLab Pro',
+      welcomeDesc: 'Profesjonalny symulator elektrowni słonecznych z dokładną fizyką i ekonomią',
+      getStarted: 'Rozpocznij',
+      optimal: 'Optymalny',
+      set: 'ustaw',
+      optimalAngle: 'Kąt optymalny',
+      locationDetected: 'Lokalizacja wykryta',
+      dataExported: 'Dane wyeksportowane',
+      pdfExported: 'PDF wygenerowany',
+      linkCopied: 'Link skopiowany',
+      copyFailed: 'Nie udało się skopiować',
+      resetConfirm: 'Zresetować wszystkie ustawienia?',
+      weatherLoading: 'Ładowanie pogody...',
+      weatherLoaded: 'Pogoda załadowana',
+      weatherFailed: 'Używanie średnich danych',
+      winter: 'zima', spring: 'wiosna', summer: 'lato', autumn: 'jesień'
+    }
+  };
+  
+  let currentLang = 'ru';
+  
+  function setLang(lang) {
+    if (!translations[lang]) lang = 'ru';
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    applyTranslations();
+    EventBus.emit('i18n:changed', lang);
+    try { localStorage.setItem('solarlab-lang', lang); } catch(e) {}
+  }
+  
+  function t(key) {
+    return translations[currentLang][key] || translations.ru[key] || key;
+  }
+  
+  function applyTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const val = t(key);
+      if (val) el.innerHTML = val;
+    });
+  }
+  
+  function getLang() { return currentLang; }
+  function getMonths() { return translations[currentLang].months; }
+  function getSeasons() { return translations[currentLang].seasons; }
+  function getSeasonsShort() { return translations[currentLang].seasonShort; }
+  
+  // Init from storage or browser
+  try {
+    const saved = localStorage.getItem('solarlab-lang');
+    if (saved && translations[saved]) currentLang = saved;
+    else {
+      const nav = (navigator.language || 'ru').slice(0,2).toLowerCase();
+      if (translations[nav]) currentLang = nav;
+    }
+  } catch(e) {}
+  
+  return { setLang, t, getLang, getMonths, getSeasons, getSeasonsShort, applyTranslations };
+})();
 
-function resize(){const rect=els.stageBox.getBoundingClientRect();if(rect.width===0||rect.height===0)return;scene.H=clamp(Math.round(1000*rect.height/rect.width),550,1400);els.sceneSvg.setAttribute('viewBox',`0 0 1000 ${scene.H}`);els.skyR.setAttribute('height',scene.H);scene.Hy=Math.round(scene.H*0.72);scene.baseY=Math.round(scene.H*0.885);els.groundShade.setAttribute('y',scene.Hy);els.groundShade.setAttribute('height',scene.H-scene.Hy);els.starsG.innerHTML=Array.from({length:50},()=>`<circle cx="${Math.random()*1000}" cy="${Math.random()*scene.H*0.45}" r="${(0.6+Math.random()*1.2).toFixed(1)}" fill="#cfe4ff"/>`).join('');cloudEls.forEach((g,i)=>{const c=cloudDefs[i];if(c)g.setAttribute('transform',`translate(0,${Math.round(scene.H*c.y)}) scale(${c.s})`)});const canvas=els.stageCanvas;const dpr=window.devicePixelRatio||1;canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;buildLand(isWinter(Store.state.month));buildPanel(Store.state.tilt)}
+// ============================================================================
+// 4. CONFIGURATION & GEOLOCATION
+// ============================================================================
+const CONFIG = Object.freeze({
+  LOCATION: { lat: 50.06, lon: 19.94, tz: 1, name: 'Kraków, Poland' },
+  PANEL: {
+    name: 'Jinko Tiger Neo 540W',
+    Pmax: 540, Vmp: 41.7, Imp: 13.02, Voc: 49.5, Isc: 13.85,
+    tempCoeff_P: -0.0034, NOCT: 45, bifaciality: 0.7,
+    cost: 350,
+    degradation: 0.004,
+    b0_IAM: 0.03,
+    width: 1.134, height: 2.384, area: 2.703
+  },
+  INVERTER: {
+    efficiency: 0.97,
+    maxPower: 3000,
+    minVoltage: 150, maxVoltage: 500
+  },
+  SYSTEM: {
+    cableLosses: 0.015,
+    mismatchLosses: 0.02,
+    soilingLosses: 0.03,
+    shadingLosses: 0.01,
+    availability: 0.99
+  },
+  ECONOMICS: {
+    electricityPrice: 0.22,
+    discountRate: 0.06,
+    projectLife: 25,
+    annualOPEX: 15,
+    installationCost: 800
+  },
+  SCENE: {
+    PANEL: { LENGTH: 200, WIDTH: 280, X: 380, K: 0.5, M: 0.22 },
+    SUN: { RADIUS: 48, HALO: 130 },
+    BEAM: { WIDTH: 60 }
+  },
+  WEATHER_API: {
+    baseUrl: 'https://api.open-meteo.com/v1/forecast',
+    timeout: 8000
+  }
+});
 
-function updateThumbPosition(track,thumb,f,size){const rect=track.getBoundingClientRect();if(rect.width===0||rect.height===0)return;const isVert=window.matchMedia('(min-width:961px)').matches;if(isVert){thumb.style.top=`${Math.round((1-f)*(rect.height-size))}px`;thumb.style.left='50%';thumb.style.transform='translateX(-50%)'}else{thumb.style.left=`${Math.round(f*(rect.width-size))}px`;thumb.style.top='50%';thumb.style.transform='translateY(-50%)'}}
-function updateWeatherThumb(f){const rect=els.weatherTrack.getBoundingClientRect();if(rect.width===0)return;els.weatherThumb.style.left=`${Math.round(f*(rect.width-26))}px`;els.weatherThumb.style.top='50%';els.weatherThumb.style.transform='translateY(-50%)'}
+const MONTH_DAYS = [31,28,31,30,31,30,31,31,30,31,30,31];
+const DAY_OF_YEAR = [15,46,74,105,135,162,197,228,258,288,319,344];
+const AMBIENT_TEMP_DEFAULT = [-1,0,4,9,14,17,19,19,15,10,5,1];
+const MAX_GHI_NOON_DEFAULT = [195,290,470,630,780,900,940,860,670,450,230,165];
 
-function update(state){const t0=performance.now();try{
-const output=Physics.calculateOutput({month:state.month,clock:state.time,tilt:state.tilt,weather:state.weather,panelCount:state.panels});
-const sol=output.solar;const elDeg=sol.elevationDeg;const night=elDeg<=0;const deepNight=elDeg<=-6;const wf=state.weather/100;const dark=1-wf;const winter=isWinter(state.month);
+// ============================================================================
+// 5. WEATHER SERVICE — Real data with fallback
+// ============================================================================
+const WeatherService = (() => {
+  let cachedData = null;
+  let cacheTimestamp = 0;
+  const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+  
+  async function fetchWeather(lat, lon) {
+    const now = Date.now();
+    const cacheKey = `${lat.toFixed(2)}_${lon.toFixed(2)}`;
+    
+    if (cachedData && cachedData.key === cacheKey && (now - cacheTimestamp) < CACHE_TTL) {
+      return cachedData.data;
+    }
+    
+    const params = new URLSearchParams({
+      latitude: lat,
+      longitude: lon,
+      hourly: 'temperature_2m,global_tilted_irradiance,direct_radiation,diffuse_radiation,weathercode',
+      daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum',
+      timezone: 'auto',
+      forecast_days: 1
+    });
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), CONFIG.WEATHER_API.timeout);
+    
+    try {
+      const response = await fetch(`${CONFIG.WEATHER_API.baseUrl}?${params}`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      
+      const data = await response.json();
+      cachedData = { key: cacheKey, data };
+      cacheTimestamp = now;
+      
+      try { localStorage.setItem(`weather_${cacheKey}`, JSON.stringify({ data, timestamp: now })); } catch(e) {}
+      
+      return data;
+    } catch (err) {
+      clearTimeout(timeoutId);
+      console.warn('Weather API failed, using fallback:', err.message);
+      
+      // Try to load from cache
+      try {
+        const cached = localStorage.getItem(`weather_${cacheKey}`);
+        if (cached) {
+          const { data, timestamp } = JSON.parse(cached);
+          if ((now - timestamp) < CACHE_TTL * 4) return data;
+        }
+      } catch(e) {}
+      
+      return null;
+    }
+  }
+  
+  function getWeatherForHour(data, month, hour) {
+    if (!data || !data.hourly) return null;
+    
+    const dayIndex = Math.min(Math.floor(hour), 23);
+    const temp = data.hourly.temperature_2m?.[dayIndex];
+    const ghi = data.hourly.global_tilted_irradiance?.[dayIndex];
+    const dni = data.hourly.direct_radiation?.[dayIndex];
+    const dhi = data.hourly.diffuse_radiation?.[dayIndex];
+    const code = data.hourly.weathercode?.[dayIndex];
+    
+    if (temp === undefined || ghi === undefined) return null;
+    
+    return { temp, ghi, dni: dni || 0, dhi: dhi || 0, code: code || 0 };
+  }
+  
+  function getMonthlyAverages(data) {
+    if (!data || !data.daily) return null;
+    
+    // Simplified — would need historical data for real averages
+    return {
+      temp: data.daily.temperature_2m_max?.[0] || 15,
+      tempMin: data.daily.temperature_2m_min?.[0] || 5
+    };
+  }
+  
+  return { fetchWeather, getWeatherForHour, getMonthlyAverages };
+})();
 
-/* Sky */
-const warm=!night?clamp(1-elDeg/25,0,1):0;let c1=mix([10,42,85],[40,55,80],dark),c2=mix([29,77,143],[28,38,58],dark),c3=mix([43,108,176],[16,22,36],dark);if(warm>0){c1=mix(c1,[255,140,80],warm*.5);c2=mix(c2,[255,120,70],warm*.4);c3=mix(c3,[255,90,50],warm*.2)}if(deepNight){c1=[7,11,26];c2=[9,13,30];c3=[11,15,34]}
-els.st1.setAttribute('stop-color',rgb(c1));els.st2.setAttribute('stop-color',rgb(c2));els.st3.setAttribute('stop-color',rgb(c3));els.starsG.setAttribute('opacity',deepNight?0.9:night?0.6:0);
+// ============================================================================
+// 6. PHYSICS ENGINE — Enhanced with Perez model & shading
+// ============================================================================
+const Physics = (() => {
+  const DEG = Math.PI / 180, RAD = 180 / Math.PI;
+  const { clamp, safeAcos, safeAsin, safeDiv, safeSqrt, isFiniteNum } = SafeMath;
+  
+  let currentLocation = { ...CONFIG.LOCATION };
+  let weatherData = null;
+  
+  function setLocation(loc) {
+    currentLocation = { ...CONFIG.LOCATION, ...loc };
+    invalidateCache();
+  }
+  
+  function setWeatherData(data) {
+    weatherData = data;
+    invalidateCache();
+  }
+  
+  /** Atmospheric refraction correction (Meeus algorithm) */
+  function refraction(elDeg) {
+    if (elDeg < -0.575) return 0;
+    const elRad = elDeg * DEG;
+    return (1.02 / Math.tan(elRad + 10.3 / (elDeg + 5.11) * DEG)) / 60;
+  }
+  
+  /** Solar position (NOAA SPA simplified) */
+  function solarPosition(dayOfYear, clockHour) {
+    const { lat, lon, tz } = currentLocation;
+    const latRad = lat * DEG;
+    
+    const gamma = (2 * Math.PI / 365) * (dayOfYear - 1 + (clockHour - 12) / 24);
+    const eqtime = 229.18 * (0.000075 + 0.001868 * Math.cos(gamma) - 0.032077 * Math.sin(gamma) - 0.014615 * Math.cos(2 * gamma) - 0.040849 * Math.sin(2 * gamma));
+    const decl = 0.006918 - 0.399912 * Math.cos(gamma) + 0.070257 * Math.sin(gamma) - 0.006758 * Math.cos(2 * gamma) + 0.000907 * Math.sin(2 * gamma) - 0.002697 * Math.cos(3 * gamma) + 0.00148 * Math.sin(3 * gamma);
+    
+    const timeOffset = eqtime + 4 * lon - 60 * tz;
+    const tst = clockHour * 60 + timeOffset;
+    const ha = (tst / 4 - 180) * DEG;
+    
+    const cosZenith = Math.sin(latRad) * Math.sin(decl) + Math.cos(latRad) * Math.cos(decl) * Math.cos(ha);
+    const zenith = safeAcos(cosZenith);
+    let elevation = Math.PI / 2 - zenith;
+    let elDeg = elevation * RAD;
+    
+    // Refraction
+    elDeg += refraction(elDeg);
+    elevation = elDeg * DEG;
+    
+    const sinZenith = Math.sin(zenith);
+    let azimuth = 0;
+    if (sinZenith > 0.001) {
+      const cosAz = (Math.sin(decl) - Math.cos(zenith) * Math.sin(latRad)) / (sinZenith * Math.cos(latRad));
+      azimuth = safeAcos(cosAz);
+      if (ha > 0) azimuth = 2 * Math.PI - azimuth;
+    }
+    
+    let azFromSouth = azimuth - Math.PI;
+    if (azFromSouth > Math.PI) azFromSouth -= 2 * Math.PI;
+    if (azFromSouth < -Math.PI) azFromSouth += 2 * Math.PI;
+    
+    const cosH0 = clamp(-Math.tan(latRad) * Math.tan(decl), -1, 1);
+    const H0 = safeAcos(cosH0);
+    
+    return {
+      elevation, elevationDeg: elDeg, azimuth,
+      azimuthFromSouth: azFromSouth, azimuthFromSouthDeg: azFromSouth * RAD,
+      declination: decl, hourAngle: ha,
+      sunrise: 12 - (H0 * RAD) / 15 - timeOffset / 60,
+      sunset: 12 + (H0 * RAD) / 15 - timeOffset / 60,
+      dayLength: (2 * H0 * RAD) / 15
+    };
+  }
+  
+  /** Air mass (Kasten & Young 1989) */
+  function airMass(elDeg) {
+    if (elDeg <= 0) return 38;
+    return safeDiv(1, Math.sin(elDeg * DEG) + 0.50572 * Math.pow(Math.max(elDeg, 0.1) + 6.07995, -1.6364), 38);
+  }
+  
+  /** Martin-Ruiz IAM model */
+  function IAM(AOI) {
+    if (AOI >= Math.PI / 2) return 0;
+    const aR = CONFIG.PANEL.b0_IAM;
+    const cosAOI = Math.cos(AOI);
+    if (cosAOI <= 0) return 0;
+    return (1 - Math.exp(-cosAOI / aR)) / (1 - Math.exp(-1 / aR));
+  }
+  
+  /** Perez diffuse model (simplified anisotropic) */
+  function perezDiffuse(dhi, dni, tiltRad, cosIncidence, elevation) {
+    if (dhi <= 0 || elevation <= 0) return 0;
+    
+    const sinEl = Math.sin(elevation);
+    const clearness = safeDiv(dni + dhi, dhi, 1);
+    const brightness = (dhi * airMass(currentLocation.lat)) / (1367 * 0.001); // approximate
+    
+    // Simplified Perez coefficients
+    const F1 = clamp(0.0177 * Math.pow(clearness, 1.5) - 0.041, 0, 1);
+    const F2 = clamp(-0.02 * clearness + 0.05, -0.1, 0.2);
+    
+    const isoDiffuse = dhi * (1 + Math.cos(tiltRad)) / 2;
+    const circumsolar = dhi * F1 * clamp(cosIncidence / sinEl, 0, 10);
+    const horizon = dhi * F2 * Math.sin(tiltRad);
+    
+    return Math.max(0, isoDiffuse + circumsolar + horizon);
+  }
+  
+  /** Shading losses (row-to-row) */
+  function shadingLoss(tiltRad, month) {
+    // Simplified model: assumes standard row spacing
+    const { lat } = currentLocation;
+    const decl = 23.45 * Math.sin(DEG * (360 / 365) * (284 + DAY_OF_YEAR[month]));
+    const winterSunHeight = 90 - Math.abs(lat - decl);
+    
+    if (winterSunHeight < 15) return 0.05; // 5% loss in winter
+    if (winterSunHeight < 25) return 0.02;
+    return 0;
+  }
+  
+  /** Faiman cell temperature model */
+  function cellTemperature(poa, ambientTemp, windSpeed = 1) {
+    const u0 = 25.0, u1 = 6.84;
+    return ambientTemp + safeDiv(poa, u0 + u1 * windSpeed, 0);
+  }
+  
+  /** Inverter model with clipping */
+  function inverterOutput(dcPower) {
+    const { efficiency, maxPower } = CONFIG.INVERTER;
+    const clipped = Math.min(dcPower, maxPower);
+    return clipped * efficiency;
+  }
+  
+  /** Main PV output calculation */
+  function calculateOutput(params) {
+    const { month = 6, clock = 13, tilt = 35, weather = 100, panelCount = 4, useWeather = true } = params;
+    const tiltRad = tilt * DEG;
+    const sol = solarPosition(DAY_OF_YEAR[month], clock);
+    
+    if (sol.elevationDeg <= -0.833) {
+      return {
+        power: 0, acPower: 0, dcPower: 0, poa: 0, ghi: 0, dni: 0, dhi: 0,
+        cosIncidence: 0, AOI: 0, cellTemp: AMBIENT_TEMP_DEFAULT[month],
+        solar: sol, current: 0, voltage: 0, shadingLoss: 0
+      };
+    }
+    
+    let ghi, dni, dhi, ambientTemp;
+    
+    // Try to use real weather data
+    const hourWeather = useWeather ? WeatherService.getWeatherForHour(weatherData, month, clock) : null;
+    
+    if (hourWeather) {
+      ghi = hourWeather.ghi * (weather / 100);
+      dni = hourWeather.dni * (weather / 100);
+      dhi = hourWeather.dhi * (weather / 100);
+      ambientTemp = hourWeather.temp;
+    } else {
+      // Fallback to clear sky model
+      const sinEl = Math.max(0, Math.sin(sol.elevation));
+      const am = airMass(sol.elevationDeg);
+      const dni_clear = 1367 * Math.pow(0.7, Math.pow(am, 0.678));
+      const ghi_clear = dni_clear * sinEl + 100 * sinEl;
+      
+      const wf = weather / 100;
+      const weatherAtten = 0.12 + 0.88 * Math.pow(wf, 1.4);
+      ghi = ghi_clear * weatherAtten;
+      
+      const beamFraction = Math.pow(wf, 1.5) * 0.85 + 0.05;
+      dhi = ghi * (1 - beamFraction);
+      const bhi = ghi * beamFraction;
+      dni = sinEl > 0.01 ? safeDiv(bhi, sinEl, 0) : 0;
+      ambientTemp = AMBIENT_TEMP_DEFAULT[month] + 8 * wf - 2 * (1 - wf);
+    }
+    
+    // Incidence angle
+    const isWinter = month === 11 || month === 0 || month === 1;
+    const albedo = isWinter ? 0.6 : 0.2;
+    const panelAzRad = 0;
+    
+    const cosIncidence = Math.sin(sol.elevation) * Math.cos(tiltRad) + 
+                          Math.cos(sol.elevation) * Math.sin(tiltRad) * 
+                          Math.cos(sol.azimuthFromSouth - panelAzRad);
+    const AOI = safeAcos(cosIncidence);
+    
+    // Beam on panel with IAM
+    const beamOnPanel = Math.max(0, dni * Math.max(0, cosIncidence) * IAM(AOI));
+    
+    // Diffuse on panel (Perez model)
+    const diffuseOnPanel = perezDiffuse(dhi, dni, tiltRad, cosIncidence, sol.elevation);
+    
+    // Ground reflected
+    const groundReflected = ghi * albedo * (1 - Math.cos(tiltRad)) / 2;
+    
+    const poa = beamOnPanel + diffuseOnPanel + groundReflected;
+    
+    // Bifacial gain
+    const bifacialGain = 1 + CONFIG.PANEL.bifaciality * albedo * (1 - Math.cos(tiltRad)) / 2 * 0.5;
+    
+    // Temperature
+    const Tcell = cellTemperature(poa, ambientTemp);
+    const tempFactor = Math.max(0.5, 1 + CONFIG.PANEL.tempCoeff_P * (Tcell - 25));
+    
+    // Shading losses
+    const shLoss = shadingLoss(tiltRad, month);
+    
+    // DC power per panel
+    const dcPerPanel = Math.max(0, CONFIG.PANEL.Pmax * safeDiv(poa, 1000, 0) * tempFactor * bifacialGain * (1 - shLoss));
+    
+    // System losses
+    const sysLosses = 1 - CONFIG.SYSTEM.cableLosses - CONFIG.SYSTEM.mismatchLosses - CONFIG.SYSTEM.soilingLosses;
+    const dcTotal = dcPerPanel * panelCount * sysLosses * CONFIG.SYSTEM.availability;
+    
+    // Inverter
+    const acPower = inverterOutput(dcTotal);
+    
+    // Electrical output
+    const current = panelCount > 0 && poa > 0 ? 
+      CONFIG.PANEL.Imp * safeDiv(poa, 1000, 0) * Math.max(0, tempFactor) * panelCount : 0;
+    const voltage = CONFIG.PANEL.Vmp;
+    
+    return {
+      power: acPower, acPower, dcPower: dcTotal, powerPerPanel: dcPerPanel,
+      poa, ghi, dni, dhi, cosIncidence: Math.max(0, cosIncidence), AOI,
+      cellTemp: Tcell, ambientTemp, tempFactor, bifacialGain,
+      current, voltage, solar: sol, shadingLoss: shLoss
+    };
+  }
+  
+  function optimalTilt(month) {
+    const decl = 23.45 * Math.sin(DEG * (360 / 365) * (284 + DAY_OF_YEAR[month]));
+    return clamp(Math.round(currentLocation.lat - decl * 0.9), 15, 75);
+  }
+  
+  // Cache with config hash
+  const _cache = new Map();
+  let _configHash = '';
+  
+  function getConfigHash() {
+    return `${CONFIG.PANEL.Pmax}_${CONFIG.INVERTER.maxPower}_${CONFIG.SYSTEM.cableLosses}_${currentLocation.lat.toFixed(2)}_${currentLocation.lon.toFixed(2)}`;
+  }
+  
+  function invalidateCache() {
+    _cache.clear();
+    _configHash = getConfigHash();
+  }
+  
+  function integrateHourly(params, targetMonth) {
+    const configHash = getConfigHash();
+    if (configHash !== _configHash) invalidateCache();
+    
+    const key = `h_${targetMonth}_${params.tilt}_${params.weather}_${params.panelCount}_${configHash}`;
+    if (_cache.has(key)) return _cache.get(key);
+    
+    const hourly = new Array(24).fill(0);
+    let daily = 0;
+    
+    for (let h = 0; h < 24; h += 0.5) {
+      try {
+        const out = calculateOutput({ ...params, month: targetMonth, clock: h });
+        const e = out.power * 0.5 / 1000;
+        daily += e;
+        hourly[Math.floor(h)] += e;
+      } catch (err) {
+        console.warn('Integration error at hour', h, err);
+      }
+    }
+    
+    const result = { daily, hourly };
+    
+    // Limit cache size
+    if (_cache.size > 50) {
+      const firstKey = _cache.keys().next().value;
+      _cache.delete(firstKey);
+    }
+    
+    _cache.set(key, result);
+    return result;
+  }
+  
+  function integrateYear(params) {
+    const configHash = getConfigHash();
+    if (configHash !== _configHash) invalidateCache();
+    
+    const key = `y_${params.tilt}_${params.weather}_${params.panelCount}_${configHash}`;
+    if (_cache.has(key)) return _cache.get(key);
+    
+    let total = 0;
+    for (let m = 0; m < 12; m++) {
+      try {
+        total += integrateHourly(params, m).daily * MONTH_DAYS[m];
+      } catch (err) {
+        console.warn('Year integration error at month', m, err);
+      }
+    }
+    
+    _cache.set(key, total);
+    return total;
+  }
+  
+  function integrateWithOptimal(params) {
+    const optTilt = optimalTilt(params.month);
+    const current = integrateHourly(params, params.month);
+    const optimal = integrateHourly({ ...params, tilt: optTilt }, params.month);
+    return { 
+      current, optimal, optTilt, 
+      efficiency: optimal.daily > 0 ? current.daily / optimal.daily : 0 
+    };
+  }
+  
+  return { 
+    solarPosition, calculateOutput, optimalTilt, 
+    integrateHourly, integrateYear, integrateWithOptimal, 
+    IAM, cellTemperature, inverterOutput,
+    setLocation, setWeatherData, invalidateCache
+  };
+})();
 
-/* Sun */
-const dayFraction=clamp((state.time-sol.sunrise)/(sol.sunset-sol.sunrise),0,1);const sunX=lerp(90,910,dayFraction);const peakY=scene.H*0.12,lowY=scene.Hy-20;const sunY=deepNight?lowY:lerp(lowY,peakY,clamp(elDeg/65,0,1));
-els.sunG.setAttribute('transform',`translate(${sunX},${sunY})`);els.sunG.setAttribute('opacity',night?0:(clamp(Math.sin(sol.elevation)*1.6,.3,1)*(.2+.8*wf)).toFixed(2));
+// ============================================================================
+// 7. ECONOMICS MODULE — Extended with ROI
+// ============================================================================
+const Economics = (() => {
+  const { electricityPrice, discountRate, projectLife, annualOPEX, installationCost } = CONFIG.ECONOMICS;
+  
+  function calculateNPV(yearlyYield, panelCount) {
+    const initialCost = panelCount * CONFIG.PANEL.cost + installationCost;
+    const annualRevenue = yearlyYield * electricityPrice;
+    const annualCost = (panelCount * CONFIG.PANEL.Pmax / 1000) * annualOPEX;
+    
+    let npv = -initialCost;
+    for (let y = 1; y <= projectLife; y++) {
+      const degradationFactor = Math.pow(1 - CONFIG.PANEL.degradation, y);
+      const netCashFlow = annualRevenue * degradationFactor - annualCost;
+      npv += safeDiv(netCashFlow, Math.pow(1 + discountRate, y), 0);
+    }
+    return npv;
+  }
+  
+  function calculatePayback(yearlyYield, panelCount) {
+    const initialCost = panelCount * CONFIG.PANEL.cost + installationCost;
+    const annualRevenue = yearlyYield * electricityPrice;
+    const annualCost = (panelCount * CONFIG.PANEL.Pmax / 1000) * annualOPEX;
+    const netAnnual = annualRevenue - annualCost;
+    
+    if (netAnnual <= 0) return Infinity;
+    return safeDiv(initialCost, netAnnual, Infinity);
+  }
+  
+  function calculateROI(yearlyYield, panelCount, years = 25) {
+    const initialCost = panelCount * CONFIG.PANEL.cost + installationCost;
+    const annualRevenue = yearlyYield * electricityPrice;
+    const annualCost = (panelCount * CONFIG.PANEL.Pmax / 1000) * annualOPEX;
+    
+    let totalSavings = 0;
+    for (let y = 1; y <= years; y++) {
+      const degradationFactor = Math.pow(1 - CONFIG.PANEL.degradation, y);
+      totalSavings += (annualRevenue * degradationFactor - annualCost);
+    }
+    
+    const roi = safeDiv(totalSavings - initialCost, initialCost, 0) * 100;
+    const lcoe = safeDiv(initialCost, yearlyYield * years, 0);
+    
+    return { roi, lcoe, totalSavings, initialCost };
+  }
+  
+  function calculateLCOE(yearlyYield, panelCount) {
+    const { roi, lcoe } = calculateROI(yearlyYield, panelCount);
+    return lcoe;
+  }
+  
+  function { safeDiv } = SafeMath;
+  
+  return { calculateNPV, calculatePayback, calculateROI, calculateLCOE };
+})();
 
-/* Beam */
-if(scene.corners){const{tl,tr,bl,br}=scene.corners;const sunR=CONFIG.SCENE.SUN.RADIUS;const midX=(tl[0]+tr[0]+bl[0]+br[0])/4,midY=(tl[1]+tr[1]+bl[1]+br[1])/4;const dx=midX-sunX,dy=midY-sunY;const dist=Math.sqrt(dx*dx+dy*dy)||1;const edgeX=sunX+(dx/dist)*sunR,edgeY=sunY+(dy/dist)*sunR;const beamW=CONFIG.SCENE.BEAM.WIDTH;const perpX=-(dy/dist)*beamW/2,perpY=(dx/dist)*beamW/2;
-els.beam1.setAttribute('d',`M${edgeX-perpX} ${edgeY-perpY} L${tl[0]} ${tl[1]} L${bl[0]} ${bl[1]} L${edgeX+perpX} ${edgeY+perpY} L${tr[0]} ${tr[1]} Z`);els.beam2.setAttribute('d',`M${edgeX} ${edgeY} L${tl[0]} ${tl[1]} L${tr[0]} ${tr[1]} Z`);els.beamG.setAttribute('opacity',(output.poa/1000*.6).toFixed(2));
-rayLines.forEach((line,i)=>{const f=.1+.8*i/4;line.setAttribute('x1',edgeX);line.setAttribute('y1',edgeY);line.setAttribute('x2',lerp(tl[0],tr[0],f));line.setAttribute('y2',lerp(tl[1],tr[1],f))});
-els.raysG.setAttribute('opacity',(output.poa/1000*.7*(0.3+0.7*output.cosIncidence)).toFixed(2))}
+// ============================================================================
+// 8. STATE MANAGEMENT — with validation & undo
+// ============================================================================
+const Store = (() => {
+  const STORAGE_KEY = 'solarlab-pro-v4.0';
+  const defaults = Object.freeze({ 
+    panels: 4, tilt: 35, month: 6, time: 13, weather: 100,
+    theme: 'system', lang: i18n.getLang()
+  });
+  
+  const schema = {
+    panels: { min: 1, max: 24, step: 1 },
+    tilt: { min: 0, max: 90, step: 1 },
+    month: { min: 0, max: 11, step: 1 },
+    time: { min: 0, max: 24, step: 0.25 },
+    weather: { min: 0, max: 100, step: 1 },
+    theme: { values: ['light', 'system', 'dark'] },
+    lang: { values: ['ru', 'en', 'pl'] }
+  };
+  
+  function validate(key, value) {
+    const s = schema[key];
+    if (!s) return value;
+    
+    if (s.values) {
+      return s.values.includes(value) ? value : s.values[0];
+    }
+    
+    let v = typeof value === 'number' ? value : parseFloat(value);
+    if (isNaN(v)) return s.min;
+    v = Math.max(s.min, Math.min(s.max, v));
+    if (s.step) v = Math.round(v / s.step) * s.step;
+    return v;
+  }
+  
+  // Load saved state
+  let savedState = { ...defaults };
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) {
+      const parsed = JSON.parse(s);
+      Object.keys(defaults).forEach(k => {
+        if (parsed[k] !== undefined) savedState[k] = validate(k, parsed[k]);
+      });
+    }
+  } catch (e) { console.warn('Failed to load state:', e); }
+  
+  // URL params
+  const urlParams = new URLSearchParams(window.location.search);
+  Object.keys(defaults).forEach(k => {
+    if (urlParams.has(k) && schema[k]) savedState[k] = validate(k, urlParams.get(k));
+  });
+  
+  const state = { ...savedState };
+  const listeners = new Set();
+  const history = [];
+  const MAX_HISTORY = 30;
+  let isNotifying = false;
+  let saveTimeout = null;
+  
+  function subscribe(fn) { 
+    listeners.add(fn); 
+    return () => listeners.delete(fn); 
+  }
+  
+  function notify() {
+    if (isNotifying) return;
+    isNotifying = true;
+    try { 
+      listeners.forEach(fn => { 
+        try { fn(state); } catch (e) { console.error('Listener error:', e); } 
+      }); 
+    } finally { 
+      isNotifying = false; 
+    }
+    
+    // Debounced save
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => {
+      try { 
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); 
+        EventBus.emit('state:saved', state);
+      } catch (e) {
+        console.warn('Failed to save state:', e);
+      }
+    }, 500);
+  }
+  
+  function set(updates, skipHistory = false) {
+    const validated = {};
+    Object.entries(updates).forEach(([k, v]) => {
+      if (k in schema) validated[k] = validate(k, v);
+    });
+    
+    if (!skipHistory && Object.keys(validated).length > 0) {
+      history.push({ ...state });
+      if (history.length > MAX_HISTORY) history.shift();
+    }
+    
+    Object.assign(state, validated);
+    notify();
+    EventBus.emit('state:changed', { state, changes: validated });
+  }
+  
+  function undo() {
+    if (history.length === 0) return false;
+    const prev = history.pop();
+    Object.assign(state, prev);
+    notify();
+    EventBus.emit('state:undo', state);
+    return true;
+  }
+  
+  function getShareUrl() {
+    const url = new URL(window.location.href.split('?')[0]);
+    Object.entries(state).forEach(([k, v]) => { 
+      if (v !== defaults[k] && schema[k]) url.searchParams.set(k, v); 
+    });
+    return url.toString();
+  }
+  
+  function reset() {
+    set({ ...defaults });
+    history.length = 0;
+    EventBus.emit('state:reset');
+  }
+  
+  return { state, defaults, set, undo, subscribe, getShareUrl, validate, reset };
+})();
 
-/* Clouds */
-const cloudCount=Math.round(2+10*dark);cloudEls.forEach((g,i)=>{const show=i<cloudCount?clamp(1-i*.05,.3,1):0;const cw=g.querySelector('.cw'),cd=g.querySelector('.cd');if(cw)cw.setAttribute('opacity',(show*(1-dark*.85)).toFixed(2));if(cd)cd.setAttribute('opacity',(show*dark*.95).toFixed(2))});
+// ============================================================================
+// 9. RENDER ENGINE — Enhanced with shadows & themes
+// ============================================================================
+const Render = (() => {
+  const $ = id => document.getElementById(id);
+  const { clamp } = SafeMath;
+  
+  const els = {};
+  const elIds = ['stageBox','sceneSvg','stageCanvas','skyR','st1','st2','st3','starsG','sunG',
+    'beamG','beam1','beam2','raysG','cloudsG','landG','groundShade','panelG','faceClipP',
+    'snowmanG','fieldStop1','fieldStop2','chipDate','chipSun','wEmoji','wIrr','wLabel','wMax',
+    'weatherTrack','weatherThumb','powerVal','rI','rV','rE','panelCount','panelSys',
+    'tiltThumb','tiltTrack','sThumb','sTrack','sCur','lblSr','lblSs','azInfo','optHint',
+    'panelSlider','timeSlider','statPeak','statDay','statDayLbl','statMonth','statYear',
+    'statNPV','statPay','chartSvg','chartTotal','chartLabels','metaInfo','sceneDescription',
+    'heroLocation','locName','perfInfo'];
+  elIds.forEach(id => els[id] = $(id));
+  
+  const scene = { W: 1000, H: 625, Hy: 450, baseY: 553, corners: null };
+  
+  let rayLines = [];
+  let cloudEls = [];
+  let windowEls = [];
+  
+  const cloudDefs = [
+    {y:.08,s:.9,dur:62,del:-4},{y:.12,s:1.35,dur:78,del:-30},{y:.18,s:.85,dur:50,del:-18},
+    {y:.22,s:1.15,dur:68,del:-55},{y:.05,s:.75,dur:44,del:-10},{y:.16,s:1.05,dur:58,del:-40},
+    {y:.10,s:.95,dur:66,del:-22},{y:.20,s:1.2,dur:74,del:-48},{y:.14,s:.8,dur:46,del:-14},
+    {y:.24,s:1.0,dur:60,del:-34},{y:.06,s:1.1,dur:52,del:-6},{y:.19,s:.9,dur:56,del:-28}
+  ];
+  
+  const lerp = (a,b,t) => a+(b-a)*t;
+  const mix = (c1,c2,t) => c1.map((v,i)=>lerp(v,c2[i],t));
+  const rgb = c => `rgb(${c.map(Math.round).join(',')})`;
+  const fmtTime = h => { const hr=Math.floor(h)%24,mn=Math.round((h-Math.floor(h))*60); return `${hr}:${mn<10?'0':''}${mn}`; };
+  const isWinter = m => m===11||m===0||m===1;
+  
+  function initClouds() {
+    const shape = `<ellipse cx="60" cy="30" rx="34" ry="22"/><ellipse cx="102" cy="16" rx="42" ry="28"/><ellipse cx="150" cy="28" rx="36" ry="22"/><ellipse cx="106" cy="42" rx="78" ry="20"/>`;
+    els.cloudsG.innerHTML = cloudDefs.map((c,i) => `<g class="cloud"><g class="drift" style="animation-duration:${c.dur}s;animation-delay:${c.del}s"><g class="cw" fill="#fff" filter="url(#soft)" opacity="0">${shape}</g><g class="cd" fill="#2e3854" filter="url(#soft)" opacity="0">${shape}</g></g></g>`).join('');
+    
+    const style = document.createElement('style');
+    style.textContent = `@keyframes drift{from{transform:translateX(-300px)}to{transform:translateX(1300px)}}.drift{animation:drift var(--dur,60s) linear infinite}`;
+    document.head.appendChild(style);
+    cloudEls = Array.from(els.cloudsG.querySelectorAll('.cloud'));
+  }
+  
+  function buildPanel(tilt) {
+    const { LENGTH: L, WIDTH: Wp, X: px, K: k, M: m } = CONFIG.SCENE.PANEL;
+    const T = clamp(tilt, 0, 90) * Math.PI / 180;
+    const gy = scene.baseY - 10;
+    const P = (u,v) => [px + (-v*L*Math.cos(T)) + k*((u-0.5)*Wp), gy - (v*L*Math.sin(T)) + m*((u-0.5)*Wp)];
+    const b0=P(0,0),b1=P(1,0),t1=P(1,1),t0=P(0,1);
+    els.faceClipP.setAttribute('d', `M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t0[0]} ${t0[1]} Z`);
+    
+    let cells = '';
+    for (let r=0;r<4;r++) for (let c=0;c<6;c++) {
+      const v0=r/4+.02,v1=(r+1)/4-.02,u0=(c+.06)/6,u1=(c+.94)/6;
+      cells += `<polygon points="${P(u0,v0).join(',')} ${P(u1,v0).join(',')} ${P(u1,v1).join(',')} ${P(u0,v1).join(',')}" fill="url(#cellGrad)" stroke="rgba(160,200,255,.22)" stroke-width="0.5"/>`;
+    }
+    
+    const mbx=(b0[0]+b1[0])/2, mby=(b0[1]+b1[1])/2;
+    const minX=Math.min(b0[0],t0[0])-25, minY=Math.min(t0[1],t1[1])-52;
+    const wX=Math.max(b1[0],t1[0])-minX+25, hY=Math.max(b0[1],b1[1])-minY+25;
+    const aDeg=Math.atan2(b0[1]-t0[1],b0[0]-t0[0])*180/Math.PI;
+    const r=40, ax=t0[0]+r, ay=t0[1];
+    const bx2=t0[0]+r*Math.cos(aDeg*Math.PI/180), by2=t0[1]+r*Math.sin(aDeg*Math.PI/180);
+    
+    els.panelG.innerHTML = `
+      <ellipse cx="${mbx-40}" cy="${scene.baseY+22}" rx="120" ry="7" fill="rgba(0,0,0,.35)" filter="url(#soft)"/>
+      <line x1="${mbx}" y1="${mby}" x2="${mbx-3}" y2="${scene.baseY+16}" stroke="#39465a" stroke-width="8" stroke-linecap="round"/>
+      <polygon points="${mbx-50},${scene.baseY+14} ${mbx+45},${scene.baseY+14} ${mbx+55},${scene.baseY+24} ${mbx-60},${scene.baseY+24}" fill="#1a2230"/>
+      <path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${b1[0]+4} ${b1[1]+10} L${b0[0]-4} ${b0[1]+10} Z" fill="url(#sideGrad)"/>
+      <path d="M${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t1[0]+10} ${t1[1]+4} L${b1[0]+10} ${b1[1]+4} Z" fill="url(#sideGrad)"/>
+      <path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t0[0]} ${t0[1]} Z" fill="none" stroke="url(#frameGrad)" stroke-width="4" stroke-linejoin="round"/>
+      ${cells}
+      <g clip-path="url(#faceClip)">
+        <rect id="faceGlow" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#bfe3ff" opacity="0"/>
+        <rect id="faceDark" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#0a0f1e" opacity="0"/>
+        <rect class="shine" id="pShine" x="${minX}" y="${minY}" width="140" height="${hY}" fill="url(#shineG)"/>
+      </g>
+      <line x1="${t0[0]}" y1="${t0[1]}" x2="${t0[0]+85}" y2="${t0[1]}" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="M ${ax} ${ay} A ${r} ${r} 0 0 1 ${bx2} ${by2}" fill="none" stroke="#3dffa8" stroke-width="2.5"/>
+      <text x="${t0[0]+52}" y="${t0[1]+20}" fill="#3dffa8" font-size="12" font-family="JetBrains Mono" font-weight="700">${tilt}°</text>
+      <g transform="translate(${t0[0]-6},${t0[1]-40})">
+        <rect width="92" height="26" rx="9" fill="rgba(8,12,26,.75)" stroke="rgba(255,255,255,.18)"/>
+        <text id="effChipTxt" x="46" y="17" text-anchor="middle" fill="#22e4ff" font-size="11" font-family="JetBrains Mono" font-weight="700">к солнцу 0%</text>
+      </g>`;
+    
+    scene.corners = { tl:t0, tr:t1, bl:b0, br:b1 };
+    rayLines = Array.from(els.raysG.querySelectorAll('line'));
+    windowEls = [];
+  }
+  
+  function buildLand(winter) {
+    const tur=(x,s,d)=>`<g transform="translate(${x},${scene.Hy+2}) scale(${s})"><line y2="-65" stroke="#9fb0c4" stroke-width="3"/><g transform="translate(0,-65)"><g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="${d}" repeatCount="indefinite"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round" transform="rotate(120)"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round" transform="rotate(240)"/></g><circle r="3" fill="#dfe7f2"/></g></g>`;
+    const house=(x,s)=>`<g transform="translate(${x},${scene.Hy+4}) scale(${s})"><rect x="-26" y="-30" width="52" height="30" fill="#2b3854"/><polygon points="-30,-30 0,-50 30,-30" fill="${winter?'#e8f4ff':'#1c2740'}"/><rect class="win" x="-17" y="-23" width="10" height="10" fill="#ffd54a"/><rect class="win" x="7" y="-23" width="10" height="10" fill="#ffd54a"/><rect x="-5" y="-12" width="10" height="12" fill="#141d33"/></g>`;
+    const fieldFill = winter ? 'url(#snowFieldG)' : 'url(#fieldG)';
+    const hill1 = winter ? '#d8eaf8' : '#1b3a26';
+    const hill2 = winter ? '#c4dcf0' : '#142b1d';
+    
+    els.landG.innerHTML = `<rect y="${scene.Hy}" width="1000" height="${scene.H-scene.Hy}" fill="${fieldFill}"/>
+      <path d="M0 ${scene.Hy+10} Q 250 ${scene.Hy-16} 500 ${scene.Hy+6} T 1000 ${scene.Hy+4} V ${scene.H} H 0 Z" fill="${hill1}" opacity="0.85"/>
+      <path d="M0 ${scene.Hy+18} Q 330 ${scene.Hy-4} 660 ${scene.Hy+12} T 1000 ${scene.Hy+10} V ${scene.H} H 0 Z" fill="${hill2}" opacity="0.7"/>
+      ${tur(760,1,'6s')}${tur(840,.7,'4.5s')}${tur(920,.85,'5.2s')}${tur(960,.6,'4s')}
+      ${house(820,.9)}${house(880,.7)}`;
+    windowEls = Array.from(els.landG.querySelectorAll('.win'));
+  }
+  
+  function resize() {
+    const rect = els.stageBox.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+    
+    scene.H = clamp(Math.round(1000 * rect.height / rect.width), 550, 1400);
+    els.sceneSvg.setAttribute('viewBox', `0 0 1000 ${scene.H}`);
+    els.skyR.setAttribute('height', scene.H);
+    scene.Hy = Math.round(scene.H * 0.72);
+    scene.baseY = Math.round(scene.H * 0.885);
+    els.groundShade.setAttribute('y', scene.Hy);
+    els.groundShade.setAttribute('height', scene.H - scene.Hy);
+    
+    els.starsG.innerHTML = Array.from({length:50},()=>`<circle cx="${Math.random()*1000}" cy="${Math.random()*scene.H*0.45}" r="${(0.6+Math.random()*1.2).toFixed(1)}" fill="#cfe4ff"/>`).join('');
+    
+    cloudEls.forEach((g,i) => { 
+      const c=cloudDefs[i]; 
+      if(c) g.setAttribute('transform',`translate(0,${Math.round(scene.H*c.y)}) scale(${c.s})`); 
+    });
+    
+    const canvas = els.stageCanvas;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    
+    buildLand(isWinter(Store.state.month));
+    buildPanel(Store.state.tilt);
+  }
+  
+  function updateThumbPosition(track, thumb, f, size) {
+    const rect = track.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+    const isVert = window.matchMedia('(min-width:961px)').matches;
+    
+    if (isVert) {
+      thumb.style.top = `${Math.round((1-f)*(rect.height-size))}px`;
+      thumb.style.left = '50%';
+      thumb.style.transform = 'translateX(-50%)';
+    } else {
+      thumb.style.left = `${Math.round(f*(rect.width-size))}px`;
+      thumb.style.top = '50%';
+      thumb.style.transform = 'translateY(-50%)';
+    }
+  }
+  
+  function updateWeatherThumb(f) {
+    const rect = els.weatherTrack.getBoundingClientRect();
+    if (rect.width === 0) return;
+    els.weatherThumb.style.left = `${Math.round(f * (rect.width - 30))}px`;
+    els.weatherThumb.style.top = '50%';
+    els.weatherThumb.style.transform = 'translateY(-50%)';
+  }
+  
+  function updateSky(state, output) {
+    const wf = state.weather / 100, dark = 1 - wf;
+    const elDeg = output.solar.elevationDeg;
+    const night = elDeg <= 0, deepNight = elDeg <= -6;
+    const warm = !night ? clamp(1 - elDeg / 25, 0, 1) : 0;
+    
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light' || 
+                    (Store.state.theme === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
+    
+    let c1, c2, c3;
+    
+    if (isLight) {
+      c1 = mix([180,210,240],[120,140,170],dark);
+      c2 = mix([150,190,230],[100,120,150],dark);
+      c3 = mix([120,160,200],[70,90,120],dark);
+    } else {
+      c1 = mix([10,42,85],[40,55,80],dark);
+      c2 = mix([29,77,143],[28,38,58],dark);
+      c3 = mix([43,108,176],[16,22,36],dark);
+    }
+    
+    if (warm > 0) { 
+      c1=mix(c1,[255,140,80],warm*.5); 
+      c2=mix(c2,[255,120,70],warm*.4); 
+      c3=mix(c3,[255,90,50],warm*.2); 
+    }
+    if (deepNight) { 
+      c1=[7,11,26]; c2=[9,13,30]; c3=[11,15,34]; 
+    }
+    
+    els.st1.setAttribute('stop-color', rgb(c1));
+    els.st2.setAttribute('stop-color', rgb(c2));
+    els.st3.setAttribute('stop-color', rgb(c3));
+    els.starsG.setAttribute('opacity', deepNight ? 0.9 : night ? 0.6 : 0);
+  }
+  
+  function updateSun(state, output) {
+    const sol = output.solar;
+    const elDeg = sol.elevationDeg;
+    const night = elDeg <= 0, deepNight = elDeg <= -6;
+    const wf = state.weather / 100;
+    
+    const dayFraction = clamp((state.time - sol.sunrise) / (sol.sunset - sol.sunrise), 0, 1);
+    const sunX = lerp(90, 910, dayFraction);
+    const peakY = scene.H * 0.12, lowY = scene.Hy - 20;
+    const sunY = deepNight ? lowY : lerp(lowY, peakY, clamp(elDeg / 65, 0, 1));
+    
+    els.sunG.setAttribute('transform', `translate(${sunX},${sunY})`);
+    els.sunG.setAttribute('opacity', night ? 0 : (clamp(Math.sin(sol.elevation)*1.6,.3,1)*(.2+.8*wf)).toFixed(2));
+    
+    return { sunX, sunY };
+  }
+  
+  function updateBeam(sunPos, output) {
+    if (!scene.corners) return;
+    const { tl, tr, bl, br } = scene.corners;
+    const { sunX, sunY } = sunPos;
+    const sunR = CONFIG.SCENE.SUN.RADIUS;
+    const midX = (tl[0]+tr[0]+bl[0]+br[0])/4, midY = (tl[1]+tr[1]+bl[1]+br[1])/4;
+    const dx = midX-sunX, dy = midY-sunY;
+    const dist = Math.sqrt(dx*dx+dy*dy) || 1;
+    const edgeX = sunX + (dx/dist)*sunR, edgeY = sunY + (dy/dist)*sunR;
+    const beamW = CONFIG.SCENE.BEAM.WIDTH;
+    const perpX = -(dy/dist)*beamW/2, perpY = (dx/dist)*beamW/2;
+    
+    els.beam1.setAttribute('d', `M${edgeX-perpX} ${edgeY-perpY} L${tl[0]} ${tl[1]} L${bl[0]} ${bl[1]} L${edgeX+perpX} ${edgeY+perpY} L${tr[0]} ${tr[1]} Z`);
+    els.beam2.setAttribute('d', `M${edgeX} ${edgeY} L${tl[0]} ${tl[1]} L${tr[0]} ${tr[1]} Z`);
+    els.beamG.setAttribute('opacity', (output.poa/1000*.6).toFixed(2));
+    
+    rayLines.forEach((line, i) => {
+      const f = .1 + .8 * i / 4;
+      line.setAttribute('x1', edgeX); line.setAttribute('y1', edgeY);
+      line.setAttribute('x2', lerp(tl[0],tr[0],f)); line.setAttribute('y2', lerp(tl[1],tr[1],f));
+    });
+    els.raysG.setAttribute('opacity', (output.poa/1000*.7*(0.3+0.7*output.cosIncidence)).toFixed(2));
+  }
+  
+  function updateClouds(state) {
+    const dark = 1 - state.weather / 100;
+    const cloudCount = Math.round(2 + 10 * dark);
+    
+    cloudEls.forEach((g, i) => {
+      const show = i < cloudCount ? clamp(1 - i*.05, .3, 1) : 0;
+      const cw = g.querySelector('.cw'), cd = g.querySelector('.cd');
+      if (cw) cw.setAttribute('opacity', (show*(1-dark*.85)).toFixed(2));
+      if (cd) cd.setAttribute('opacity', (show*dark*.95).toFixed(2));
+    });
+  }
+  
+  function updateSeasonalVisuals(state) {
+    const winter = isWinter(state.month);
+    els.snowmanG.setAttribute('opacity', winter ? 1 : 0);
+    els.fieldStop1.setAttribute('stop-color', winter ? '#e8f4ff' : '#2a4d33');
+    els.fieldStop2.setAttribute('stop-color', winter ? '#b8d4f0' : '#0a140e');
+  }
+  
+  function updatePanelEffects(output, state) {
+    const dark = 1 - state.weather / 100;
+    const night = output.solar.elevationDeg <= -6;
+    
+    const faceDark = document.getElementById('faceDark');
+    const faceGlow = document.getElementById('faceGlow');
+    const pShine = document.getElementById('pShine');
+    const effChip = document.getElementById('effChipTxt');
+    
+    if (faceDark) {
+      faceDark.setAttribute('opacity', (dark*.5+(night?.35:0)).toFixed(2));
+      faceGlow.setAttribute('opacity', (.3*output.cosIncidence*(output.poa/1000)).toFixed(2));
+      pShine.setAttribute('opacity', clamp(output.poa/1000-.2,0,1).toFixed(2));
+    }
+    if (effChip) effChip.textContent = `${i18n.t('toSun')} ${Math.round(output.cosIncidence*100)}%`;
+    els.groundShade.setAttribute('opacity', (dark*.4+(night?.55:0)).toFixed(2));
+    
+    windowEls.forEach(w => {
+      const sol = output.solar;
+      const wOp = clamp(Math.max(sol.sunrise-.5-state.time, state.time-sol.sunset+.5,0)/1.5,0,1)*.9+.05;
+      w.setAttribute('opacity', (wOp*(night?1:.3)).toFixed(2));
+    });
+  }
+  
+  function updateUINumbers(output, state) {
+    const sol = output.solar;
+    const elDeg = sol.elevationDeg;
+    const night = elDeg <= 0;
+    
+    els.panelCount.textContent = state.panels;
+    els.panelSys.textContent = (state.panels * CONFIG.PANEL.Pmax / 1000).toFixed(2) + ' kWp';
+    els.powerVal.textContent = Math.round(output.power).toLocaleString();
+    els.rI.textContent = output.current.toFixed(1);
+    els.rV.textContent = output.voltage.toFixed(1);
+    els.rE.textContent = Math.round(output.cosIncidence * 100);
+    els.chipDate.textContent = `${i18n.getMonths()[state.month]} · ${fmtTime(state.time)}`;
+    els.chipSun.textContent = `☀ ${Math.round(Math.max(0, elDeg))}°`;
+    els.lblSr.textContent = fmtTime(Math.max(0, sol.sunrise));
+    els.lblSs.textContent = fmtTime(Math.min(24, sol.sunset));
+    els.tiltThumb.textContent = state.tilt + '°';
+    els.azInfo.textContent = `Az: ${Math.round(sol.azimuthFromSouthDeg)}°`;
+    
+    els.sceneDescription.textContent = `Solar panel at ${state.tilt} degrees tilt. Sun elevation ${Math.round(Math.max(0,elDeg))} degrees. Irradiance ${Math.round(output.ghi)} W/m². Power ${Math.round(output.power)} watts.`;
+  }
+  
+  function updateWeatherWidget(output, state) {
+    const wf = state.weather / 100;
+    const night = output.solar.elevationDeg <= 0;
+    const ghiVal = Math.round(output.ghi);
+    const maxGhi = MAX_GHI_NOON_DEFAULT[state.month];
+    
+    const weatherEmoji = night?'🌙':wf>=.85?'☀️':wf>=.6?'🌤️':wf>=.35?'⛅':wf>=.15?'☁️':'🌧️';
+    const weatherIdx = night?5:wf>=.85?0:wf>=.6?1:wf>=.35?2:wf>=.15?3:4;
+    const labelKeys = ['clear','partlyCloudy','cloudy','overcast','rain','night'];
+    
+    els.wEmoji.textContent = weatherEmoji;
+    els.wIrr.textContent = ghiVal;
+    els.wLabel.textContent = i18n.t(labelKeys[weatherIdx]);
+    els.wMax.textContent = `max: ${maxGhi} W/m²`;
+    els.weatherThumb.textContent = weatherEmoji;
+    updateWeatherThumb(wf);
+    els.weatherTrack.setAttribute('aria-valuenow', state.weather);
+    els.weatherTrack.setAttribute('aria-valuetext', i18n.t(labelKeys[weatherIdx]));
+  }
+  
+  function updateStats(state) {
+    const params = { month: state.month, tilt: state.tilt, weather: state.weather, panelCount: state.panels };
+    const integration = Physics.integrateWithOptimal(params);
+    
+    els.statPeak.textContent = (state.panels * CONFIG.PANEL.Pmax / 1000).toFixed(2);
+    els.statDay.textContent = integration.current.daily.toFixed(1);
+    els.statDayLbl.innerHTML = `kWh / ${i18n.t('day')} · ${i18n.getMonths()[state.month].slice(0,3).toLowerCase()}`;
+    els.statMonth.textContent = Math.round(integration.current.daily * MONTH_DAYS[state.month]);
+    
+    const yearly = Physics.integrateYear(params);
+    els.statYear.textContent = Math.round(yearly);
+    
+    const npv = Economics.calculateNPV(yearly, state.panels);
+    els.statNPV.textContent = npv > 0 ? `+${Math.round(npv)}` : Math.round(npv);
+    els.statNPV.style.color = npv > 0 ? 'var(--green)' : 'var(--red)';
+    
+    const payback = Economics.calculatePayback(yearly, state.panels);
+    els.statPay.textContent = payback === Infinity ? '∞' : payback.toFixed(1);
+    
+    const opt = Physics.optimalTilt(state.month);
+    if (Math.abs(state.tilt - opt) > 2) {
+      els.optHint.innerHTML = `${i18n.t('optimal')}: <b>${opt}°</b> · <button class="c-badge" id="btnOpt">${i18n.t('set')}</button>`;
+      setTimeout(() => {
+        const b = document.getElementById('btnOpt');
+        if (b && !b._bound) { 
+          b._bound = true; 
+          b.onclick = () => Store.set({ tilt: opt }); 
+        }
+      }, 0);
+    } else {
+      els.optHint.innerHTML = `<span style="color:var(--green)">✓ ${i18n.t('optimalAngle')}</span>`;
+    }
+  }
+  
+  function updateChart(state) {
+    const params = { month: state.month, tilt: state.tilt, weather: state.weather, panelCount: state.panels };
+    const integration = Physics.integrateHourly(params, state.month);
+    const { hourly, daily } = integration;
+    
+    const max = Math.max(...hourly, .01);
+    const points = hourly.map((h,i) => `${(i/23)*1000},${100-(h/max)*85}`);
+    const areaPath = `M0,100 L${points.join(' L')} L1000,100 Z`;
+    const linePath = `M${points.join(' L')}`;
+    const nowX = (state.time/24)*1000;
+    const currentHour = Math.min(Math.floor(state.time), 23);
+    const currentVal = hourly[currentHour] || 0;
+    const currentY = 100 - (currentVal/max)*85;
+    
+    els.chartSvg.innerHTML = `<defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22e4ff" stop-opacity=".4"/><stop offset="1" stop-color="#22e4ff" stop-opacity=".02"/></linearGradient></defs>
+      <path d="${areaPath}" fill="url(#chartGrad)"/><path d="${linePath}" fill="none" stroke="#22e4ff" stroke-width="2" stroke-linejoin="round"/>
+      ${daily>0?`<line x1="${nowX}" y1="0" x2="${nowX}" y2="100" stroke="rgba(255,194,75,.5)" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="${nowX}" cy="${currentY}" r="4" fill="#ffc24b" stroke="#fff" stroke-width="1.5"/>`:''}`;
+    els.chartTotal.textContent = daily.toFixed(1) + ' kWh';
+    els.chartLabels.innerHTML = ['00','04','08','12','16','20','24'].map(l=>`<span>${l}</span>`).join('');
+  }
+  
+  function updateSliders(state) {
+    updateThumbPosition(els.tiltTrack, els.tiltThumb, state.tilt/90, 36);
+    updateThumbPosition(els.sTrack, els.sThumb, 1-state.month/11, 42);
+    els.tiltTrack.setAttribute('aria-valuenow', state.tilt);
+    els.tiltTrack.setAttribute('aria-valuetext', `${state.tilt} degrees`);
+    els.sTrack.setAttribute('aria-valuenow', state.month);
+    els.sTrack.setAttribute('aria-valuetext', i18n.getMonths()[state.month]);
+  }
+  
+  function updateLocationInfo() {
+    const loc = CONFIG.LOCATION;
+    if (els.heroLocation) els.heroLocation.textContent = `${loc.name} · ${loc.lat.toFixed(2)}°N, ${loc.lon.toFixed(2)}°E`;
+    if (els.locName) els.locName.textContent = loc.name;
+    if (els.metaInfo) els.metaInfo.textContent = `${loc.lat.toFixed(2)}°N`;
+  }
+  
+  function update(state) {
+    const t0 = performance.now();
+    
+    try {
+      const output = Physics.calculateOutput({
+        month: state.month, clock: state.time, tilt: state.tilt,
+        weather: state.weather, panelCount: state.panels
+      });
+      
+      updateSky(state, output);
+      const sunPos = updateSun(state, output);
+      updateBeam(sunPos, output);
+      updateClouds(state);
+      updateSeasonalVisuals(state);
+      updatePanelEffects(output, state);
+      updateUINumbers(output, state);
+      updateWeatherWidget(output, state);
+      updateStats(state);
+      updateChart(state);
+      updateSliders(state);
+      updateLocationInfo();
+      
+      const elapsed = performance.now() - t0;
+      PerfMonitor.updateFPS();
+      const stats = PerfMonitor.getStats();
+      if (els.perfInfo) {
+        els.perfInfo.innerHTML = `FPS: ${stats.fps} · Render: ${elapsed.toFixed(1)}ms · Avg: ${stats.total.avg}ms`;
+      }
+      
+    } catch (e) {
+      console.error('Render error:', e);
+      EventBus.emit('error', { type: 'render', error: e });
+    }
+  }
+  
+  return { $, els, scene, resize, update, buildPanel, initClouds, updateThumbPosition, updateWeatherThumb };
+})();
 
-/* Winter */
-els.snowmanG.setAttribute('opacity',winter?1:0);els.fieldStop1.setAttribute('stop-color',winter?'#e8f4ff':'#2a4d33');els.fieldStop2.setAttribute('stop-color',winter?'#b8d4f0':'#0a140e');
+// ============================================================================
+// 10. PARTICLE SYSTEM — Fixed memory leaks
+// ============================================================================
+const ParticleSystem = (() => {
+  let canvas = null;
+  let ctx = null;
+  let particles = [];
+  let currentMode = 'clear';
+  let animId = null;
+  let isRunning = false;
+  
+  class Particle {
+    constructor(type, W, H) { 
+      this.type = type; 
+      this.W = W; 
+      this.H = H; 
+      this.reset(); 
+    }
+    
+    reset() {
+      if (this.type === 'rain') { 
+        this.x = Math.random() * this.W; 
+        this.y = -10 - Math.random() * this.H; 
+        this.vy = 12 + Math.random() * 6; 
+        this.vx = -1.5; 
+        this.len = 12 + Math.random() * 8; 
+        this.alpha = .3 + Math.random() * .5; 
+      } else if (this.type === 'snow') { 
+        this.x = Math.random() * this.W; 
+        this.y = -10 - Math.random() * this.H; 
+        this.vy = .5 + Math.random() * 1; 
+        this.vx = (Math.random() - .5) * .8; 
+        this.size = 1 + Math.random() * 2.5; 
+        this.alpha = .5 + Math.random() * .5; 
+        this.sway = Math.random() * Math.PI * 2; 
+        this.swaySpeed = .01 + Math.random() * .02; 
+      }
+    }
+    
+    update() {
+      if (this.type === 'rain') { 
+        this.x += this.vx; 
+        this.y += this.vy; 
+        if (this.y > this.H + 20) this.reset(); 
+      } else if (this.type === 'snow') { 
+        this.sway += this.swaySpeed; 
+        this.x += this.vx + Math.sin(this.sway) * .3; 
+        this.y += this.vy; 
+        if (this.y > this.H + 20) this.reset(); 
+      }
+    }
+    
+    draw(ctx) {
+      ctx.globalAlpha = this.alpha;
+      if (this.type === 'rain') { 
+        ctx.strokeStyle = 'rgba(180,215,255,.7)'; 
+        ctx.lineWidth = 1.2; 
+        ctx.beginPath(); 
+        ctx.moveTo(this.x, this.y); 
+        ctx.lineTo(this.x - this.vx * 2, this.y - this.len); 
+        ctx.stroke(); 
+      } else if (this.type === 'snow') { 
+        ctx.fillStyle = '#fff'; 
+        ctx.beginPath(); 
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); 
+        ctx.fill(); 
+      }
+    }
+  }
+  
+  function init() {
+    canvas = Render.els.stageCanvas;
+    ctx = canvas.getContext('2d');
+  }
+  
+  function setMode(mode) {
+    if (mode === currentMode) return;
+    currentMode = mode;
+    particles = [];
+    
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width === 0) return;
+    
+    const dpr = window.devicePixelRatio || 1;
+    const W = rect.width * dpr, H = rect.height * dpr;
+    
+    if (mode === 'rain') {
+      for (let i = 0; i < 80; i++) particles.push(new Particle('rain', W, H));
+    } else if (mode === 'snow') {
+      for (let i = 0; i < 100; i++) particles.push(new Particle('snow', W, H));
+    }
+  }
+  
+  function update(state) {
+    if (!canvas) init();
+    
+    let mode = 'clear';
+    const winter = state.month === 11 || state.month === 0 || state.month === 1;
+    
+    if (winter && state.weather < .3) mode = 'snow';
+    else if (state.weather < .15) mode = 'rain';
+    
+    setMode(mode);
+    
+    if (!isRunning && particles.length > 0) start();
+    if (isRunning && particles.length === 0) stop();
+  }
+  
+  function animate() {
+    if (!isRunning) return;
+    if (particles.length === 0) { stop(); return; }
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of particles) { 
+      p.update(); 
+      p.draw(ctx); 
+    }
+    ctx.globalAlpha = 1;
+    animId = requestAnimationFrame(animate);
+  }
+  
+  function start() { 
+    if (isRunning) return; 
+    isRunning = true; 
+    animate(); 
+  }
+  
+  function stop() { 
+    isRunning = false; 
+    if (animId) cancelAnimationFrame(animId); 
+    if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); 
+  }
+  
+  function destroy() {
+    stop();
+    particles = [];
+    canvas = null;
+    ctx = null;
+  }
+  
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', destroy);
+  
+  return { update, destroy, init };
+})();
 
-/* Panel effects */
-const faceDark=document.getElementById('faceDark');const faceGlow=document.getElementById('faceGlow');const pShine=document.getElementById('pShine');const effChip=document.getElementById('effChipTxt');
-if(faceDark){faceDark.setAttribute('opacity',(dark*.5+(deepNight?.35:0)).toFixed(2));faceGlow.setAttribute('opacity',(.3*output.cosIncidence*(output.poa/1000)).toFixed(2));pShine.setAttribute('opacity',clamp(output.poa/1000-.2,0,1).toFixed(2))}
-if(effChip)effChip.textContent=`к солнцу ${Math.round(output.cosIncidence*100)}%`;
-els.groundShade.setAttribute('opacity',(dark*.4+(deepNight?.55:0)).toFixed(2));
-windowEls.forEach(w=>{const wOp=clamp(Math.max(sol.sunrise-.5-state.time,state.time-sol.sunset+.5,0)/1.5,0,1)*.9+.05;w.setAttribute('opacity',(wOp*(night?1:.3)).toFixed(2))});
+// ============================================================================
+// 11. EXPORT MODULE — JSON & PDF
+// ============================================================================
+const Exporter = (() => {
+  function generateReportData() {
+    const state = Store.state;
+    const params = { month: state.month, tilt: state.tilt, weather: state.weather, panelCount: state.panels };
+    const integration = Physics.integrateHourly(params, state.month);
+    const yearly = Physics.integrateYear(params);
+    const roi = Economics.calculateROI(yearly, state.panels);
+    
+    return {
+      meta: { 
+        app: 'SolarLab Pro', 
+        version: '4.0', 
+        location: CONFIG.LOCATION, 
+        panel: CONFIG.PANEL.name,
+        exportDate: new Date().toISOString(),
+        lang: i18n.getLang()
+      },
+      configuration: { 
+        panels: state.panels, 
+        tilt: state.tilt, 
+        month: i18n.getMonths()[state.month],
+        weather: state.weather 
+      },
+      results: {
+        daily_kWh: integration.daily,
+        monthly_kWh: integration.daily * MONTH_DAYS[state.month],
+        yearly_kWh: yearly,
+        hourly_kWh: integration.hourly,
+        peak_power_W: state.panels * CONFIG.PANEL.Pmax
+      },
+      economics: {
+        npv_25y: Economics.calculateNPV(yearly, state.panels),
+        payback_years: Economics.calculatePayback(yearly, state.panels),
+        roi_percent: roi.roi,
+        lcoe_eur_per_kwh: roi.lcoe,
+        total_savings_eur: roi.totalSavings,
+        initial_cost_eur: roi.initialCost,
+        electricity_price: CONFIG.ECONOMICS.electricityPrice
+      }
+    };
+  }
+  
+  function exportJSON() {
+    const data = generateReportData();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; 
+    a.download = `solarlab-${CONFIG.LOCATION.name.toLowerCase().replace(/\s+/g,'-')}-${i18n.getMonths()[Store.state.month].toLowerCase()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    EventBus.emit('export:json', data);
+  }
+  
+  function exportPDF() {
+    const data = generateReportData();
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>SolarLab Report - ${data.meta.location.name}</title>
+        <style>
+          body { font-family: 'Inter', -apple-system, sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; }
+          h1 { color: #0891b2; border-bottom: 3px solid #22e4ff; padding-bottom: 10px; }
+          h2 { color: #059669; margin-top: 30px; }
+          .meta { color: #666; font-size: 12px; margin-bottom: 30px; }
+          table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+          th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; }
+          th { background: #f5f7fa; font-weight: 600; }
+          .highlight { background: #e8f4ff; font-weight: 600; }
+          .section { margin: 20px 0; padding: 15px; background: #f9fafb; border-radius: 8px; }
+          @media print { body { padding: 20px; } }
+        </style>
+      </head>
+      <body>
+        <h1>⚡ SolarLab Pro Report</h1>
+        <div class="meta">
+          Generated: ${new Date(data.meta.exportDate).toLocaleString()} | 
+          Location: ${data.meta.location.name} (${data.meta.location.lat}°N, ${data.meta.location.lon}°E) | 
+          Panel: ${data.meta.panel}
+        </div>
+        
+        <h2>Configuration</h2>
+        <table>
+          <tr><th>Parameter</th><th>Value</th></tr>
+          <tr><td>Panels</td><td>${data.configuration.panels}</td></tr>
+          <tr><td>Tilt Angle</td><td>${data.configuration.tilt}°</td></tr>
+          <tr><td>Month</td><td>${data.configuration.month}</td></tr>
+          <tr><td>System Size</td><td>${(data.configuration.panels * CONFIG.PANEL.Pmax / 1000).toFixed(2)} kWp</td></tr>
+        </table>
+        
+        <h2>Energy Production</h2>
+        <table>
+          <tr><th>Period</th><th>Energy (kWh)</th></tr>
+          <tr><td>Daily</td><td class="highlight">${data.results.daily_kWh.toFixed(2)}</td></tr>
+          <tr><td>Monthly</td><td>${data.results.monthly_kWh.toFixed(1)}</td></tr>
+          <tr><td>Yearly</td><td class="highlight">${data.results.yearly_kWh.toFixed(0)}</td></tr>
+        </table>
+        
+        <h2>Economics</h2>
+        <table>
+          <tr><th>Metric</th><th>Value</th></tr>
+          <tr><td>Initial Investment</td><td>€${data.economics.initial_cost_eur.toFixed(0)}</td></tr>
+          <tr><td>NPV (25 years)</td><td class="highlight">€${data.economics.npv_25y.toFixed(0)}</td></tr>
+          <tr><td>Payback Period</td><td>${data.economics.payback_years === Infinity ? '∞' : data.economics.payback_years.toFixed(1)} years</td></tr>
+          <tr><td>ROI (25 years)</td><td class="highlight">${data.economics.roi_percent.toFixed(1)}%</td></tr>
+          <tr><td>LCOE</td><td>€${data.economics.lcoe_eur_per_kwh.toFixed(3)}/kWh</td></tr>
+          <tr><td>Total Savings</td><td>€${data.economics.total_savings_eur.toFixed(0)}</td></tr>
+        </table>
+        
+        <div class="section">
+          <strong>Note:</strong> This report uses NOAA Solar Position Algorithm, Perez diffuse model, 
+          Martin-Ruiz IAM, and Faiman cell temperature model. Economics calculated with 
+          ${CONFIG.ECONOMICS.discountRate*100}% discount rate and ${CONFIG.PANEL.degradation*100}%/year degradation.
+        </div>
+        
+        <script>
+          setTimeout(() => window.print(), 500);
+        </script>
+      </body>
+      </html>
+    `;
+    
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, '_blank');
+    if (!win) {
+      // Fallback: download HTML
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `solarlab-report-${Date.now()}.html`;
+      a.click();
+    }
+    URL.revokeObjectURL(url);
+    EventBus.emit('export:pdf', data);
+  }
+  
+  return { exportJSON, exportPDF, generateReportData };
+})();
 
-/* UI numbers */
-els.panelCount.textContent=state.panels;els.panelSys.textContent=(state.panels*CONFIG.PANEL.Pmax/1000).toFixed(2)+' kWp';
-els.powerVal.textContent=Math.round(output.power).toLocaleString('ru-RU');els.rI.textContent=output.current.toFixed(1);els.rV.textContent=output.voltage.toFixed(1);els.rE.textContent=Math.round(output.cosIncidence*100);
-els.chipDate.textContent=`${MONTHS[state.month]} · ${fmtTime(state.time)}`;els.chipSun.textContent=`☀ ${Math.round(Math.max(0,elDeg))}°`;
-els.lblSr.textContent=fmtTime(Math.max(0,sol.sunrise));els.lblSs.textContent=fmtTime(Math.min(24,sol.sunset));els.tiltThumb.textContent=state.tilt+'°';
-els.sceneDescription.textContent=`Панель ${state.tilt}°. Солнце ${Math.round(Math.max(0,elDeg))}°. Мощность ${Math.round(output.power)} Вт.`;
+// ============================================================================
+// 12. NOTIFICATION SYSTEM
+// ============================================================================
+const Notifications = (() => {
+  const el = document.getElementById('notification');
+  const icon = document.getElementById('notifIcon');
+  const text = document.getElementById('notifText');
+  const closeBtn = document.getElementById('notifClose');
+  let timeoutId = null;
+  
+  function show(message, type = 'success', duration = 3000) {
+    if (timeoutId) clearTimeout(timeoutId);
+    
+    text.textContent = message;
+    el.className = 'notification show ' + type;
+    icon.textContent = type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ';
+    
+    timeoutId = setTimeout(() => {
+      el.classList.remove('show');
+    }, duration);
+  }
+  
+  function hide() {
+    el.classList.remove('show');
+    if (timeoutId) clearTimeout(timeoutId);
+  }
+  
+  if (closeBtn) closeBtn.addEventListener('click', hide);
+  
+  return { show, hide };
+})();
 
-/* Weather widget */
-const maxGhi=MAX_GHI_NOON[state.month];const weatherEmoji=night?'🌙':wf>=.85?'☀️':wf>=.6?'🌤️':wf>=.35?'⛅':wf>=.15?'☁️':'🌧️';
-const weatherIdx=night?5:wf>=.85?0:wf>=.6?1:wf>=.35?2:wf>=.15?3:4;const labelList=['ясно','перем.','облачно','пасмурно','дождь','ночь'];
-els.wEmoji.textContent=weatherEmoji;els.wIrr.textContent=Math.round(output.ghi);els.wLabel.textContent=labelList[weatherIdx];els.wMax.textContent=`макс: ${maxGhi}`;els.weatherThumb.textContent=weatherEmoji;updateWeatherThumb(wf);els.weatherTrack.setAttribute('aria-valuenow',state.weather);els.weatherTrack.setAttribute('aria-valuetext',labelList[weatherIdx]);
+// ============================================================================
+// 13. THEME & LANGUAGE MANAGEMENT
+// ============================================================================
+const ThemeManager = (() => {
+  function apply(theme) {
+    document.documentElement.setAttribute('data-theme', theme === 'system' ? '' : theme);
+    Store.set({ theme }, true);
+    
+    document.querySelectorAll('.theme-switcher button').forEach(btn => btn.classList.remove('active'));
+    const btn = document.getElementById(`theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`);
+    if (btn) btn.classList.add('active');
+    
+    EventBus.emit('theme:changed', theme);
+  }
+  
+  function init() {
+    apply(Store.state.theme);
+    
+    document.getElementById('themeLight').addEventListener('click', () => apply('light'));
+    document.getElementById('themeSystem').addEventListener('click', () => apply('system'));
+    document.getElementById('themeDark').addEventListener('click', () => apply('dark'));
+    
+    // Listen to system theme changes
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+      if (Store.state.theme === 'system') apply('system');
+    });
+  }
+  
+  return { apply, init };
+})();
 
-/* Azimuth & optimal */
-const azDeg=Math.round(sol.azimuthFromSouthDeg);const azDir=azDeg<=-10?'восток':azDeg>=10?'запад':'юг';
-els.azInfo.innerHTML=`☀ ${night?'—':azDir}`;
-const opt=Physics.optimalTilt(state.month);
-if(Math.abs(state.tilt-opt)>2){els.optHint.innerHTML=`Оптимум: <b>${opt}°</b> · <button class="c-badge" id="btnOpt">✓</button>`;setTimeout(()=>{const b=document.getElementById('btnOpt');if(b&&!b._bound){b._bound=true;b.onclick=()=>Store.set({tilt:opt})}},0)}
-else{els.optHint.innerHTML=`<span style="color:var(--green)">✓</span>`}
+const LangManager = (() => {
+  function apply(lang) {
+    i18n.setLang(lang);
+    Store.set({ lang }, true);
+    
+    document.querySelectorAll('.lang-switcher button').forEach(btn => btn.classList.remove('active'));
+    const btn = document.getElementById(`lang${lang.toUpperCase()}`);
+    if (btn) btn.classList.add('active');
+    
+    // Update dynamic content
+    Render.update(Store.state);
+    updateMonthUI();
+  }
+  
+  function updateMonthUI() {
+    const month = Store.state.month;
+    const sCur = document.getElementById('sCur');
+    const sThumb = document.getElementById('sThumb');
+    const SEASONS = i18n.getSeasons();
+    const SEASONS_SHORT = i18n.getSeasonsShort();
+    const SEASON_EMOJI = ['❄️','❄️','🌱','🌱','🌱','☀️','☀️','☀️','🍂','🍂','🍂','❄️'];
+    
+    if (sCur) sCur.innerHTML = i18n.getMonths()[month].toUpperCase() + `<small>${SEASONS_SHORT[month]}</small>`;
+    if (sThumb) sThumb.textContent = SEASON_EMOJI[month];
+  }
+  
+  function init() {
+    apply(Store.state.lang);
+    
+    document.getElementById('langRU').addEventListener('click', () => apply('ru'));
+    document.getElementById('langEN').addEventListener('click', () => apply('en'));
+    document.getElementById('langPL').addEventListener('click', () => apply('pl'));
+  }
+  
+  return { apply, init, updateMonthUI };
+})();
 
-/* Stats */
-const params={month:state.month,tilt:state.tilt,weather:state.weather,panelCount:state.panels};
-const integration=Physics.integrateWithOptimal(params);
-els.statPeak.textContent=(state.panels*CONFIG.PANEL.Pmax/1000).toFixed(2);
-els.statDay.textContent=integration.current.daily.toFixed(1);
-els.statDayLbl.textContent=`kWh/день`;
-els.statMonth.textContent=Math.round(integration.current.daily*MONTH_DAYS[state.month]);
-const yearly=Physics.integrateYear(params);els.statYear.textContent=Math.round(yearly);
-const npv=Economics.calculateNPV(yearly,state.panels);els.statNPV.textContent=npv>0?`+${Math.round(npv)}`:Math.round(npv);els.statNPV.style.color=npv>0?'var(--green)':'var(--red)';
-const payback=Economics.calculatePayback(yearly,state.panels);els.statPay.textContent=payback===Infinity?'∞':payback.toFixed(1);
+// ============================================================================
+// 14. GEOLOCATION
+// ============================================================================
+const Geolocation = (() => {
+  async function detect() {
+    if (!navigator.geolocation) return null;
+    
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          resolve({ lat: latitude, lon: longitude, name: 'Your Location' });
+        },
+        (err) => {
+          console.warn('Geolocation error:', err.message);
+          resolve(null);
+        },
+        { timeout: 5000, enableHighAccuracy: false }
+      );
+    });
+  }
+  
+  async function reverseGeocode(lat, lon) {
+    try {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`;
+      const resp = await fetch(url, { headers: { 'Accept-Language': i18n.getLang() } });
+      const data = await resp.json();
+      const addr = data.address || {};
+      return addr.city || addr.town || addr.village || addr.county || 'Unknown';
+    } catch (e) {
+      return `${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E`;
+    }
+  }
+  
+  async function init() {
+    const loc = await detect();
+    if (loc) {
+      const name = await reverseGeocode(loc.lat, loc.lon);
+      CONFIG.LOCATION.lat = loc.lat;
+      CONFIG.LOCATION.lon = loc.lon;
+      CONFIG.LOCATION.name = name;
+      Physics.setLocation(loc);
+      Notifications.show(i18n.t('locationDetected') + ': ' + name, 'success', 2000);
+      Render.update(Store.state);
+    }
+  }
+  
+  return { detect, init };
+})();
 
-/* Chart */
-const{hourly,daily}=integration.current;const max=Math.max(...hourly,.01);const points=hourly.map((h,i)=>`${(i/23)*1000},${100-(h/max)*85}`);
-const areaPath=`M0,100 L${points.join(' L')} L1000,100 Z`;const linePath=`M${points.join(' L')}`;const nowX=(state.time/24)*1000;
-const currentHour=Math.min(Math.floor(state.time),23);const currentVal=hourly[currentHour]||0;const currentY=100-(currentVal/max)*85;
-els.chartSvg.innerHTML=`<defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22e4ff" stop-opacity=".4"/><stop offset="1" stop-color="#22e4ff" stop-opacity=".02"/></linearGradient></defs><path d="${areaPath}" fill="url(#chartGrad)"/><path d="${linePath}" fill="none" stroke="#22e4ff" stroke-width="2" stroke-linejoin="round"/>${daily>0?`<line x1="${nowX}" y1="0" x2="${nowX}" y2="100" stroke="rgba(255,194,75,.5)" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="${nowX}" cy="${currentY}" r="4" fill="#ffc24b" stroke="#fff" stroke-width="1.5"/>`:''}`;
-els.chartTotal.textContent=daily.toFixed(1)+' kWh';els.chartLabels.innerHTML=['00','06','12','18','24'].map(l=>`<span>${l}</span>`).join('');
+// ============================================================================
+// 15. UI MODULE — Enhanced with onboarding & shortcuts
+// ============================================================================
+const UI = (() => {
+  let rafPending = false;
+  let isPlaying = false;
+  let playInterval = null;
+  
+  function scheduleUpdate() {
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => {
+      Render.update(Store.state);
+      ParticleSystem.update(Store.state);
+      rafPending = false;
+    });
+  }
+  
+  function bindTrack(track, apply) {
+    let dragging = false;
+    const getFraction = e => {
+      const rect = track.getBoundingClientRect();
+      const isVert = window.matchMedia('(min-width:961px)').matches;
+      let pos;
+      if (e.touches && e.touches.length > 0) pos = isVert ? e.touches[0].clientY : e.touches[0].clientX;
+      else pos = isVert ? e.clientY : e.clientX;
+      const size = isVert ? rect.height : rect.width;
+      const offset = isVert ? rect.top : rect.left;
+      if (size === 0) return 0;
+      return Math.max(0, Math.min(1, isVert ? 1-((pos-offset)/size) : (pos-offset)/size));
+    };
+    
+    const start = e => { 
+      dragging = true; 
+      track.classList.add('dragging'); 
+      apply(getFraction(e)); 
+      if (e.cancelable) e.preventDefault(); 
+    };
+    const move = e => { 
+      if (!dragging) return; 
+      apply(getFraction(e)); 
+    };
+    const end = () => { 
+      if (!dragging) return; 
+      dragging = false; 
+      track.classList.remove('dragging'); 
+    };
+    
+    track.addEventListener('pointerdown', start);
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', end);
+    window.addEventListener('pointercancel', end);
+    track.addEventListener('touchstart', e => { if (e.cancelable) e.preventDefault(); }, {passive:false});
+    track.addEventListener('touchmove', e => { if (e.cancelable) e.preventDefault(); }, {passive:false});
+    
+    track.addEventListener('keydown', e => {
+      const step = e.shiftKey ? .1 : .02;
+      let f = parseFloat(track.dataset.f || .5);
+      if (['ArrowUp','ArrowRight','ArrowLeft','ArrowDown'].includes(e.key)) {
+        if (e.key==='ArrowUp'||e.key==='ArrowRight') f=Math.min(1,f+step);
+        else f=Math.max(0,f-step);
+        apply(f); 
+        track.dataset.f=f.toFixed(4); 
+        e.preventDefault();
+      }
+    });
+  }
+  
+  function bindWeatherTrack() {
+    const track = Render.els.weatherTrack;
+    let dragging = false;
+    
+    const getFraction = e => {
+      const rect = track.getBoundingClientRect();
+      let pos;
+      if (e.touches && e.touches.length > 0) pos = e.touches[0].clientX;
+      else pos = e.clientX;
+      if (rect.width === 0) return 0;
+      return Math.max(0, Math.min(1, (pos-rect.left)/rect.width));
+    };
+    
+    const start = e => { 
+      dragging = true; 
+      track.classList.add('dragging'); 
+      Store.set({weather:Math.round(getFraction(e)*100)}); 
+      if (e.cancelable) e.preventDefault(); 
+    };
+    const move = e => { 
+      if (!dragging) return; 
+      Store.set({weather:Math.round(getFraction(e)*100)}); 
+    };
+    const end = () => { 
+      if (!dragging) return; 
+      dragging = false; 
+      track.classList.remove('dragging'); 
+    };
+    
+    track.addEventListener('pointerdown', start);
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', end);
+    window.addEventListener('pointercancel', end);
+    track.addEventListener('touchstart', e => { if (e.cancelable) e.preventDefault(); }, {passive:false});
+    track.addEventListener('touchmove', e => { if (e.cancelable) e.preventDefault(); }, {passive:false});
+    
+    track.addEventListener('keydown', e => {
+      const step = e.shiftKey ? 10 : 2;
+      let w = Store.state.weather;
+      if (e.key==='ArrowRight'||e.key==='ArrowUp') w=Math.min(100,w+step);
+      else if (e.key==='ArrowLeft'||e.key==='ArrowDown') w=Math.max(0,w-step);
+      else return;
+      Store.set({weather:w}); 
+      e.preventDefault();
+    });
+  }
+  
+  function showTooltip(anchor, text) {
+    const tip = document.getElementById('tooltip');
+    tip.textContent = text; 
+    tip.classList.add('show');
+    const rect = anchor.getBoundingClientRect();
+    tip.style.top = (rect.top - 8) + 'px';
+    tip.style.left = (rect.left + rect.width/2) + 'px';
+    setTimeout(() => tip.classList.remove('show'), 2000);
+  }
+  
+  function togglePlay() {
+    isPlaying = !isPlaying;
+    const btn = document.getElementById('btnPlay');
+    
+    if (isPlaying) {
+      btn.innerHTML = `⏸️ <span data-i18n="pause">${i18n.t('pause')}</span>`;
+      playInterval = setInterval(() => {
+        let time = Store.state.time + 0.25;
+        if (time >= 24) time = 0;
+        Store.set({ time });
+        Render.els.timeSlider.value = time;
+      }, 100);
+    } else {
+      btn.innerHTML = `▶️ <span data-i18n="play">${i18n.t('play')}</span>`;
+      clearInterval(playInterval);
+    }
+  }
+  
+  function showOnboarding() {
+    const shown = localStorage.getItem('solarlab-onboarded');
+    if (!shown) {
+      document.getElementById('onboarding').classList.add('active');
+    }
+  }
+  
+  function hideOnboarding() {
+    document.getElementById('onboarding').classList.remove('active');
+    localStorage.setItem('solarlab-onboarded', 'true');
+  }
+  
+  function showShortcuts() {
+    const hint = document.getElementById('shortcutsHint');
+    hint.classList.toggle('show');
+    setTimeout(() => hint.classList.remove('show'), 5000);
+  }
+  
+  async function loadWeather() {
+    Notifications.show(i18n.t('weatherLoading'), 'info', 2000);
+    
+    try {
+      const data = await WeatherService.fetchWeather(CONFIG.LOCATION.lat, CONFIG.LOCATION.lon);
+      if (data) {
+        Physics.setWeatherData(data);
+        Notifications.show(i18n.t('weatherLoaded'), 'success', 2000);
+        Physics.invalidateCache();
+        Render.update(Store.state);
+      } else {
+        Notifications.show(i18n.t('weatherFailed'), 'error', 3000);
+      }
+    } catch (err) {
+      console.error('Weather load error:', err);
+      Notifications.show(i18n.t('weatherFailed'), 'error', 3000);
+    }
+  }
+  
+  function init() {
+    // Panel slider
+    Render.els.panelSlider.addEventListener('input', e => Store.set({ panels: parseInt(e.target.value) }));
+    
+    // Time slider
+    const timeSlider = Render.els.timeSlider;
+    timeSlider.addEventListener('input', e => Store.set({ time: parseFloat(e.target.value) }));
+    
+    // Quick time buttons
+    document.querySelectorAll('[data-h]').forEach(btn => btn.addEventListener('click', () => {
+      const h = parseFloat(btn.dataset.h);
+      Store.set({ time: h });
+      timeSlider.value = h;
+    }));
+    
+    // Now button
+    document.getElementById('btnNow').addEventListener('click', () => {
+      const now = new Date();
+      Store.set({ 
+        month: now.getMonth(), 
+        time: Math.round((now.getHours() + now.getMinutes()/60) * 4) / 4 
+      }, true);
+      timeSlider.value = Store.state.time;
+      LangManager.updateMonthUI();
+    });
+    
+    // Demo button
+    document.getElementById('btnDemo').addEventListener('click', () => {
+      Store.set({ month: 6, time: 13, weather: 100, tilt: 30 });
+      timeSlider.value = 13;
+      Render.buildPanel(30);
+      LangManager.updateMonthUI();
+    });
+    
+    // Play button
+    document.getElementById('btnPlay').addEventListener('click', togglePlay);
+    
+    // Export buttons
+    document.getElementById('btnExport').addEventListener('click', () => {
+      Exporter.exportJSON();
+      Notifications.show(i18n.t('dataExported'), 'success', 2000);
+    });
+    
+    document.getElementById('btnPDF').addEventListener('click', () => {
+      Exporter.exportPDF();
+      Notifications.show(i18n.t('pdfExported'), 'success', 2000);
+    });
+    
+    // Share button
+    document.getElementById('btnShare').addEventListener('click', async () => {
+      const url = Store.getShareUrl();
+      try { 
+        await navigator.clipboard.writeText(url); 
+        Notifications.show(i18n.t('linkCopied'), 'success', 2000);
+      } catch(e) { 
+        Notifications.show(i18n.t('copyFailed'), 'error', 2000); 
+      }
+    });
+    
+    // Reset button
+    document.getElementById('btnReset').addEventListener('click', () => {
+      if (confirm(i18n.t('resetConfirm'))) {
+        Store.reset();
+        Render.els.panelSlider.value = Store.defaults.panels;
+        Render.els.timeSlider.value = Store.defaults.time;
+        LangManager.updateMonthUI();
+        Render.buildPanel(Store.defaults.tilt);
+      }
+    });
+    
+    // Help button
+    document.getElementById('btnHelp').addEventListener('click', showShortcuts);
+    
+    // Onboarding
+    document.getElementById('btnOnboardStart').addEventListener('click', hideOnboarding);
+    
+    // Undo (Ctrl+Z)
+    document.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'z') { 
+        Store.undo(); 
+        e.preventDefault(); 
+      }
+      // Space for play/pause
+      if (e.code === 'Space' && e.target === document.body) {
+        togglePlay();
+        e.preventDefault();
+      }
+      // R for reset
+      if (e.key === 'r' && !e.ctrlKey && !e.metaKey && e.target === document.body) {
+        if (confirm(i18n.t('resetConfirm'))) {
+          Store.reset();
+          Render.els.panelSlider.value = Store.defaults.panels;
+          Render.els.timeSlider.value = Store.defaults.time;
+          LangManager.updateMonthUI();
+          Render.buildPanel(Store.defaults.tilt);
+        }
+      }
+    });
+    
+    // Bind tracks
+    bindWeatherTrack();
+    bindTrack(Render.els.tiltTrack, f => { 
+      const tilt = Math.round(f*90); 
+      Store.set({tilt}); 
+      Render.buildPanel(tilt); 
+    });
+    bindTrack(Render.els.sTrack, f => { 
+      const month = Math.max(0, Math.min(11, Math.round((1-f)*11))); 
+      Store.set({month}); 
+      LangManager.updateMonthUI(); 
+    });
+    
+    Render.els.tiltTrack.dataset.f = (Store.state.tilt/90).toFixed(4);
+    Render.els.sTrack.dataset.f = (1-Store.state.month/11).toFixed(4);
+    
+    // Resize (debounced)
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { 
+        Render.resize(); 
+        Render.update(Store.state); 
+      }, 100);
+    });
+    
+    // Visibility
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (isPlaying) togglePlay();
+      }
+    });
+    
+    // Subscribe to store
+    Store.subscribe(scheduleUpdate);
+    
+    // Initial render
+    LangManager.updateMonthUI();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      Render.resize();
+      Render.update(Store.state);
+      
+      console.log('%c☀️ SolarLab Pro v4.0 — Production Build', 'color:#22e4ff;font-size:14px;font-weight:bold');
+      console.log('Location:', CONFIG.LOCATION);
+      console.log('Panel:', CONFIG.PANEL);
+      console.log('Inverter:', CONFIG.INVERTER);
+      console.log('Shortcuts: Space=play, R=reset, Ctrl+Z=undo');
+    }));
+    
+    // Load weather data asynchronously
+    setTimeout(loadWeather, 500);
+    
+    // Show onboarding on first visit
+    setTimeout(showOnboarding, 1000);
+    
+    // Init geolocation
+    setTimeout(() => Geolocation.init(), 2000);
+  }
+  
+  return { init };
+})();
 
-/* Sliders */
-updateThumbPosition(els.tiltTrack,els.tiltThumb,state.tilt/90,30);updateThumbPosition(els.sTrack,els.sThumb,1-state.month/11,36);
-els.tiltTrack.setAttribute('aria-valuenow',state.tilt);els.tiltTrack.setAttribute('aria-valuetext',`${state.tilt}°`);els.sTrack.setAttribute('aria-valuenow',state.month);els.sTrack.setAttribute('aria-valuetext',MONTHS[state.month]);
+// ============================================================================
+// 16. APP BOOTSTRAP
+// ============================================================================
+window.addEventListener('DOMContentLoaded', () => {
+  // Apply saved theme and language
+  ThemeManager.init();
+  LangManager.init();
+  
+  // Init modules
+  Render.initClouds();
+  ParticleSystem.init();
+  UI.init();
+  
+  // Global error handlers
+  window.addEventListener('error', e => {
+    console.error('Global error:', e.message);
+    EventBus.emit('error', { type: 'global', error: e.error });
+  });
+  
+  window.addEventListener('unhandledrejection', e => {
+    console.error('Unhandled rejection:', e.reason);
+    EventBus.emit('error', { type: 'promise', error: e.reason });
+  });
+  
+  // Error bus listener
+  EventBus.on('error', ({ type, error }) => {
+    Notifications.show(`Error: ${error?.message || 'Unknown error'}`, 'error', 5000);
+  });
+});
 
-const elapsed=performance.now()-t0;document.getElementById('perfInfo').textContent=`${elapsed.toFixed(1)}ms`;
-}catch(e){console.error('Render error:',e)}}
-
-return{els,resize,update,buildPanel,initClouds,updateWeatherThumb}})();
-
-/* === PARTICLES === */
-const ParticleSystem=(()=>{const canvas=Render.els.stageCanvas;const ctx=canvas.getContext('2d');let particles=[],currentMode='clear',animId=null,isRunning=false;
-class Particle{constructor(type,W,H){this.type=type;this.W=W;this.H=H;this.reset()}reset(){if(this.type==='rain'){this.x=Math.random()*this.W;this.y=-10-Math.random()*this.H;this.vy=12+Math.random()*6;this.vx=-1.5;this.len=12+Math.random()*8;this.alpha=.3+Math.random()*.5}else if(this.type==='snow'){this.x=Math.random()*this.W;this.y=-10-Math.random()*this.H;this.vy=.5+Math.random()*1;this.vx=(Math.random()-.5)*.8;this.size=1+Math.random()*2.5;this.alpha=.5+Math.random()*.5;this.sway=Math.random()*Math.PI*2;this.swaySpeed=.01+Math.random()*.02}}update(){if(this.type==='rain'){this.x+=this.vx;this.y+=this.vy;if(this.y>this.H+20)this.reset()}else if(this.type==='snow'){this.sway+=this.swaySpeed;this.x+=this.vx+Math.sin(this.sway)*.3;this.y+=this.vy;if(this.y>this.H+20)this.reset()}}draw(ctx){ctx.globalAlpha=this.alpha;if(this.type==='rain'){ctx.strokeStyle='rgba(180,215,255,.7)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x-this.vx*2,this.y-this.len);ctx.stroke()}else if(this.type==='snow'){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill()}}}
-function setMode(mode){if(mode===currentMode)return;currentMode=mode;particles=[];const rect=canvas.getBoundingClientRect();if(rect.width===0)return;const dpr=window.devicePixelRatio||1;const W=rect.width*dpr,H=rect.height*dpr;if(mode==='rain')for(let i=0;i<80;i++)particles.push(new Particle('rain',W,H));else if(mode==='snow')for(let i=0;i<100;i++)particles.push(new Particle('snow',W,H))}
-function update(state){let mode='clear';const winter=state.month===11||state.month===0||state.month===1;if(winter&&state.weather<.3)mode='snow';else if(state.weather<.15)mode='rain';setMode(mode);if(!isRunning&&particles.length>0)start();if(isRunning&&particles.length===0)stop()}
-function animate(){if(!isRunning)return;if(particles.length===0){stop();return}ctx.clearRect(0,0,canvas.width,canvas.height);for(const p of particles){p.update();p.draw(ctx)}ctx.globalAlpha=1;animId=requestAnimationFrame(animate)}
-function start(){if(isRunning)return;isRunning=true;animate()}function stop(){isRunning=false;if(animId)cancelAnimationFrame(animId);ctx.clearRect(0,0,canvas.width,canvas.height)}
-return{update}})();
-
-/* === UI === */
-const UI=(()=>{let rafPending=false;
-function scheduleUpdate(){if(rafPending)return;rafPending=true;requestAnimationFrame(()=>{Render.update(Store.state);ParticleSystem.update(Store.state);rafPending=false})}
-function bindTrack(track,apply){let dragging=false;const getFraction=e=>{const rect=track.getBoundingClientRect();const isVert=window.matchMedia('(min-width:961px)').matches;let pos;if(e.touches&&e.touches.length>0)pos=isVert?e.touches[0].clientY:e.touches[0].clientX;else pos=isVert?e.clientY:e.clientX;const size=isVert?rect.height:rect.width;const offset=isVert?rect.top:rect.left;if(size===0)return 0;return Math.max(0,Math.min(1,isVert?1-((pos-offset)/size):(pos-offset)/size))};
-const start=e=>{dragging=true;track.classList.add('dragging');apply(getFraction(e));if(e.cancelable)e.preventDefault()};const move=e=>{if(!dragging)return;apply(getFraction(e))};const end=()=>{if(!dragging)return;dragging=false;track.classList.remove('dragging')};
-track.addEventListener('pointerdown',start);window.addEventListener('pointermove',move);window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
-track.addEventListener('touchstart',e=>{if(e.cancelable)e.preventDefault()},{passive:false});track.addEventListener('touchmove',e=>{if(e.cancelable)e.preventDefault()},{passive:false});
-track.addEventListener('keydown',e=>{const step=e.shiftKey?.1:.02;let f=parseFloat(track.dataset.f||.5);if(['ArrowUp','ArrowRight','ArrowLeft','ArrowDown'].includes(e.key)){if(e.key==='ArrowUp'||e.key==='ArrowRight')f=Math.min(1,f+step);else f=Math.max(0,f-step);apply(f);track.dataset.f=f.toFixed(4);e.preventDefault()}})}
-function bindWeatherTrack(){const track=Render.els.weatherTrack;let dragging=false;const getFraction=e=>{const rect=track.getBoundingClientRect();let pos;if(e.touches&&e.touches.length>0)pos=e.touches[0].clientX;else pos=e.clientX;if(rect.width===0)return 0;return Math.max(0,Math.min(1,(pos-rect.left)/rect.width))};
-const start=e=>{dragging=true;track.classList.add('dragging');Store.set({weather:Math.round(getFraction(e)*100)});if(e.cancelable)e.preventDefault()};const move=e=>{if(!dragging)return;Store.set({weather:Math.round(getFraction(e)*100)})};const end=()=>{if(!dragging)return;dragging=false;track.classList.remove('dragging')};
-track.addEventListener('pointerdown',start);window.addEventListener('pointermove',move);window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
-track.addEventListener('touchstart',e=>{if(e.cancelable)e.preventDefault()},{passive:false});track.addEventListener('touchmove',e=>{if(e.cancelable)e.preventDefault()},{passive:false});
-track.addEventListener('keydown',e=>{const step=e.shiftKey?10:2;let w=Store.state.weather;if(e.key==='ArrowRight'||e.key==='ArrowUp')w=Math.min(100,w+step);else if(e.key==='ArrowLeft'||e.key==='ArrowDown')w=Math.max(0,w-step);else return;Store.set({weather:w});e.preventDefault()})}
-function syncMonth(){const SEASONS=['зима','зима','весна','весна','весна','лето','лето','лето','осень','осень','осень','зима'];const SEASON_EMOJI=['❄️','❄️','🌱','🌱','🌱','☀️','☀️','☀️','🍂','🍂','🍂','❄️'];const month=Store.state.month;Render.els.sCur.innerHTML=MONTHS[month].toUpperCase()+`<small>${SEASONS[month]}</small>`;Render.els.sThumb.textContent=SEASON_EMOJI[month]}
-function showTooltip(anchor,text){const tip=document.getElementById('tooltip');tip.textContent=text;tip.classList.add('show');const rect=anchor.getBoundingClientRect();tip.style.top=(rect.top-8)+'px';tip.style.left=(rect.left+rect.width/2)+'px';setTimeout(()=>tip.classList.remove('show'),2000)}
-function init(){
-Render.els.panelSlider.addEventListener('input',e=>Store.set({panels:parseInt(e.target.value)}));
-const timeSlider=Render.els.timeSlider;timeSlider.addEventListener('input',e=>Store.set({time:parseFloat(e.target.value)}));
-document.querySelectorAll('[data-h]').forEach(btn=>btn.addEventListener('click',()=>{Store.set({time:parseFloat(btn.dataset.h)});timeSlider.value=Store.state.time}));
-document.getElementById('btnNow').addEventListener('click',()=>{const now=new Date();Store.set({month:now.getMonth(),time:Math.round((now.getHours()+now.getMinutes()/60)*4)/4});timeSlider.value=Store.state.time;syncMonth()});
-document.getElementById('btnDemo').addEventListener('click',()=>{Store.set({month:6,time:13,weather:100,tilt:30});timeSlider.value=13;Render.buildPanel(30);syncMonth()});
-document.getElementById('btnShare').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(Store.getShareUrl());showTooltip(document.getElementById('btnShare'),'✓ Ссылка скопирована')}catch(e){showTooltip(document.getElementById('btnShare'),'Ошибка')}});
-document.getElementById('btnReset').addEventListener('click',()=>{if(confirm('Сбросить?')){Store.set({...Store.defaults});Render.els.panelSlider.value=Store.defaults.panels;Render.els.timeSlider.value=Store.defaults.time;syncMonth();Render.buildPanel(Store.defaults.tilt)}});
-document.getElementById('btnExport').addEventListener('click',()=>{
-const state=Store.state;const yearly=Physics.integrateYear(state);
-const data={meta:{app:'SolarLab Pro v3.1',location:'Kraków',date:new Date().toISOString()},config:state,results:{yearly_kWh:yearly,npv:Economics.calculateNPV(yearly,state.panels)}};
-const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='solarlab-export.json';a.click();URL.revokeObjectURL(url);
-showTooltip(document.getElementById('btnExport'),'✓ Экспортировано')});
-bindWeatherTrack();
-bindTrack(Render.els.tiltTrack,f=>{const tilt=Math.round(f*90);Store.set({tilt});Render.buildPanel(tilt)});
-bindTrack(Render.els.sTrack,f=>{const month=Math.max(0,Math.min(11,Math.round((1-f)*11)));Store.set({month});syncMonth()});
-Render.els.tiltTrack.dataset.f=(Store.state.tilt/90).toFixed(4);Render.els.sTrack.dataset.f=(1-Store.state.month/11).toFixed(4);
-let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{Render.resize();Render.update(Store.state)},150)});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)ParticleSystem.update({weather:100,month:6})});
-Store.subscribe(scheduleUpdate);syncMonth();
-requestAnimationFrame(()=>requestAnimationFrame(()=>{Render.resize();Render.update(Store.state);console.log('%c☀️ SolarLab Pro v3.1','color:#22e4ff;font-size:14px;font-weight:bold')}))}
-return{init}})();
-
-window.addEventListener('DOMContentLoaded',()=>{Render.initClouds();UI.init()});
-window.addEventListener('error',e=>console.error('Error:',e.message));
+// Service Worker registration (for PWA capabilities)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    // Would register service worker here for offline support
+    // navigator.serviceWorker.register('/sw.js');
+  });
+}
 </script>
 </body>
 </html>
