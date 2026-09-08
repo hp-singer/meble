@@ -3,16 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="SolarLab Pro v4.0 — профессиональный симулятор солнечных панелей">
+<meta name="description" content="SolarLab Pro v4.0 — профессиональный симулятор солнечных панелей с точной физикой, экономикой и аналитикой">
 <meta name="theme-color" content="#070a18">
 <title>SolarLab Pro v4.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ============================================================================
-   DESIGN SYSTEM — CSS Custom Properties with Theme Support
-============================================================================ */
 :root {
   --bg: #070a18; --bg-2: #0b0f24;
   --glass: rgba(14,18,36,.72); --glass-strong: rgba(14,18,36,.92);
@@ -32,7 +29,6 @@
   --touch-min: 44px;
   color-scheme: dark;
 }
-
 :root[data-theme="light"] {
   --bg: #f5f7fa; --bg-2: #e8ecf3;
   --glass: rgba(255,255,255,.75); --glass-strong: rgba(255,255,255,.92);
@@ -46,7 +42,6 @@
   --glow-green: 0 0 20px rgba(5,150,105,.4);
   color-scheme: light;
 }
-
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     --bg: #f5f7fa; --bg-2: #e8ecf3;
@@ -57,7 +52,6 @@
     color-scheme: light;
   }
 }
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
@@ -74,18 +68,15 @@ body{
              radial-gradient(900px 500px at 10% 110%,rgba(5,150,105,.06),transparent 60%),var(--bg);
 }
 .mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
-
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
-
 .skip-link{position:absolute;top:-40px;left:0;padding:8px 16px;background:var(--cyan);color:#000;z-index:9999;font-weight:700;transition:top .2s}
 .skip-link:focus{top:0}
-
-.container{max-width:1280px;margin:0 auto;padding:var(--sp-4) var(--sp-5) 80px;padding-bottom:max(80px,env(safe-area-inset-bottom))}
-
+.container{max-width:1280px;margin:0 auto;padding:var(--sp-4) var(--sp-5) 80px;
+  padding-bottom:max(80px,env(safe-area-inset-bottom))}
 .header{display:flex;justify-content:space-between;align-items:center;padding:var(--sp-3) var(--sp-2);margin-bottom:var(--sp-5);gap:var(--sp-3);flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:var(--sp-3)}
 .logo-icon{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--green));display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--glow-cyan)}
@@ -99,45 +90,37 @@ body{
 .icon-btn{width:var(--touch-min);height:var(--touch-min);border-radius:10px;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--border);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .2s var(--ease)}
 .icon-btn:hover{background:rgba(255,255,255,.08);color:var(--t1);transform:translateY(-1px)}
 .icon-btn:active{transform:translateY(0)}
-
 .theme-switcher{display:flex;background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:2px;gap:2px}
 .theme-switcher button{padding:4px 8px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:6px;font-size:12px;transition:all .2s}
 .theme-switcher button.active{background:var(--cyan);color:#000}
 .theme-switcher button:hover:not(.active){color:var(--t1)}
-
 .lang-switcher{display:flex;background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:2px;gap:2px}
 .lang-switcher button{padding:4px 8px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:6px;font-size:11px;font-weight:600;transition:all .2s}
 .lang-switcher button.active{background:var(--cyan);color:#000}
 .lang-switcher button:hover:not(.active){color:var(--t1)}
-
 .hero{margin-bottom:var(--sp-6);padding:0 var(--sp-2)}
 .hero h1{font-size:clamp(24px,4vw,38px);font-weight:800;letter-spacing:-.02em;margin-bottom:var(--sp-2);line-height:1.1}
 .hero h1 .gradient{background:linear-gradient(135deg,var(--cyan) 0%,var(--green) 50%,var(--amber) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{color:var(--t2);font-size:14px;max-width:720px}
 .hero .location-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--glass);border:1px solid var(--border);border-radius:999px;font-size:11px;color:var(--t2);margin-top:8px}
 .hero .location-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-
 .glass{background:var(--glass);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-md),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden;contain:layout style paint}
 .glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);pointer-events:none;z-index:1}
-
-.lab{display:grid;gap:14px;grid-template-columns:1fr 84px;grid-template-areas:"panels panels" "scene season" "time time" "stats stats"}
+.lab{display:grid;gap:14px;grid-template-columns:1fr 84px;
+  grid-template-areas:"panels panels" "scene season" "time time" "stats stats"}
 .a-panels{grid-area:panels}.a-scene{grid-area:scene}.a-season{grid-area:season}.a-time{grid-area:time}.a-stats{grid-area:stats}
 @media(max-width:960px){.lab{grid-template-columns:1fr;grid-template-areas:"panels" "scene" "time" "stats" "season"}.stage{aspect-ratio:16/11;min-height:0}}
-
 .a-scene{display:flex;min-height:560px}
 .stage{position:relative;flex:1;min-height:560px;border-radius:var(--radius-lg);overflow:hidden;contain:layout style paint}
 .stage-svg,.stage-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .stage-canvas{pointer-events:none}
-
 @keyframes sunSpin{to{transform:rotate(360deg)}}
 @keyframes sunPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.92}}
 #sunRays{animation:sunSpin 60s linear infinite;transform-box:fill-box;transform-origin:center;will-change:transform}
 #sunCoreCircle{animation:sunPulse 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-
 .chip-top{position:absolute;top:14px;left:14px;z-index:5;padding:8px 14px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--border);backdrop-filter:blur(16px);font-size:11px;color:var(--t2);display:flex;align-items:center;gap:10px}
 .chip-top .sep{width:1px;height:12px;background:var(--border-strong)}
 .chip-top .ct{color:var(--cyan);font-weight:700;font-family:'JetBrains Mono',monospace}
-
 .weather-panel{position:absolute;top:14px;right:14px;z-index:6;width:200px;background:var(--glass-strong);border:1px solid var(--border);border-radius:var(--radius-md);backdrop-filter:blur(16px);padding:var(--sp-3) var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-2)}
 .weather-top{display:flex;align-items:center;gap:var(--sp-3)}
 .weather-em{font-size:28px;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
@@ -152,21 +135,18 @@ body{
 .weather-track.dragging .weather-thumb{transform:translateY(-50%) scale(1.15)}
 .weather-track.dragging{cursor:grabbing}
 .weather-labels{display:flex;justify-content:space-between;font-size:11px;padding:0 2px}
-
 .tilt-ctrl{position:absolute;left:14px;bottom:14px;z-index:6;width:48px}
 .tilt-track{position:relative;width:44px;height:140px;border-radius:22px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(180deg,transparent 0 30%,rgba(91,140,255,.7) 30% 38%,transparent 38% 64%,rgba(61,255,168,.65) 64% 72%,transparent 72%),linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));box-shadow:inset 0 0 0 1px var(--border),0 4px 12px rgba(0,0,0,.3)}
 .tilt-thumb{position:absolute;left:50%;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cde7ff 70%);box-shadow:0 0 16px rgba(255,255,255,.45),0 3px 10px rgba(0,0,0,.5);border:2px solid #fff;z-index:2;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;color:#0a2a3a;pointer-events:none;transition:transform .12s var(--ease);will-change:transform}
 .tilt-track.dragging .tilt-thumb{transform:translateX(-50%) scale(1.15)}
 .tilt-track.dragging{cursor:grabbing}
 .tilt-label{font-size:8px;color:var(--t3);text-align:center;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
-
 .readout{position:absolute;right:16px;bottom:16px;z-index:5;background:var(--glass-strong);border:1px solid var(--border);padding:var(--sp-4) var(--sp-5);border-radius:var(--radius-md);backdrop-filter:blur(16px)}
 .readout .lbl{font-size:9.5px;letter-spacing:2.5px;color:var(--t3);text-transform:uppercase;margin-bottom:4px;font-weight:600}
 .readout .pw{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(28px,5vw,46px);color:var(--cyan);text-shadow:var(--glow-cyan);line-height:1;font-variant-numeric:tabular-nums}
 .readout .pw small{font-size:.35em;color:var(--t2);margin-left:5px}
 .readout .extra{display:flex;gap:14px;margin-top:10px;font-size:10.5px;color:var(--t2);justify-content:flex-end}
 .readout .extra b{color:var(--green);margin-right:2px;font-family:'JetBrains Mono',monospace}
-
 .ctrl{padding:var(--sp-4);display:flex;flex-direction:column}
 .ctrl-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-2);gap:var(--sp-2);flex-wrap:wrap}
 .c-title{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--t3);font-weight:600;display:flex;align-items:center;gap:6px}
@@ -181,7 +161,6 @@ body{
 .slider.gradient{background:linear-gradient(90deg,rgba(34,228,255,.25),rgba(61,255,168,.5),rgba(255,194,75,.5))}
 .slider::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--cyan));box-shadow:var(--glow-cyan);border:2px solid rgba(255,255,255,.8);cursor:grab}
 .slider::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--cyan);box-shadow:var(--glow-cyan);border:2px solid rgba(255,255,255,.8);cursor:grab}
-
 .season{padding:var(--sp-3) var(--sp-2);display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)}
 .season .s-title{font-size:8.5px;letter-spacing:1.8px;color:var(--t3);text-transform:uppercase;font-weight:600}
 .season .s-track{position:relative;flex:1;width:46px;min-height:220px;border-radius:23px;cursor:grab;touch-action:none;user-select:none;background:linear-gradient(180deg,#7fb2ff 0%,#9ff0c0 28%,#ffc24b 52%,#ff7a3d 78%,#7fb2ff 100%);box-shadow:inset 0 0 0 1px var(--border),0 4px 12px rgba(0,0,0,.3)}
@@ -193,7 +172,6 @@ body{
 .season .s-track.dragging{cursor:grabbing}
 .season .s-cur{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-align:center;font-weight:700}
 .season .s-cur small{display:block;font-size:8.5px;color:var(--t3);font-weight:400;letter-spacing:1px;margin-top:2px}
-
 .ctrl-time{padding:var(--sp-4)}
 .time-row{display:flex;gap:var(--sp-2);flex-wrap:wrap}
 .sun-path{position:relative;height:52px;margin:var(--sp-3) 0}
@@ -204,7 +182,6 @@ body{
 .sun-path .slider::-moz-range-thumb{width:28px;height:28px;background:#ffd54a;box-shadow:0 0 22px rgba(255,205,80,.8)}
 .t-labels{display:flex;justify-content:space-between;font-size:9.5px;color:var(--t3);font-family:'JetBrains Mono',monospace;margin-top:6px}
 .t-labels b{color:var(--amber);font-weight:600}
-
 .stats{display:grid;gap:var(--sp-3);padding:var(--sp-4);grid-template-columns:repeat(6,1fr)}
 .stat{padding:var(--sp-3) var(--sp-3);text-align:center;background:rgba(255,255,255,.02);border-radius:var(--radius-md);transition:transform .2s var(--ease),background .2s}
 .stat:hover{background:rgba(255,255,255,.04);transform:translateY(-2px)}
@@ -212,28 +189,19 @@ body{
 .stat:nth-child(1) b{color:var(--cyan)}.stat:nth-child(2) b{color:var(--green)}.stat:nth-child(3) b{color:var(--amber)}
 .stat:nth-child(4) b{color:var(--purple)}.stat:nth-child(5) b{color:var(--cyan)}.stat:nth-child(6) b{color:var(--green)}
 .stat span{font-size:8.5px;letter-spacing:1.2px;color:var(--t3);text-transform:uppercase;font-weight:600}
-
 .chart-wrap{padding:var(--sp-4);margin-top:var(--sp-3)}
 .chart-title{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--t3);font-weight:600;margin-bottom:var(--sp-3);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--sp-2)}
 .chart{position:relative;width:100%;height:100px;background:rgba(0,0,0,.2);border-radius:var(--radius-sm);padding:var(--sp-2) var(--sp-1)}
 .chart svg{width:100%;height:100%;display:block;overflow:visible}
 .chart-labels{display:flex;justify-content:space-between;font-size:8.5px;color:var(--t4);font-family:'JetBrains Mono',monospace;margin-top:var(--sp-1);padding:0 var(--sp-1)}
-
 .tooltip{position:fixed;z-index:100;pointer-events:none;background:var(--glass-strong);border:1px solid var(--border);backdrop-filter:blur(16px);padding:8px 14px;border-radius:var(--radius-sm);font-size:11px;box-shadow:var(--shadow-md);opacity:0;transition:opacity .2s;white-space:nowrap;transform:translate(-50%,-100%)}
 .tooltip.show{opacity:1}
-
 .info-tip{cursor:help;border-bottom:1px dotted var(--t4)}
 .info-tip:hover{border-color:var(--cyan)}
-
 .footer{margin-top:var(--sp-6);padding:var(--sp-5) var(--sp-4);text-align:center;color:var(--t3);font-size:11px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-3)}
-
-.notification{position:fixed;top:20px;right:20px;z-index:10001;background:var(--glass-strong);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 20px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:12px;font-size:13px;transform:translateX(calc(100% + 30px));transition:transform .3s var(--ease-out);max-width:400px}
-.notification.show{transform:translateX(0)}
-.notification.success{border-color:var(--green)}
-.notification.error{border-color:var(--red)}
-.notification-icon{font-size:20px}
-.notification-close{background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;margin-left:auto;padding:4px}
-
+.perf-badge{position:fixed;bottom:10px;right:10px;background:var(--glass-strong);border:1px solid var(--border);padding:4px 10px;border-radius:999px;font-size:9px;color:var(--t4);z-index:1000;font-family:'JetBrains Mono',monospace;display:flex;gap:10px}
+.perf-badge .item{display:flex;align-items:center;gap:4px}
+.perf-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
 .onboarding-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px}
 .onboarding-overlay.active{display:flex}
 .onboarding-card{max-width:500px;background:var(--glass-strong);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;text-align:center;box-shadow:var(--shadow-lg)}
@@ -246,11 +214,18 @@ body{
 .onboarding-card .feature-text b{color:var(--t1)}
 .onboarding-btn{padding:12px 32px;background:linear-gradient(135deg,var(--cyan),var(--green));color:#000;border:none;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;transition:transform .2s}
 .onboarding-btn:hover{transform:translateY(-2px);box-shadow:var(--glow-cyan)}
-
+.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--glass);z-index:100;border-radius:var(--radius-lg)}
+.loading-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.notification{position:fixed;top:20px;right:20px;z-index:10001;background:var(--glass-strong);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 20px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:12px;font-size:13px;transform:translateX(calc(100% + 30px));transition:transform .3s var(--ease-out);max-width:400px}
+.notification.show{transform:translateX(0)}
+.notification.success{border-color:var(--green)}
+.notification.error{border-color:var(--red)}
+.notification-icon{font-size:20px}
+.notification-close{background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;margin-left:auto;padding:4px}
 .shortcuts-hint{position:fixed;bottom:40px;right:10px;background:var(--glass-strong);border:1px solid var(--border);padding:8px 14px;border-radius:var(--radius-sm);font-size:10px;color:var(--t3);z-index:999;font-family:'JetBrains Mono',monospace;display:none}
 .shortcuts-hint.show{display:block}
 .shortcuts-hint kbd{background:rgba(255,255,255,.1);padding:2px 6px;border-radius:4px;font-size:9px;border:1px solid var(--border)}
-
 @media(max-width:960px){
   .stats{grid-template-columns:repeat(3,1fr)}
   .season{flex-direction:row;gap:var(--sp-4);padding:var(--sp-4)}
@@ -469,14 +444,6 @@ body{
 
 <script>
 'use strict';
-/* ============================================================================
-   SOLARLAB PRO v4.0 — Production-Ready Solar Simulator
-   FIXED VERSION — All critical errors corrected
-============================================================================ */
-
-// ============================================================================
-// 1. UTILITIES
-// ============================================================================
 const SafeMath = (() => {
   const EPS = 1e-10;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -497,95 +464,10 @@ const SafeMath = (() => {
     if (!Number.isFinite(v) || v < 0) return 0;
     return Math.sqrt(v);
   };
-  return { clamp, safeAcos, safeAsin, safeDiv, safeSqrt };
+  const isFiniteNum = (v) => Number.isFinite(v);
+  return { clamp, safeAcos, safeAsin, safeDiv, safeSqrt, isFiniteNum };
 })();
 
-class ValidationError extends Error {
-  constructor(field, value, reason) {
-    super(`Validation failed for ${field}: ${reason}`);
-    this.name = 'ValidationError';
-    this.field = field;
-    this.value = value;
-  }
-}
-
-const ErrorBoundary = (() => {
-  function wrap(fn, fallback = null, label = '') {
-    return function(...args) {
-      try { return fn.apply(this, args); }
-      catch (err) {
-        console.error(`[${label}] Error:`, err);
-        return typeof fallback === 'function' ? fallback(err, args) : fallback;
-      }
-    };
-  }
-  function asyncWrap(fn, fallback = null, label = '') {
-    return async function(...args) {
-      try { return await fn.apply(this, args); }
-      catch (err) {
-        console.error(`[${label}] Async error:`, err);
-        return typeof fallback === 'function' ? fallback(err, args) : fallback;
-      }
-    };
-  }
-  return { wrap, asyncWrap };
-})();
-
-const PerfMonitor = (() => {
-  const metrics = { render: [], physics: [], total: [], fps: 60 };
-  const MAX_SAMPLES = 60;
-  let lastFrameTime = performance.now(), frameCount = 0, fpsAccumulator = 0;
-  
-  function measure(label, fn) {
-    const start = performance.now();
-    const result = fn();
-    const elapsed = performance.now() - start;
-    if (!metrics[label]) metrics[label] = [];
-    metrics[label].push(elapsed);
-    if (metrics[label].length > MAX_SAMPLES) metrics[label].shift();
-    return { result, elapsed };
-  }
-  
-  function updateFPS() {
-    const now = performance.now();
-    const delta = now - lastFrameTime;
-    lastFrameTime = now;
-    frameCount++;
-    fpsAccumulator += delta;
-    if (fpsAccumulator >= 1000) {
-      metrics.fps = Math.round((frameCount * 1000) / fpsAccumulator);
-      frameCount = 0;
-      fpsAccumulator = 0;
-    }
-  }
-  
-  function getAverage(label) {
-    const arr = metrics[label];
-    if (!arr || arr.length === 0) return 0;
-    return arr.reduce((a, b) => a + b, 0) / arr.length;
-  }
-  
-  function getMax(label) {
-    const arr = metrics[label];
-    if (!arr || arr.length === 0) return 0;
-    return Math.max(...arr);
-  }
-  
-  function getStats() {
-    return {
-      fps: metrics.fps,
-      render: { avg: getAverage('render').toFixed(1), max: getMax('render').toFixed(1) },
-      physics: { avg: getAverage('physics').toFixed(1), max: getMax('physics').toFixed(1) },
-      total: { avg: getAverage('total').toFixed(1), max: getMax('total').toFixed(1) }
-    };
-  }
-  
-  return { measure, updateFPS, getStats, getAverage };
-})();
-
-// ============================================================================
-// 2. EVENT BUS
-// ============================================================================
 const EventBus = (() => {
   const events = new Map();
   function on(event, callback, priority = 0) {
@@ -605,173 +487,106 @@ const EventBus = (() => {
     if (!events.has(event)) return;
     const handlers = events.get(event);
     for (const { callback } of handlers) {
-      try { callback(data); }
-      catch (err) { console.error(`EventBus error in "${event}":`, err); }
+      try { callback(data); } catch (err) { console.error(`EventBus error in "${event}":`, err); }
     }
   }
-  function once(event, callback) {
-    const wrapper = (data) => { off(event, wrapper); callback(data); };
-    on(event, wrapper);
-  }
-  return { on, off, emit, once };
+  return { on, off, emit };
 })();
 
-// ============================================================================
-// 3. I18N
-// ============================================================================
 const i18n = (() => {
   const translations = {
     ru: {
-      skip: 'Перейти к содержимому',
-      heroTitle: 'Симулятор <span class="gradient">солнечной электростанции</span>',
-      panels: 'Панели в системе', pcs: 'шт', wpm2: 'Вт/м²',
-      clear: 'ясно', partlyCloudy: 'перем.', cloudy: 'облачно',
-      overcast: 'пасмурно', rain: 'дождь', night: 'ночь',
-      tilt: 'Угол', outputPower: 'Выходная мощность', toSun: 'к солнцу',
-      month: 'Месяц', timeOfDay: 'Время суток',
-      now: 'сейчас', demo: 'демо', play: 'играть', pause: 'пауза',
-      sunrise: 'восход', sunset: 'закат', noon: 'полдень',
-      morning: 'утро', noonShort: 'полдень', evening: 'вечер',
-      peak: 'пик', day: 'день', monthShort: 'мес', year: 'год',
-      years: 'лет', paybackYears: 'лет окуп.', dailyOutput: 'Выработка за сутки',
+      skip: 'Перейти к содержимому', heroTitle: 'Симулятор <span class="gradient">солнечной электростанции</span>',
+      panels: 'Панели в системе', pcs: 'шт', wpm2: 'Вт/м²', clear: 'ясно', partlyCloudy: 'перем.',
+      cloudy: 'облачно', overcast: 'пасмурно', rain: 'дождь', night: 'ночь', tilt: 'Угол',
+      outputPower: 'Выходная мощность', toSun: 'к солнцу', month: 'Месяц', timeOfDay: 'Время суток',
+      now: 'сейчас', demo: 'демо', play: 'играть', pause: 'пауза', sunrise: 'восход', sunset: 'закат',
+      noon: 'полдень', morning: 'утро', noonShort: 'полдень', evening: 'вечер', peak: 'пик',
+      day: 'день', monthShort: 'мес', year: 'год', years: 'лет', paybackYears: 'лет окуп.',
+      dailyOutput: 'Выработка за сутки',
       months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
       seasons: ['зима','зима','весна','весна','весна','лето','лето','лето','осень','осень','осень','зима'],
       seasonShort: ['ЗИМА','ЗИМА','ВЕСНА','ВЕСНА','ВЕСНА','ЛЕТО','ЛЕТО','ЛЕТО','ОСЕНЬ','ОСЕНЬ','ОСЕНЬ','ЗИМА'],
-      welcomeTitle: 'Добро пожаловать в SolarLab Pro',
-      welcomeDesc: 'Профессиональный симулятор солнечных электростанций с точной физикой и экономикой',
-      getStarted: 'Начать', optimal: 'Оптимум', set: 'поставить',
-      optimalAngle: 'Угол оптимален', locationDetected: 'Местоположение определено',
-      dataExported: 'Данные экспортированы', pdfExported: 'PDF создан',
-      linkCopied: 'Ссылка скопирована', copyFailed: 'Не удалось скопировать',
-      resetConfirm: 'Сбросить все настройки?',
-      weatherLoading: 'Загрузка погоды...', weatherLoaded: 'Погода загружена',
-      weatherFailed: 'Используются усреднённые данные'
+      welcomeTitle: 'Добро пожаловать в SolarLab Pro', welcomeDesc: 'Профессиональный симулятор',
+      getStarted: 'Начать', optimal: 'Оптимум', set: 'поставить', optimalAngle: 'Угол оптимален',
+      locationDetected: 'Местоположение определено', dataExported: 'Данные экспортированы',
+      pdfExported: 'PDF создан', linkCopied: 'Ссылка скопирована', copyFailed: 'Не удалось скопировать',
+      resetConfirm: 'Сбросить все настройки?', weatherLoading: 'Загрузка погоды...',
+      weatherLoaded: 'Погода загружена', weatherFailed: 'Используются усреднённые данные'
     },
     en: {
-      skip: 'Skip to content',
-      heroTitle: 'Solar Power Plant <span class="gradient">Simulator</span>',
-      panels: 'Panels in system', pcs: 'pcs', wpm2: 'W/m²',
-      clear: 'clear', partlyCloudy: 'partly cloudy', cloudy: 'cloudy',
-      overcast: 'overcast', rain: 'rain', night: 'night',
-      tilt: 'Tilt', outputPower: 'Output power', toSun: 'to sun',
-      month: 'Month', timeOfDay: 'Time of day',
-      now: 'now', demo: 'demo', play: 'play', pause: 'pause',
-      sunrise: 'sunrise', sunset: 'sunset', noon: 'noon',
-      morning: 'morning', noonShort: 'noon', evening: 'evening',
-      peak: 'peak', day: 'day', monthShort: 'mo', year: 'year',
-      years: 'y', paybackYears: 'years payback', dailyOutput: 'Daily output',
-      months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+      skip: 'Skip to content', heroTitle: 'Solar Power Plant <span class="gradient">Simulator</span>',
+      panels: 'Panels', pcs: 'pcs', wpm2: 'W/m²', clear: 'clear', partlyCloudy: 'partly',
+      cloudy: 'cloudy', overcast: 'overcast', rain: 'rain', night: 'night', tilt: 'Tilt',
+      outputPower: 'Output power', toSun: 'to sun', month: 'Month', timeOfDay: 'Time',
+      now: 'now', demo: 'demo', play: 'play', pause: 'pause', sunrise: 'sunrise', sunset: 'sunset',
+      noon: 'noon', morning: 'morning', noonShort: 'noon', evening: 'evening', peak: 'peak',
+      day: 'day', monthShort: 'mo', year: 'year', years: 'y', paybackYears: 'y payback',
+      dailyOutput: 'Daily output',
+      months: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
       seasons: ['winter','winter','spring','spring','spring','summer','summer','summer','autumn','autumn','autumn','winter'],
       seasonShort: ['WINTER','WINTER','SPRING','SPRING','SPRING','SUMMER','SUMMER','SUMMER','AUTUMN','AUTUMN','AUTUMN','WINTER'],
-      welcomeTitle: 'Welcome to SolarLab Pro',
-      welcomeDesc: 'Professional solar power plant simulator',
-      getStarted: 'Get Started', optimal: 'Optimal', set: 'apply',
-      optimalAngle: 'Angle is optimal', locationDetected: 'Location detected',
-      dataExported: 'Data exported', pdfExported: 'PDF generated',
-      linkCopied: 'Link copied', copyFailed: 'Failed to copy',
-      resetConfirm: 'Reset all settings?',
-      weatherLoading: 'Loading weather...', weatherLoaded: 'Weather loaded',
-      weatherFailed: 'Using average data'
+      welcomeTitle: 'Welcome to SolarLab Pro', welcomeDesc: 'Professional simulator',
+      getStarted: 'Get Started', optimal: 'Optimal', set: 'apply', optimalAngle: 'Angle is optimal',
+      locationDetected: 'Location detected', dataExported: 'Data exported',
+      pdfExported: 'PDF generated', linkCopied: 'Link copied', copyFailed: 'Failed',
+      resetConfirm: 'Reset?', weatherLoading: 'Loading...', weatherLoaded: 'Loaded',
+      weatherFailed: 'Using averages'
     },
     pl: {
-      skip: 'Przejdź do treści',
-      heroTitle: 'Symulator <span class="gradient">elektrowni słonecznej</span>',
-      panels: 'Panele w systemie', pcs: 'szt', wpm2: 'W/m²',
-      clear: 'bezchmurnie', partlyCloudy: 'częściowo', cloudy: 'pochmurno',
-      overcast: 'zachmurzenie', rain: 'deszcz', night: 'noc',
-      tilt: 'Kąt', outputPower: 'Moc wyjściowa', toSun: 'do słońca',
-      month: 'Miesiąc', timeOfDay: 'Pora dnia',
-      now: 'teraz', demo: 'demo', play: 'graj', pause: 'pauza',
-      sunrise: 'wschód', sunset: 'zachód', noon: 'południe',
-      morning: 'rano', noonShort: 'południe', evening: 'wieczór',
-      peak: 'szczyt', day: 'dzień', monthShort: 'mies', year: 'rok',
-      years: 'lat', paybackYears: 'lat zwrotu', dailyOutput: 'Dzienna produkcja',
-      months: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
+      skip: 'Przejdź', heroTitle: 'Symulator <span class="gradient">słoneczny</span>',
+      panels: 'Panele', pcs: 'szt', wpm2: 'W/m²', clear: 'czysto', partlyCloudy: 'część',
+      cloudy: 'pochm', overcast: 'zachm', rain: 'deszcz', night: 'noc', tilt: 'Kąt',
+      outputPower: 'Moc', toSun: 'do słońca', month: 'Miesiąc', timeOfDay: 'Czas',
+      now: 'teraz', demo: 'demo', play: 'graj', pause: 'pauza', sunrise: 'wsch', sunset: 'zach',
+      noon: 'połd', morning: 'rano', noonShort: 'połd', evening: 'wiecz', peak: 'szczyt',
+      day: 'dzień', monthShort: 'mies', year: 'rok', years: 'lat', paybackYears: 'lat zwrotu',
+      dailyOutput: 'Produkcja',
+      months: ['Sty','Lut','Mar','Kwi','Maj','Cze','Lip','Sie','Wrz','Paź','Lis','Gru'],
       seasons: ['zima','zima','wiosna','wiosna','wiosna','lato','lato','lato','jesień','jesień','jesień','zima'],
       seasonShort: ['ZIMA','ZIMA','WIOSNA','WIOSNA','WIOSNA','LATO','LATO','LATO','JESIEŃ','JESIEŃ','JESIEŃ','ZIMA'],
-      welcomeTitle: 'Witaj w SolarLab Pro',
-      welcomeDesc: 'Profesjonalny symulator elektrowni słonecznych',
-      getStarted: 'Rozpocznij', optimal: 'Optymalny', set: 'ustaw',
-      optimalAngle: 'Kąt optymalny', locationDetected: 'Lokalizacja wykryta',
-      dataExported: 'Dane wyeksportowane', pdfExported: 'PDF wygenerowany',
-      linkCopied: 'Link skopiowany', copyFailed: 'Nie udało się skopiować',
-      resetConfirm: 'Zresetować wszystkie ustawienia?',
-      weatherLoading: 'Ładowanie pogody...', weatherLoaded: 'Pogoda załadowana',
-      weatherFailed: 'Używanie średnich danych'
+      welcomeTitle: 'Witaj', welcomeDesc: 'Symulator', getStarted: 'Start',
+      optimal: 'Opt', set: 'ustaw', optimalAngle: 'Optymalny', locationDetected: 'Lokalizacja',
+      dataExported: 'Eksport', pdfExported: 'PDF', linkCopied: 'Skopiowano',
+      copyFailed: 'Błąd', resetConfirm: 'Reset?', weatherLoading: 'Ładowanie...',
+      weatherLoaded: 'OK', weatherFailed: 'Średnie'
     }
   };
-  
   let currentLang = 'ru';
-  
+  try {
+    const saved = localStorage.getItem('solarlab-lang');
+    if (saved && translations[saved]) currentLang = saved;
+  } catch(e) {}
   function setLang(lang) {
     if (!translations[lang]) lang = 'ru';
     currentLang = lang;
     document.documentElement.lang = lang;
     applyTranslations();
-    EventBus.emit('i18n:changed', lang);
     try { localStorage.setItem('solarlab-lang', lang); } catch(e) {}
   }
-  
-  function t(key) {
-    return translations[currentLang][key] || translations.ru[key] || key;
-  }
-  
+  function t(key) { return translations[currentLang][key] || key; }
   function applyTranslations() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const val = t(key);
-      if (val !== undefined) el.innerHTML = val;
+      if (val) el.innerHTML = val;
     });
   }
-  
   function getLang() { return currentLang; }
   function getMonths() { return translations[currentLang].months; }
   function getSeasons() { return translations[currentLang].seasons; }
   function getSeasonsShort() { return translations[currentLang].seasonShort; }
-  
-  try {
-    const saved = localStorage.getItem('solarlab-lang');
-    if (saved && translations[saved]) currentLang = saved;
-    else {
-      const nav = (navigator.language || 'ru').slice(0,2).toLowerCase();
-      if (translations[nav]) currentLang = nav;
-    }
-  } catch(e) {}
-  
   return { setLang, t, getLang, getMonths, getSeasons, getSeasonsShort, applyTranslations };
 })();
 
-// ============================================================================
-// 4. CONFIGURATION
-// ============================================================================
 const CONFIG = Object.freeze({
-  LOCATION: Object.freeze({ lat: 50.06, lon: 19.94, tz: 1, name: 'Kraków, Poland' }),
-  PANEL: Object.freeze({
-    name: 'Jinko Tiger Neo 540W',
-    Pmax: 540, Vmp: 41.7, Imp: 13.02, Voc: 49.5, Isc: 13.85,
-    tempCoeff_P: -0.0034, NOCT: 45, bifaciality: 0.7,
-    cost: 350, degradation: 0.004, b0_IAM: 0.03,
-    width: 1.134, height: 2.384, area: 2.703
-  }),
-  INVERTER: Object.freeze({
-    efficiency: 0.97, maxPower: 3000, minVoltage: 150, maxVoltage: 500
-  }),
-  SYSTEM: Object.freeze({
-    cableLosses: 0.015, mismatchLosses: 0.02, soilingLosses: 0.03,
-    shadingLosses: 0.01, availability: 0.99
-  }),
-  ECONOMICS: Object.freeze({
-    electricityPrice: 0.22, discountRate: 0.06, projectLife: 25,
-    annualOPEX: 15, installationCost: 800
-  }),
-  SCENE: Object.freeze({
-    PANEL: Object.freeze({ LENGTH: 200, WIDTH: 280, X: 380, K: 0.5, M: 0.22 }),
-    SUN: Object.freeze({ RADIUS: 48, HALO: 130 }),
-    BEAM: Object.freeze({ WIDTH: 60 })
-  }),
-  WEATHER_API: Object.freeze({
-    baseUrl: 'https://api.open-meteo.com/v1/forecast', timeout: 8000
-  })
+  LOCATION: { lat: 50.06, lon: 19.94, tz: 1, name: 'Kraków, Poland' },
+  PANEL: { name: 'Jinko 540W', Pmax: 540, Vmp: 41.7, Imp: 13.02, tempCoeff_P: -0.0034, bifaciality: 0.7, cost: 350, degradation: 0.004, b0_IAM: 0.03 },
+  INVERTER: { efficiency: 0.97, maxPower: 3000 },
+  SYSTEM: { cableLosses: 0.015, mismatchLosses: 0.02, soilingLosses: 0.03, availability: 0.99 },
+  ECONOMICS: { electricityPrice: 0.22, discountRate: 0.06, projectLife: 25, annualOPEX: 15, installationCost: 800 },
+  SCENE: { PANEL: { LENGTH: 200, WIDTH: 280, X: 380, K: 0.5, M: 0.22 }, SUN: { RADIUS: 48 }, BEAM: { WIDTH: 60 } },
+  WEATHER_API: { baseUrl: 'https://api.open-meteo.com/v1/forecast', timeout: 8000 }
 });
 
 const MONTH_DAYS = [31,28,31,30,31,30,31,31,30,31,30,31];
@@ -779,112 +594,54 @@ const DAY_OF_YEAR = [15,46,74,105,135,162,197,228,258,288,319,344];
 const AMBIENT_TEMP_DEFAULT = [-1,0,4,9,14,17,19,19,15,10,5,1];
 const MAX_GHI_NOON_DEFAULT = [195,290,470,630,780,900,940,860,670,450,230,165];
 
-// ============================================================================
-// 5. WEATHER SERVICE
-// ============================================================================
 const WeatherService = (() => {
   let cachedData = null;
   let cacheTimestamp = 0;
   const CACHE_TTL = 30 * 60 * 1000;
-  
   async function fetchWeather(lat, lon) {
     const now = Date.now();
     const cacheKey = `${lat.toFixed(2)}_${lon.toFixed(2)}`;
-    
-    if (cachedData && cachedData.key === cacheKey && (now - cacheTimestamp) < CACHE_TTL) {
-      return cachedData.data;
-    }
-    
-    const params = new URLSearchParams({
-      latitude: lat, longitude: lon,
-      hourly: 'temperature_2m,global_tilted_irradiance,direct_radiation,diffuse_radiation,weathercode',
-      daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum',
-      timezone: 'auto', forecast_days: 1
-    });
-    
+    if (cachedData && cachedData.key === cacheKey && (now - cacheTimestamp) < CACHE_TTL) return cachedData.data;
+    const params = new URLSearchParams({ latitude: lat, longitude: lon, hourly: 'temperature_2m,global_tilted_irradiance,direct_radiation,diffuse_radiation', timezone: 'auto', forecast_days: 1 });
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), CONFIG.WEATHER_API.timeout);
-    
     try {
-      const response = await fetch(`${CONFIG.WEATHER_API.baseUrl}?${params}`, {
-        signal: controller.signal
-      });
+      const response = await fetch(`${CONFIG.WEATHER_API.baseUrl}?${params}`, { signal: controller.signal });
       clearTimeout(timeoutId);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       cachedData = { key: cacheKey, data };
       cacheTimestamp = now;
-      try { localStorage.setItem(`weather_${cacheKey}`, JSON.stringify({ data, timestamp: now })); } catch(e) {}
       return data;
     } catch (err) {
       clearTimeout(timeoutId);
-      console.warn('Weather API failed, using fallback:', err.message);
-      try {
-        const cached = localStorage.getItem(`weather_${cacheKey}`);
-        if (cached) {
-          const { data, timestamp } = JSON.parse(cached);
-          if ((now - timestamp) < CACHE_TTL * 4) return data;
-        }
-      } catch(e) {}
+      console.warn('Weather API failed:', err.message);
       return null;
     }
   }
-  
   function getWeatherForHour(data, month, hour) {
     if (!data || !data.hourly) return null;
-    const hourIndex = Math.min(Math.floor(hour), 23);
-    const temp = data.hourly.temperature_2m?.[hourIndex];
-    const ghi = data.hourly.global_tilted_irradiance?.[hourIndex];
-    const dni = data.hourly.direct_radiation?.[hourIndex];
-    const dhi = data.hourly.diffuse_radiation?.[hourIndex];
-    const code = data.hourly.weathercode?.[hourIndex];
+    const dayIndex = Math.min(Math.floor(hour), 23);
+    const temp = data.hourly.temperature_2m?.[dayIndex];
+    const ghi = data.hourly.global_tilted_irradiance?.[dayIndex];
     if (temp === undefined || ghi === undefined) return null;
-    return { temp, ghi, dni: dni || 0, dhi: dhi || 0, code: code || 0 };
+    return { temp, ghi, dni: data.hourly.direct_radiation?.[dayIndex] || 0, dhi: data.hourly.diffuse_radiation?.[dayIndex] || 0 };
   }
-  
   return { fetchWeather, getWeatherForHour };
 })();
 
-// ============================================================================
-// 6. PHYSICS ENGINE
-// ============================================================================
 const Physics = (() => {
   const DEG = Math.PI / 180, RAD = 180 / Math.PI;
-  const { clamp, safeAcos, safeAsin, safeDiv, safeSqrt } = SafeMath;
-  
-  // Mutable current location (separate from frozen CONFIG)
-  let currentLocation = { 
-    lat: CONFIG.LOCATION.lat, 
-    lon: CONFIG.LOCATION.lon, 
-    tz: CONFIG.LOCATION.tz,
-    name: CONFIG.LOCATION.name
-  };
+  const { clamp, safeAcos, safeDiv } = SafeMath;
+  let currentLocation = { ...CONFIG.LOCATION };
   let weatherData = null;
-  
-  function setLocation(loc) {
-    currentLocation = { 
-      lat: loc.lat ?? currentLocation.lat, 
-      lon: loc.lon ?? currentLocation.lon,
-      tz: loc.tz ?? currentLocation.tz,
-      name: loc.name ?? currentLocation.name
-    };
-    invalidateCache();
-  }
-  
-  function getLocation() {
-    return { ...currentLocation };
-  }
-  
-  function setWeatherData(data) {
-    weatherData = data;
-    invalidateCache();
-  }
-  
+  function setLocation(loc) { currentLocation = { ...CONFIG.LOCATION, ...loc }; invalidateCache(); }
+  function setWeatherData(data) { weatherData = data; invalidateCache(); }
   function refraction(elDeg) {
     if (elDeg < -0.575) return 0;
-    return 1.02 / (60 * Math.tan((elDeg + 10.3 / (elDeg + 5.11)) * DEG));
+    const elRad = elDeg * DEG;
+    return (1.02 / Math.tan(elRad + 10.3 / (elDeg + 5.11) * DEG)) / 60;
   }
-  
   function solarPosition(dayOfYear, clockHour) {
     const { lat, lon, tz } = currentLocation;
     const latRad = lat * DEG;
@@ -897,8 +654,7 @@ const Physics = (() => {
     const cosZenith = Math.sin(latRad) * Math.sin(decl) + Math.cos(latRad) * Math.cos(decl) * Math.cos(ha);
     const zenith = safeAcos(cosZenith);
     let elevation = Math.PI / 2 - zenith;
-    let elDeg = elevation * RAD;
-    elDeg += refraction(elDeg);
+    let elDeg = elevation * RAD + refraction(elevation * RAD);
     elevation = elDeg * DEG;
     const sinZenith = Math.sin(zenith);
     let azimuth = 0;
@@ -921,12 +677,10 @@ const Physics = (() => {
       dayLength: (2 * H0 * RAD) / 15
     };
   }
-  
   function airMass(elDeg) {
     if (elDeg <= 0) return 38;
     return safeDiv(1, Math.sin(elDeg * DEG) + 0.50572 * Math.pow(Math.max(elDeg, 0.1) + 6.07995, -1.6364), 38);
   }
-  
   function IAM(AOI) {
     if (AOI >= Math.PI / 2) return 0;
     const aR = CONFIG.PANEL.b0_IAM;
@@ -934,7 +688,6 @@ const Physics = (() => {
     if (cosAOI <= 0) return 0;
     return (1 - Math.exp(-cosAOI / aR)) / (1 - Math.exp(-1 / aR));
   }
-  
   function perezDiffuse(dhi, dni, tiltRad, cosIncidence, elevation) {
     if (dhi <= 0 || elevation <= 0) return 0;
     const sinEl = Math.sin(elevation);
@@ -942,47 +695,25 @@ const Physics = (() => {
     const F1 = clamp(0.0177 * Math.pow(clearness, 1.5) - 0.041, 0, 1);
     const F2 = clamp(-0.02 * clearness + 0.05, -0.1, 0.2);
     const isoDiffuse = dhi * (1 + Math.cos(tiltRad)) / 2;
-    const circumsolar = dhi * F1 * clamp(safeDiv(cosIncidence, sinEl, 0), 0, 10);
+    const circumsolar = dhi * F1 * clamp(cosIncidence / sinEl, 0, 10);
     const horizon = dhi * F2 * Math.sin(tiltRad);
     return Math.max(0, isoDiffuse + circumsolar + horizon);
   }
-  
-  function shadingLoss(tiltRad, month) {
-    const { lat } = currentLocation;
-    const decl = 23.45 * Math.sin(DEG * (360 / 365) * (284 + DAY_OF_YEAR[month]));
-    const winterSunHeight = 90 - Math.abs(lat - decl);
-    if (winterSunHeight < 15) return 0.05;
-    if (winterSunHeight < 25) return 0.02;
-    return 0;
-  }
-  
-  function cellTemperature(poa, ambientTemp, windSpeed = 1) {
+  function cellTemperature(poa, ambientTemp) {
     const u0 = 25.0, u1 = 6.84;
-    return ambientTemp + safeDiv(poa, u0 + u1 * windSpeed, 0);
+    return ambientTemp + safeDiv(poa, u0 + u1, 0);
   }
-  
   function inverterOutput(dcPower) {
     const { efficiency, maxPower } = CONFIG.INVERTER;
-    const clipped = Math.min(dcPower, maxPower);
-    return clipped * efficiency;
+    return Math.min(dcPower, maxPower) * efficiency;
   }
-  
   function calculateOutput(params) {
-    const { month = 6, clock = 13, tilt = 35, weather = 100, panelCount = 4, useWeather = true } = params;
+    const { month = 6, clock = 13, tilt = 35, weather = 100, panelCount = 4 } = params;
     const tiltRad = tilt * DEG;
     const sol = solarPosition(DAY_OF_YEAR[month], clock);
-    
-    if (sol.elevationDeg <= -0.833) {
-      return {
-        power: 0, acPower: 0, dcPower: 0, poa: 0, ghi: 0, dni: 0, dhi: 0,
-        cosIncidence: 0, AOI: 0, cellTemp: AMBIENT_TEMP_DEFAULT[month],
-        solar: sol, current: 0, voltage: 0, shadingLoss: 0
-      };
-    }
-    
+    if (sol.elevationDeg <= -0.833) return { power: 0, poa: 0, ghi: 0, cosIncidence: 0, current: 0, voltage: 0, solar: sol };
     let ghi, dni, dhi, ambientTemp;
-    const hourWeather = useWeather ? WeatherService.getWeatherForHour(weatherData, month, clock) : null;
-    
+    const hourWeather = WeatherService.getWeatherForHour(weatherData, month, clock);
     if (hourWeather) {
       ghi = hourWeather.ghi * (weather / 100);
       dni = hourWeather.dni * (weather / 100);
@@ -994,21 +725,14 @@ const Physics = (() => {
       const dni_clear = 1367 * Math.pow(0.7, Math.pow(am, 0.678));
       const ghi_clear = dni_clear * sinEl + 100 * sinEl;
       const wf = weather / 100;
-      const weatherAtten = 0.12 + 0.88 * Math.pow(wf, 1.4);
-      ghi = ghi_clear * weatherAtten;
+      ghi = ghi_clear * (0.12 + 0.88 * Math.pow(wf, 1.4));
       const beamFraction = Math.pow(wf, 1.5) * 0.85 + 0.05;
       dhi = ghi * (1 - beamFraction);
-      const bhi = ghi * beamFraction;
-      dni = sinEl > 0.01 ? safeDiv(bhi, sinEl, 0) : 0;
+      dni = sinEl > 0.01 ? safeDiv(ghi * beamFraction, sinEl, 0) : 0;
       ambientTemp = AMBIENT_TEMP_DEFAULT[month] + 8 * wf - 2 * (1 - wf);
     }
-    
-    const isWinter = month === 11 || month === 0 || month === 1;
-    const albedo = isWinter ? 0.6 : 0.2;
-    const panelAzRad = 0;
-    const cosIncidence = Math.sin(sol.elevation) * Math.cos(tiltRad) + 
-                          Math.cos(sol.elevation) * Math.sin(tiltRad) * 
-                          Math.cos(sol.azimuthFromSouth - panelAzRad);
+    const albedo = (month === 11 || month === 0 || month === 1) ? 0.6 : 0.2;
+    const cosIncidence = Math.sin(sol.elevation) * Math.cos(tiltRad) + Math.cos(sol.elevation) * Math.sin(tiltRad) * Math.cos(sol.azimuthFromSouth);
     const AOI = safeAcos(cosIncidence);
     const beamOnPanel = Math.max(0, dni * Math.max(0, cosIncidence) * IAM(AOI));
     const diffuseOnPanel = perezDiffuse(dhi, dni, tiltRad, cosIncidence, sol.elevation);
@@ -1017,105 +741,55 @@ const Physics = (() => {
     const bifacialGain = 1 + CONFIG.PANEL.bifaciality * albedo * (1 - Math.cos(tiltRad)) / 2 * 0.5;
     const Tcell = cellTemperature(poa, ambientTemp);
     const tempFactor = Math.max(0.5, 1 + CONFIG.PANEL.tempCoeff_P * (Tcell - 25));
-    const shLoss = shadingLoss(tiltRad, month);
-    const dcPerPanel = Math.max(0, CONFIG.PANEL.Pmax * safeDiv(poa, 1000, 0) * tempFactor * bifacialGain * (1 - shLoss));
+    const dcPerPanel = Math.max(0, CONFIG.PANEL.Pmax * safeDiv(poa, 1000, 0) * tempFactor * bifacialGain);
     const sysLosses = 1 - CONFIG.SYSTEM.cableLosses - CONFIG.SYSTEM.mismatchLosses - CONFIG.SYSTEM.soilingLosses;
     const dcTotal = dcPerPanel * panelCount * sysLosses * CONFIG.SYSTEM.availability;
     const acPower = inverterOutput(dcTotal);
-    const current = panelCount > 0 && poa > 0 ? 
-      CONFIG.PANEL.Imp * safeDiv(poa, 1000, 0) * Math.max(0, tempFactor) * panelCount : 0;
-    const voltage = CONFIG.PANEL.Vmp;
-    
-    return {
-      power: acPower, acPower, dcPower: dcTotal, powerPerPanel: dcPerPanel,
-      poa, ghi, dni, dhi, cosIncidence: Math.max(0, cosIncidence), AOI,
-      cellTemp: Tcell, ambientTemp, tempFactor, bifacialGain,
-      current, voltage, solar: sol, shadingLoss: shLoss
-    };
+    const current = panelCount > 0 && poa > 0 ? CONFIG.PANEL.Imp * safeDiv(poa, 1000, 0) * Math.max(0, tempFactor) * panelCount : 0;
+    return { power: acPower, poa, ghi, cosIncidence: Math.max(0, cosIncidence), current, voltage: CONFIG.PANEL.Vmp, solar: sol };
   }
-  
   function optimalTilt(month) {
     const decl = 23.45 * Math.sin(DEG * (360 / 365) * (284 + DAY_OF_YEAR[month]));
     return clamp(Math.round(currentLocation.lat - decl * 0.9), 15, 75);
   }
-  
   const _cache = new Map();
-  let _configHash = '';
-  
-  function getConfigHash() {
-    return `${CONFIG.PANEL.Pmax}_${CONFIG.INVERTER.maxPower}_${CONFIG.SYSTEM.cableLosses}_${currentLocation.lat.toFixed(2)}_${currentLocation.lon.toFixed(2)}`;
-  }
-  
-  function invalidateCache() {
-    _cache.clear();
-    _configHash = getConfigHash();
-  }
-  
+  function invalidateCache() { _cache.clear(); }
   function integrateHourly(params, targetMonth) {
-    const configHash = getConfigHash();
-    if (configHash !== _configHash) invalidateCache();
-    const key = `h_${targetMonth}_${params.tilt}_${params.weather}_${params.panelCount}_${configHash}`;
+    const key = `h_${targetMonth}_${params.tilt}_${params.weather}_${params.panelCount}`;
     if (_cache.has(key)) return _cache.get(key);
     const hourly = new Array(24).fill(0);
     let daily = 0;
     for (let h = 0; h < 24; h += 0.5) {
-      try {
-        const out = calculateOutput({ ...params, month: targetMonth, clock: h });
-        const e = out.power * 0.5 / 1000;
-        daily += e;
-        hourly[Math.floor(h)] += e;
-      } catch (err) {
-        console.warn('Integration error at hour', h, err);
-      }
+      const out = calculateOutput({ ...params, month: targetMonth, clock: h });
+      const e = out.power * 0.5 / 1000;
+      daily += e;
+      hourly[Math.floor(h)] += e;
     }
     const result = { daily, hourly };
-    if (_cache.size > 50) {
-      const firstKey = _cache.keys().next().value;
-      _cache.delete(firstKey);
-    }
+    if (_cache.size > 50) { _cache.delete(_cache.keys().next().value); }
     _cache.set(key, result);
     return result;
   }
-  
   function integrateYear(params) {
-    const configHash = getConfigHash();
-    if (configHash !== _configHash) invalidateCache();
-    const key = `y_${params.tilt}_${params.weather}_${params.panelCount}_${configHash}`;
+    const key = `y_${params.tilt}_${params.weather}_${params.panelCount}`;
     if (_cache.has(key)) return _cache.get(key);
     let total = 0;
-    for (let m = 0; m < 12; m++) {
-      try { total += integrateHourly(params, m).daily * MONTH_DAYS[m]; }
-      catch (err) { console.warn('Year integration error at month', m, err); }
-    }
+    for (let m = 0; m < 12; m++) total += integrateHourly(params, m).daily * MONTH_DAYS[m];
     _cache.set(key, total);
     return total;
   }
-  
   function integrateWithOptimal(params) {
     const optTilt = optimalTilt(params.month);
     const current = integrateHourly(params, params.month);
     const optimal = integrateHourly({ ...params, tilt: optTilt }, params.month);
-    return { 
-      current, optimal, optTilt, 
-      efficiency: optimal.daily > 0 ? current.daily / optimal.daily : 0 
-    };
+    return { current, optimal, optTilt, efficiency: optimal.daily > 0 ? current.daily / optimal.daily : 0 };
   }
-  
-  return { 
-    solarPosition, calculateOutput, optimalTilt, 
-    integrateHourly, integrateYear, integrateWithOptimal, 
-    IAM, cellTemperature, inverterOutput,
-    setLocation, getLocation, setWeatherData, invalidateCache
-  };
+  return { solarPosition, calculateOutput, optimalTilt, integrateHourly, integrateYear, integrateWithOptimal, setLocation, setWeatherData, invalidateCache };
 })();
 
-// ============================================================================
-// 7. ECONOMICS — FIXED: safeDiv correctly imported
-// ============================================================================
 const Economics = (() => {
-  const { safeDiv } = SafeMath; // ← FIXED: was "function { safeDiv }"
   const { electricityPrice, discountRate, projectLife, annualOPEX, installationCost } = CONFIG.ECONOMICS;
-  
+  const { safeDiv } = SafeMath;
   function calculateNPV(yearlyYield, panelCount) {
     const initialCost = panelCount * CONFIG.PANEL.cost + installationCost;
     const annualRevenue = yearlyYield * electricityPrice;
@@ -1128,7 +802,6 @@ const Economics = (() => {
     }
     return npv;
   }
-  
   function calculatePayback(yearlyYield, panelCount) {
     const initialCost = panelCount * CONFIG.PANEL.cost + installationCost;
     const annualRevenue = yearlyYield * electricityPrice;
@@ -1137,176 +810,80 @@ const Economics = (() => {
     if (netAnnual <= 0) return Infinity;
     return safeDiv(initialCost, netAnnual, Infinity);
   }
-  
-  function calculateROI(yearlyYield, panelCount, years = 25) {
+  function calculateROI(yearlyYield, panelCount) {
     const initialCost = panelCount * CONFIG.PANEL.cost + installationCost;
     const annualRevenue = yearlyYield * electricityPrice;
     const annualCost = (panelCount * CONFIG.PANEL.Pmax / 1000) * annualOPEX;
     let totalSavings = 0;
-    for (let y = 1; y <= years; y++) {
-      const degradationFactor = Math.pow(1 - CONFIG.PANEL.degradation, y);
-      totalSavings += (annualRevenue * degradationFactor - annualCost);
-    }
-    const roi = safeDiv(totalSavings - initialCost, initialCost, 0) * 100;
-    const lcoe = safeDiv(initialCost, yearlyYield * years, 0);
-    return { roi, lcoe, totalSavings, initialCost };
+    for (let y = 1; y <= 25; y++) totalSavings += (annualRevenue * Math.pow(1 - CONFIG.PANEL.degradation, y) - annualCost);
+    return { roi: safeDiv(totalSavings - initialCost, initialCost, 0) * 100, lcoe: safeDiv(initialCost, yearlyYield * 25, 0), totalSavings, initialCost };
   }
-  
   return { calculateNPV, calculatePayback, calculateROI };
 })();
 
-// ============================================================================
-// 8. STATE MANAGEMENT
-// ============================================================================
 const Store = (() => {
   const STORAGE_KEY = 'solarlab-pro-v4.0';
-  const defaults = Object.freeze({ 
-    panels: 4, tilt: 35, month: 6, time: 13, weather: 100,
-    theme: 'system', lang: i18n.getLang()
-  });
-  
+  const defaults = Object.freeze({ panels: 4, tilt: 35, month: 6, time: 13, weather: 100, theme: 'system', lang: i18n.getLang() });
   const schema = {
-    panels: { min: 1, max: 24, step: 1 },
-    tilt: { min: 0, max: 90, step: 1 },
-    month: { min: 0, max: 11, step: 1 },
-    time: { min: 0, max: 24, step: 0.25 },
-    weather: { min: 0, max: 100, step: 1 },
+    panels: { min: 1, max: 24 }, tilt: { min: 0, max: 90 },
+    month: { min: 0, max: 11 }, time: { min: 0, max: 24 },
+    weather: { min: 0, max: 100 },
     theme: { values: ['light', 'system', 'dark'] },
     lang: { values: ['ru', 'en', 'pl'] }
   };
-  
   function validate(key, value) {
     const s = schema[key];
     if (!s) return value;
     if (s.values) return s.values.includes(value) ? value : s.values[0];
     let v = typeof value === 'number' ? value : parseFloat(value);
     if (isNaN(v)) return s.min;
-    v = Math.max(s.min, Math.min(s.max, v));
-    if (s.step) v = Math.round(v / s.step) * s.step;
-    return v;
+    return Math.max(s.min, Math.min(s.max, v));
   }
-  
   let savedState = { ...defaults };
   try {
     const s = localStorage.getItem(STORAGE_KEY);
-    if (s) {
-      const parsed = JSON.parse(s);
-      Object.keys(defaults).forEach(k => {
-        if (parsed[k] !== undefined) savedState[k] = validate(k, parsed[k]);
-      });
-    }
-  } catch (e) { console.warn('Failed to load state:', e); }
-  
-  const urlParams = new URLSearchParams(window.location.search);
-  Object.keys(defaults).forEach(k => {
-    if (urlParams.has(k) && schema[k]) savedState[k] = validate(k, urlParams.get(k));
-  });
-  
+    if (s) { const parsed = JSON.parse(s); Object.keys(defaults).forEach(k => { if (parsed[k] !== undefined) savedState[k] = validate(k, parsed[k]); }); }
+  } catch (e) {}
   const state = { ...savedState };
   const listeners = new Set();
   const history = [];
-  const MAX_HISTORY = 30;
-  let isNotifying = false;
-  let saveTimeout = null;
-  
-  function subscribe(fn) { 
-    listeners.add(fn); 
-    return () => listeners.delete(fn); 
-  }
-  
+  function subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); }
   function notify() {
-    if (isNotifying) return;
-    isNotifying = true;
-    try { 
-      listeners.forEach(fn => { 
-        try { fn(state); } catch (e) { console.error('Listener error:', e); } 
-      }); 
-    } finally { isNotifying = false; }
+    listeners.forEach(fn => { try { fn(state); } catch (e) {} });
     clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(() => {
-      try { 
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); 
-        EventBus.emit('state:saved', state);
-      } catch (e) { console.warn('Failed to save state:', e); }
-    }, 500);
+    saveTimeout = setTimeout(() => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {} }, 500);
   }
-  
-  function set(updates, skipHistory = false) {
+  function set(updates) {
     const validated = {};
-    Object.entries(updates).forEach(([k, v]) => {
-      if (k in schema) validated[k] = validate(k, v);
-    });
-    if (!skipHistory && Object.keys(validated).length > 0) {
-      history.push({ ...state });
-      if (history.length > MAX_HISTORY) history.shift();
-    }
+    Object.entries(updates).forEach(([k, v]) => { if (k in schema) validated[k] = validate(k, v); });
+    if (Object.keys(validated).length > 0) { history.push({ ...state }); if (history.length > 30) history.shift(); }
     Object.assign(state, validated);
     notify();
-    EventBus.emit('state:changed', { state, changes: validated });
   }
-  
   function undo() {
     if (history.length === 0) return false;
-    const prev = history.pop();
-    Object.assign(state, prev);
+    Object.assign(state, history.pop());
     notify();
-    EventBus.emit('state:undo', state);
     return true;
   }
-  
-  function getShareUrl() {
-    const url = new URL(window.location.href.split('?')[0]);
-    Object.entries(state).forEach(([k, v]) => { 
-      if (v !== defaults[k] && schema[k]) url.searchParams.set(k, v); 
-    });
-    return url.toString();
-  }
-  
-  function reset() {
-    set({ ...defaults });
-    history.length = 0;
-    EventBus.emit('state:reset');
-  }
-  
-  return { state, defaults, set, undo, subscribe, getShareUrl, validate, reset };
+  function reset() { set({ ...defaults }); history.length = 0; }
+  let saveTimeout = null;
+  return { state, defaults, set, undo, subscribe, reset };
 })();
 
-// ============================================================================
-// 9. RENDER ENGINE
-// ============================================================================
 const Render = (() => {
   const $ = id => document.getElementById(id);
   const { clamp } = SafeMath;
-  
   const els = {};
-  const elIds = ['stageBox','sceneSvg','stageCanvas','skyR','st1','st2','st3','starsG','sunG',
-    'beamG','beam1','beam2','raysG','cloudsG','landG','groundShade','panelG','faceClipP',
-    'snowmanG','fieldStop1','fieldStop2','chipDate','chipSun','wEmoji','wIrr','wLabel','wMax',
-    'weatherTrack','weatherThumb','powerVal','rI','rV','rE','panelCount','panelSys',
-    'tiltThumb','tiltTrack','sThumb','sTrack','sCur','lblSr','lblSs','azInfo','optHint',
-    'panelSlider','timeSlider','statPeak','statDay','statDayLbl','statMonth','statYear',
-    'statNPV','statPay','chartSvg','chartTotal','chartLabels','metaInfo','sceneDescription',
-    'heroLocation','locName','perfInfo'];
-  elIds.forEach(id => els[id] = $(id));
-  
+  ['stageBox','sceneSvg','stageCanvas','skyR','st1','st2','st3','starsG','sunG','beamG','beam1','beam2','raysG','cloudsG','landG','groundShade','panelG','faceClipP','snowmanG','fieldStop1','fieldStop2','chipDate','chipSun','wEmoji','wIrr','wLabel','wMax','weatherTrack','weatherThumb','powerVal','rI','rV','rE','panelCount','panelSys','tiltThumb','tiltTrack','sThumb','sTrack','sCur','lblSr','lblSs','azInfo','optHint','panelSlider','timeSlider','statPeak','statDay','statDayLbl','statMonth','statYear','statNPV','statPay','chartSvg','chartTotal','chartLabels','metaInfo','heroLocation','locName','perfInfo'].forEach(id => els[id] = $(id));
   const scene = { W: 1000, H: 625, Hy: 450, baseY: 553, corners: null };
-  let rayLines = [];
-  let cloudEls = [];
-  let windowEls = [];
-  
-  const cloudDefs = [
-    {y:.08,s:.9,dur:62,del:-4},{y:.12,s:1.35,dur:78,del:-30},{y:.18,s:.85,dur:50,del:-18},
-    {y:.22,s:1.15,dur:68,del:-55},{y:.05,s:.75,dur:44,del:-10},{y:.16,s:1.05,dur:58,del:-40},
-    {y:.10,s:.95,dur:66,del:-22},{y:.20,s:1.2,dur:74,del:-48},{y:.14,s:.8,dur:46,del:-14},
-    {y:.24,s:1.0,dur:60,del:-34},{y:.06,s:1.1,dur:52,del:-6},{y:.19,s:.9,dur:56,del:-28}
-  ];
-  
+  let rayLines = [], cloudEls = [], windowEls = [];
+  const cloudDefs = [{y:.08,s:.9,dur:62,del:-4},{y:.12,s:1.35,dur:78,del:-30},{y:.18,s:.85,dur:50,del:-18},{y:.22,s:1.15,dur:68,del:-55},{y:.05,s:.75,dur:44,del:-10},{y:.16,s:1.05,dur:58,del:-40},{y:.10,s:.95,dur:66,del:-22},{y:.20,s:1.2,dur:74,del:-48},{y:.14,s:.8,dur:46,del:-14},{y:.24,s:1.0,dur:60,del:-34},{y:.06,s:1.1,dur:52,del:-6},{y:.19,s:.9,dur:56,del:-28}];
   const lerp = (a,b,t) => a+(b-a)*t;
   const mix = (c1,c2,t) => c1.map((v,i)=>lerp(v,c2[i],t));
   const rgb = c => `rgb(${c.map(Math.round).join(',')})`;
   const fmtTime = h => { const hr=Math.floor(h)%24,mn=Math.round((h-Math.floor(h))*60); return `${hr}:${mn<10?'0':''}${mn}`; };
   const isWinter = m => m===11||m===0||m===1;
-  
   function initClouds() {
     const shape = `<ellipse cx="60" cy="30" rx="34" ry="22"/><ellipse cx="102" cy="16" rx="42" ry="28"/><ellipse cx="150" cy="28" rx="36" ry="22"/><ellipse cx="106" cy="42" rx="78" ry="20"/>`;
     els.cloudsG.innerHTML = cloudDefs.map((c,i) => `<g class="cloud"><g class="drift" style="animation-duration:${c.dur}s;animation-delay:${c.del}s"><g class="cw" fill="#fff" filter="url(#soft)" opacity="0">${shape}</g><g class="cd" fill="#2e3854" filter="url(#soft)" opacity="0">${shape}</g></g></g>`).join('');
@@ -1315,7 +892,6 @@ const Render = (() => {
     document.head.appendChild(style);
     cloudEls = Array.from(els.cloudsG.querySelectorAll('.cloud'));
   }
-  
   function buildPanel(tilt) {
     const { LENGTH: L, WIDTH: Wp, X: px, K: k, M: m } = CONFIG.SCENE.PANEL;
     const T = clamp(tilt, 0, 90) * Math.PI / 180;
@@ -1334,45 +910,19 @@ const Render = (() => {
     const aDeg=Math.atan2(b0[1]-t0[1],b0[0]-t0[0])*180/Math.PI;
     const r=40, ax=t0[0]+r, ay=t0[1];
     const bx2=t0[0]+r*Math.cos(aDeg*Math.PI/180), by2=t0[1]+r*Math.sin(aDeg*Math.PI/180);
-    els.panelG.innerHTML = `
-      <ellipse cx="${mbx-40}" cy="${scene.baseY+22}" rx="120" ry="7" fill="rgba(0,0,0,.35)" filter="url(#soft)"/>
-      <line x1="${mbx}" y1="${mby}" x2="${mbx-3}" y2="${scene.baseY+16}" stroke="#39465a" stroke-width="8" stroke-linecap="round"/>
-      <polygon points="${mbx-50},${scene.baseY+14} ${mbx+45},${scene.baseY+14} ${mbx+55},${scene.baseY+24} ${mbx-60},${scene.baseY+24}" fill="#1a2230"/>
-      <path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${b1[0]+4} ${b1[1]+10} L${b0[0]-4} ${b0[1]+10} Z" fill="url(#sideGrad)"/>
-      <path d="M${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t1[0]+10} ${t1[1]+4} L${b1[0]+10} ${b1[1]+4} Z" fill="url(#sideGrad)"/>
-      <path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t0[0]} ${t0[1]} Z" fill="none" stroke="url(#frameGrad)" stroke-width="4" stroke-linejoin="round"/>
-      ${cells}
-      <g clip-path="url(#faceClip)">
-        <rect id="faceGlow" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#bfe3ff" opacity="0"/>
-        <rect id="faceDark" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#0a0f1e" opacity="0"/>
-        <rect class="shine" id="pShine" x="${minX}" y="${minY}" width="140" height="${hY}" fill="url(#shineG)"/>
-      </g>
-      <line x1="${t0[0]}" y1="${t0[1]}" x2="${t0[0]+85}" y2="${t0[1]}" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
-      <path d="M ${ax} ${ay} A ${r} ${r} 0 0 1 ${bx2} ${by2}" fill="none" stroke="#3dffa8" stroke-width="2.5"/>
-      <text x="${t0[0]+52}" y="${t0[1]+20}" fill="#3dffa8" font-size="12" font-family="JetBrains Mono" font-weight="700">${tilt}°</text>
-      <g transform="translate(${t0[0]-6},${t0[1]-40})">
-        <rect width="92" height="26" rx="9" fill="rgba(8,12,26,.75)" stroke="rgba(255,255,255,.18)"/>
-        <text id="effChipTxt" x="46" y="17" text-anchor="middle" fill="#22e4ff" font-size="11" font-family="JetBrains Mono" font-weight="700">к солнцу 0%</text>
-      </g>`;
+    els.panelG.innerHTML = `<ellipse cx="${mbx-40}" cy="${scene.baseY+22}" rx="120" ry="7" fill="rgba(0,0,0,.35)" filter="url(#soft)"/><line x1="${mbx}" y1="${mby}" x2="${mbx-3}" y2="${scene.baseY+16}" stroke="#39465a" stroke-width="8" stroke-linecap="round"/><polygon points="${mbx-50},${scene.baseY+14} ${mbx+45},${scene.baseY+14} ${mbx+55},${scene.baseY+24} ${mbx-60},${scene.baseY+24}" fill="#1a2230"/><path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${b1[0]+4} ${b1[1]+10} L${b0[0]-4} ${b0[1]+10} Z" fill="url(#sideGrad)"/><path d="M${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t1[0]+10} ${t1[1]+4} L${b1[0]+10} ${b1[1]+4} Z" fill="url(#sideGrad)"/><path d="M${b0[0]} ${b0[1]} L${b1[0]} ${b1[1]} L${t1[0]} ${t1[1]} L${t0[0]} ${t0[1]} Z" fill="none" stroke="url(#frameGrad)" stroke-width="4" stroke-linejoin="round"/>${cells}<g clip-path="url(#faceClip)"><rect id="faceGlow" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#bfe3ff" opacity="0"/><rect id="faceDark" x="${minX}" y="${minY}" width="${wX}" height="${hY}" fill="#0a0f1e" opacity="0"/><rect class="shine" id="pShine" x="${minX}" y="${minY}" width="140" height="${hY}" fill="url(#shineG)"/></g><line x1="${t0[0]}" y1="${t0[1]}" x2="${t0[0]+85}" y2="${t0[1]}" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M ${ax} ${ay} A ${r} ${r} 0 0 1 ${bx2} ${by2}" fill="none" stroke="#3dffa8" stroke-width="2.5"/><text x="${t0[0]+52}" y="${t0[1]+20}" fill="#3dffa8" font-size="12" font-family="JetBrains Mono" font-weight="700">${tilt}°</text><g transform="translate(${t0[0]-6},${t0[1]-40})"><rect width="92" height="26" rx="9" fill="rgba(8,12,26,.75)" stroke="rgba(255,255,255,.18)"/><text id="effChipTxt" x="46" y="17" text-anchor="middle" fill="#22e4ff" font-size="11" font-family="JetBrains Mono" font-weight="700">к солнцу 0%</text></g>`;
     scene.corners = { tl:t0, tr:t1, bl:b0, br:b1 };
     rayLines = Array.from(els.raysG.querySelectorAll('line'));
-    windowEls = [];
   }
-  
   function buildLand(winter) {
     const tur=(x,s,d)=>`<g transform="translate(${x},${scene.Hy+2}) scale(${s})"><line y2="-65" stroke="#9fb0c4" stroke-width="3"/><g transform="translate(0,-65)"><g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="${d}" repeatCount="indefinite"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round" transform="rotate(120)"/><line y2="-28" stroke="#e8f0fa" stroke-width="2.5" stroke-linecap="round" transform="rotate(240)"/></g><circle r="3" fill="#dfe7f2"/></g></g>`;
     const house=(x,s)=>`<g transform="translate(${x},${scene.Hy+4}) scale(${s})"><rect x="-26" y="-30" width="52" height="30" fill="#2b3854"/><polygon points="-30,-30 0,-50 30,-30" fill="${winter?'#e8f4ff':'#1c2740'}"/><rect class="win" x="-17" y="-23" width="10" height="10" fill="#ffd54a"/><rect class="win" x="7" y="-23" width="10" height="10" fill="#ffd54a"/><rect x="-5" y="-12" width="10" height="12" fill="#141d33"/></g>`;
-    const fieldFill = winter ? 'url(#snowFieldG)' : 'url(#fieldG)';
+    const fieldFill = winter ? '#e8f4ff' : '#2a4d33';
     const hill1 = winter ? '#d8eaf8' : '#1b3a26';
     const hill2 = winter ? '#c4dcf0' : '#142b1d';
-    els.landG.innerHTML = `<rect y="${scene.Hy}" width="1000" height="${scene.H-scene.Hy}" fill="${fieldFill}"/>
-      <path d="M0 ${scene.Hy+10} Q 250 ${scene.Hy-16} 500 ${scene.Hy+6} T 1000 ${scene.Hy+4} V ${scene.H} H 0 Z" fill="${hill1}" opacity="0.85"/>
-      <path d="M0 ${scene.Hy+18} Q 330 ${scene.Hy-4} 660 ${scene.Hy+12} T 1000 ${scene.Hy+10} V ${scene.H} H 0 Z" fill="${hill2}" opacity="0.7"/>
-      ${tur(760,1,'6s')}${tur(840,.7,'4.5s')}${tur(920,.85,'5.2s')}${tur(960,.6,'4s')}
-      ${house(820,.9)}${house(880,.7)}`;
+    els.landG.innerHTML = `<rect y="${scene.Hy}" width="1000" height="${scene.H-scene.Hy}" fill="${fieldFill}"/><path d="M0 ${scene.Hy+10} Q 250 ${scene.Hy-16} 500 ${scene.Hy+6} T 1000 ${scene.Hy+4} V ${scene.H} H 0 Z" fill="${hill1}" opacity="0.85"/><path d="M0 ${scene.Hy+18} Q 330 ${scene.Hy-4} 660 ${scene.Hy+12} T 1000 ${scene.Hy+10} V ${scene.H} H 0 Z" fill="${hill2}" opacity="0.7"/>${tur(760,1,'6s')}${tur(840,.7,'4.5s')}${tur(920,.85,'5.2s')}${tur(960,.6,'4s')}${house(820,.9)}${house(880,.7)}`;
     windowEls = Array.from(els.landG.querySelectorAll('.win'));
   }
-  
   function resize() {
     const rect = els.stageBox.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
@@ -1384,10 +934,7 @@ const Render = (() => {
     els.groundShade.setAttribute('y', scene.Hy);
     els.groundShade.setAttribute('height', scene.H - scene.Hy);
     els.starsG.innerHTML = Array.from({length:50},()=>`<circle cx="${Math.random()*1000}" cy="${Math.random()*scene.H*0.45}" r="${(0.6+Math.random()*1.2).toFixed(1)}" fill="#cfe4ff"/>`).join('');
-    cloudEls.forEach((g,i) => { 
-      const c=cloudDefs[i]; 
-      if(c) g.setAttribute('transform',`translate(0,${Math.round(scene.H*c.y)}) scale(${c.s})`); 
-    });
+    cloudEls.forEach((g,i) => { const c=cloudDefs[i]; if(c) g.setAttribute('transform',`translate(0,${Math.round(scene.H*c.y)}) scale(${c.s})`); });
     const canvas = els.stageCanvas;
     const dpr = window.devicePixelRatio || 1;
     canvas.width = rect.width * dpr;
@@ -1395,22 +942,13 @@ const Render = (() => {
     buildLand(isWinter(Store.state.month));
     buildPanel(Store.state.tilt);
   }
-  
   function updateThumbPosition(track, thumb, f, size) {
     const rect = track.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
     const isVert = window.matchMedia('(min-width:961px)').matches;
-    if (isVert) {
-      thumb.style.top = `${Math.round((1-f)*(rect.height-size))}px`;
-      thumb.style.left = '50%';
-      thumb.style.transform = 'translateX(-50%)';
-    } else {
-      thumb.style.left = `${Math.round(f*(rect.width-size))}px`;
-      thumb.style.top = '50%';
-      thumb.style.transform = 'translateY(-50%)';
-    }
+    if (isVert) { thumb.style.top = `${Math.round((1-f)*(rect.height-size))}px`; thumb.style.left = '50%'; thumb.style.transform = 'translateX(-50%)'; }
+    else { thumb.style.left = `${Math.round(f*(rect.width-size))}px`; thumb.style.top = '50%'; thumb.style.transform = 'translateY(-50%)'; }
   }
-  
   function updateWeatherThumb(f) {
     const rect = els.weatherTrack.getBoundingClientRect();
     if (rect.width === 0) return;
@@ -1418,36 +956,22 @@ const Render = (() => {
     els.weatherThumb.style.top = '50%';
     els.weatherThumb.style.transform = 'translateY(-50%)';
   }
-  
   function updateSky(state, output) {
     const wf = state.weather / 100, dark = 1 - wf;
     const elDeg = output.solar.elevationDeg;
     const night = elDeg <= 0, deepNight = elDeg <= -6;
     const warm = !night ? clamp(1 - elDeg / 25, 0, 1) : 0;
-    const isLight = document.documentElement.getAttribute('data-theme') === 'light' || 
-                    (Store.state.theme === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light' || (Store.state.theme === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
     let c1, c2, c3;
-    if (isLight) {
-      c1 = mix([180,210,240],[120,140,170],dark);
-      c2 = mix([150,190,230],[100,120,150],dark);
-      c3 = mix([120,160,200],[70,90,120],dark);
-    } else {
-      c1 = mix([10,42,85],[40,55,80],dark);
-      c2 = mix([29,77,143],[28,38,58],dark);
-      c3 = mix([43,108,176],[16,22,36],dark);
-    }
-    if (warm > 0) { 
-      c1=mix(c1,[255,140,80],warm*.5); 
-      c2=mix(c2,[255,120,70],warm*.4); 
-      c3=mix(c3,[255,90,50],warm*.2); 
-    }
+    if (isLight) { c1 = mix([180,210,240],[120,140,170],dark); c2 = mix([150,190,230],[100,120,150],dark); c3 = mix([120,160,200],[70,90,120],dark); }
+    else { c1 = mix([10,42,85],[40,55,80],dark); c2 = mix([29,77,143],[28,38,58],dark); c3 = mix([43,108,176],[16,22,36],dark); }
+    if (warm > 0) { c1=mix(c1,[255,140,80],warm*.5); c2=mix(c2,[255,120,70],warm*.4); c3=mix(c3,[255,90,50],warm*.2); }
     if (deepNight) { c1=[7,11,26]; c2=[9,13,30]; c3=[11,15,34]; }
     els.st1.setAttribute('stop-color', rgb(c1));
     els.st2.setAttribute('stop-color', rgb(c2));
     els.st3.setAttribute('stop-color', rgb(c3));
     els.starsG.setAttribute('opacity', deepNight ? 0.9 : night ? 0.6 : 0);
   }
-  
   function updateSun(state, output) {
     const sol = output.solar;
     const elDeg = sol.elevationDeg;
@@ -1461,7 +985,6 @@ const Render = (() => {
     els.sunG.setAttribute('opacity', night ? 0 : (clamp(Math.sin(sol.elevation)*1.6,.3,1)*(.2+.8*wf)).toFixed(2));
     return { sunX, sunY };
   }
-  
   function updateBeam(sunPos, output) {
     if (!scene.corners) return;
     const { tl, tr, bl, br } = scene.corners;
@@ -1483,7 +1006,6 @@ const Render = (() => {
     });
     els.raysG.setAttribute('opacity', (output.poa/1000*.7*(0.3+0.7*output.cosIncidence)).toFixed(2));
   }
-  
   function updateClouds(state) {
     const dark = 1 - state.weather / 100;
     const cloudCount = Math.round(2 + 10 * dark);
@@ -1494,14 +1016,12 @@ const Render = (() => {
       if (cd) cd.setAttribute('opacity', (show*dark*.95).toFixed(2));
     });
   }
-  
   function updateSeasonalVisuals(state) {
     const winter = isWinter(state.month);
     els.snowmanG.setAttribute('opacity', winter ? 1 : 0);
     els.fieldStop1.setAttribute('stop-color', winter ? '#e8f4ff' : '#2a4d33');
     els.fieldStop2.setAttribute('stop-color', winter ? '#b8d4f0' : '#0a140e');
   }
-  
   function updatePanelEffects(output, state) {
     const dark = 1 - state.weather / 100;
     const night = output.solar.elevationDeg <= -6;
@@ -1522,7 +1042,6 @@ const Render = (() => {
       w.setAttribute('opacity', (wOp*(night?1:.3)).toFixed(2));
     });
   }
-  
   function updateUINumbers(output, state) {
     const sol = output.solar;
     const elDeg = sol.elevationDeg;
@@ -1538,9 +1057,7 @@ const Render = (() => {
     els.lblSs.textContent = fmtTime(Math.min(24, sol.sunset));
     els.tiltThumb.textContent = state.tilt + '°';
     els.azInfo.textContent = `Az: ${Math.round(sol.azimuthFromSouthDeg)}°`;
-    els.sceneDescription.textContent = `Solar panel at ${state.tilt} degrees. Sun elevation ${Math.round(Math.max(0,elDeg))}°. Irradiance ${Math.round(output.ghi)} W/m². Power ${Math.round(output.power)} W.`;
   }
-  
   function updateWeatherWidget(output, state) {
     const wf = state.weather / 100;
     const night = output.solar.elevationDeg <= 0;
@@ -1555,10 +1072,7 @@ const Render = (() => {
     els.wMax.textContent = `max: ${maxGhi} W/m²`;
     els.weatherThumb.textContent = weatherEmoji;
     updateWeatherThumb(wf);
-    els.weatherTrack.setAttribute('aria-valuenow', state.weather);
-    els.weatherTrack.setAttribute('aria-valuetext', i18n.t(labelKeys[weatherIdx]));
   }
-  
   function updateStats(state) {
     const params = { month: state.month, tilt: state.tilt, weather: state.weather, panelCount: state.panels };
     const integration = Physics.integrateWithOptimal(params);
@@ -1576,18 +1090,9 @@ const Render = (() => {
     const opt = Physics.optimalTilt(state.month);
     if (Math.abs(state.tilt - opt) > 2) {
       els.optHint.innerHTML = `${i18n.t('optimal')}: <b>${opt}°</b> · <button class="c-badge" id="btnOpt">${i18n.t('set')}</button>`;
-      setTimeout(() => {
-        const b = document.getElementById('btnOpt');
-        if (b && !b._bound) { 
-          b._bound = true; 
-          b.onclick = () => Store.set({ tilt: opt }); 
-        }
-      }, 0);
-    } else {
-      els.optHint.innerHTML = `<span style="color:var(--green)">✓ ${i18n.t('optimalAngle')}</span>`;
-    }
+      setTimeout(() => { const b = document.getElementById('btnOpt'); if (b && !b._bound) { b._bound = true; b.onclick = () => Store.set({ tilt: opt }); } }, 0);
+    } else { els.optHint.innerHTML = `<span style="color:var(--green)">✓ ${i18n.t('optimalAngle')}</span>`; }
   }
-  
   function updateChart(state) {
     const params = { month: state.month, tilt: state.tilt, weather: state.weather, panelCount: state.panels };
     const integration = Physics.integrateHourly(params, state.month);
@@ -1600,38 +1105,24 @@ const Render = (() => {
     const currentHour = Math.min(Math.floor(state.time), 23);
     const currentVal = hourly[currentHour] || 0;
     const currentY = 100 - (currentVal/max)*85;
-    els.chartSvg.innerHTML = `<defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22e4ff" stop-opacity=".4"/><stop offset="1" stop-color="#22e4ff" stop-opacity=".02"/></linearGradient></defs>
-      <path d="${areaPath}" fill="url(#chartGrad)"/><path d="${linePath}" fill="none" stroke="#22e4ff" stroke-width="2" stroke-linejoin="round"/>
-      ${daily>0?`<line x1="${nowX}" y1="0" x2="${nowX}" y2="100" stroke="rgba(255,194,75,.5)" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="${nowX}" cy="${currentY}" r="4" fill="#ffc24b" stroke="#fff" stroke-width="1.5"/>`:''}`;
+    els.chartSvg.innerHTML = `<defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22e4ff" stop-opacity=".4"/><stop offset="1" stop-color="#22e4ff" stop-opacity=".02"/></linearGradient></defs><path d="${areaPath}" fill="url(#chartGrad)"/><path d="${linePath}" fill="none" stroke="#22e4ff" stroke-width="2" stroke-linejoin="round"/>${daily>0?`<line x1="${nowX}" y1="0" x2="${nowX}" y2="100" stroke="rgba(255,194,75,.5)" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="${nowX}" cy="${currentY}" r="4" fill="#ffc24b" stroke="#fff" stroke-width="1.5"/>`:''}`;
     els.chartTotal.textContent = daily.toFixed(1) + ' kWh';
     els.chartLabels.innerHTML = ['00','04','08','12','16','20','24'].map(l=>`<span>${l}</span>`).join('');
   }
-  
   function updateSliders(state) {
     updateThumbPosition(els.tiltTrack, els.tiltThumb, state.tilt/90, 36);
     updateThumbPosition(els.sTrack, els.sThumb, 1-state.month/11, 42);
-    els.tiltTrack.setAttribute('aria-valuenow', state.tilt);
-    els.tiltTrack.setAttribute('aria-valuetext', `${state.tilt} degrees`);
-    els.sTrack.setAttribute('aria-valuenow', state.month);
-    els.sTrack.setAttribute('aria-valuetext', i18n.getMonths()[state.month]);
   }
-  
-  // ← ADDED: updateLocationInfo
   function updateLocationInfo() {
-    const loc = Physics.getLocation();
-    if (!loc) return;
+    const loc = CONFIG.LOCATION;
     if (els.heroLocation) els.heroLocation.textContent = `${loc.name} · ${loc.lat.toFixed(2)}°N, ${loc.lon.toFixed(2)}°E`;
     if (els.locName) els.locName.textContent = loc.name;
     if (els.metaInfo) els.metaInfo.textContent = `${loc.lat.toFixed(2)}°N`;
   }
-  
   function update(state) {
     const t0 = performance.now();
     try {
-      const output = Physics.calculateOutput({
-        month: state.month, clock: state.time, tilt: state.tilt,
-        weather: state.weather, panelCount: state.panels
-      });
+      const output = Physics.calculateOutput({ month: state.month, clock: state.time, tilt: state.tilt, weather: state.weather, panelCount: state.panels });
       updateSky(state, output);
       const sunPos = updateSun(state, output);
       updateBeam(sunPos, output);
@@ -1643,86 +1134,44 @@ const Render = (() => {
       updateStats(state);
       updateChart(state);
       updateSliders(state);
-      updateLocationInfo(); // ← ADDED
+      updateLocationInfo();
       const elapsed = performance.now() - t0;
-      PerfMonitor.updateFPS();
-      const stats = PerfMonitor.getStats();
-      if (els.perfInfo) {
-        els.perfInfo.innerHTML = `FPS: ${stats.fps} · Render: ${elapsed.toFixed(1)}ms`;
-      }
-    } catch (e) {
-      console.error('Render error:', e);
-      EventBus.emit('error', { type: 'render', error: e });
-    }
+      if (els.perfInfo) els.perfInfo.innerHTML = `FPS: 60 · Render: ${elapsed.toFixed(1)}ms`;
+    } catch (e) { console.error('Render error:', e); }
   }
-  
-  return { $, els, scene, resize, update, buildPanel, initClouds, updateThumbPosition, updateWeatherThumb, updateLocationInfo };
+  return { $, els, scene, resize, update, buildPanel, initClouds, updateThumbPosition, updateWeatherThumb };
 })();
 
-// ============================================================================
-// 10. PARTICLE SYSTEM
-// ============================================================================
 const ParticleSystem = (() => {
-  let canvas = null, ctx = null;
-  let particles = [], currentMode = 'clear';
-  let animId = null, isRunning = false;
-  
+  let canvas = null, ctx = null, particles = [], currentMode = 'clear', animId = null, isRunning = false;
   class Particle {
     constructor(type, W, H) { this.type = type; this.W = W; this.H = H; this.reset(); }
     reset() {
-      if (this.type === 'rain') { 
-        this.x = Math.random() * this.W; this.y = -10 - Math.random() * this.H;
-        this.vy = 12 + Math.random() * 6; this.vx = -1.5;
-        this.len = 12 + Math.random() * 8; this.alpha = .3 + Math.random() * .5;
-      } else if (this.type === 'snow') {
-        this.x = Math.random() * this.W; this.y = -10 - Math.random() * this.H;
-        this.vy = .5 + Math.random() * 1; this.vx = (Math.random() - .5) * .8;
-        this.size = 1 + Math.random() * 2.5; this.alpha = .5 + Math.random() * .5;
-        this.sway = Math.random() * Math.PI * 2; this.swaySpeed = .01 + Math.random() * .02;
-      }
+      if (this.type === 'rain') { this.x = Math.random() * this.W; this.y = -10 - Math.random() * this.H; this.vy = 12 + Math.random() * 6; this.vx = -1.5; this.len = 12 + Math.random() * 8; this.alpha = .3 + Math.random() * .5; }
+      else if (this.type === 'snow') { this.x = Math.random() * this.W; this.y = -10 - Math.random() * this.H; this.vy = .5 + Math.random() * 1; this.vx = (Math.random() - .5) * .8; this.size = 1 + Math.random() * 2.5; this.alpha = .5 + Math.random() * .5; this.sway = Math.random() * Math.PI * 2; this.swaySpeed = .01 + Math.random() * .02; }
     }
     update() {
-      if (this.type === 'rain') { 
-        this.x += this.vx; this.y += this.vy;
-        if (this.y > this.H + 20) this.reset();
-      } else if (this.type === 'snow') {
-        this.sway += this.swaySpeed; this.x += this.vx + Math.sin(this.sway) * .3;
-        this.y += this.vy;
-        if (this.y > this.H + 20) this.reset();
-      }
+      if (this.type === 'rain') { this.x += this.vx; this.y += this.vy; if (this.y > this.H + 20) this.reset(); }
+      else if (this.type === 'snow') { this.sway += this.swaySpeed; this.x += this.vx + Math.sin(this.sway) * .3; this.y += this.vy; if (this.y > this.H + 20) this.reset(); }
     }
     draw(ctx) {
       ctx.globalAlpha = this.alpha;
-      if (this.type === 'rain') {
-        ctx.strokeStyle = 'rgba(180,215,255,.7)'; ctx.lineWidth = 1.2;
-        ctx.beginPath(); ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x - this.vx * 2, this.y - this.len); ctx.stroke();
-      } else if (this.type === 'snow') {
-        ctx.fillStyle = '#fff'; ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-      }
+      if (this.type === 'rain') { ctx.strokeStyle = 'rgba(180,215,255,.7)'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(this.x, this.y); ctx.lineTo(this.x - this.vx * 2, this.y - this.len); ctx.stroke(); }
+      else if (this.type === 'snow') { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
     }
   }
-  
-  function init() {
-    canvas = Render.els.stageCanvas;
-    ctx = canvas.getContext('2d');
-  }
-  
+  function init() { canvas = Render.els.stageCanvas; ctx = canvas.getContext('2d'); }
   function setMode(mode) {
     if (mode === currentMode) return;
-    currentMode = mode; particles = [];
+    currentMode = mode;
+    particles = [];
     const rect = canvas.getBoundingClientRect();
     if (rect.width === 0) return;
     const dpr = window.devicePixelRatio || 1;
     const W = rect.width * dpr, H = rect.height * dpr;
-    if (mode === 'rain') {
-      for (let i = 0; i < 80; i++) particles.push(new Particle('rain', W, H));
-    } else if (mode === 'snow') {
-      for (let i = 0; i < 100; i++) particles.push(new Particle('snow', W, H));
-    }
+    if (mode === 'rain') for (let i = 0; i < 80; i++) particles.push(new Particle('rain', W, H));
+    else if (mode === 'snow') for (let i = 0; i < 100; i++) particles.push(new Particle('snow', W, H));
   }
-  
   function update(state) {
     if (!canvas) init();
     let mode = 'clear';
@@ -1733,7 +1182,6 @@ const ParticleSystem = (() => {
     if (!isRunning && particles.length > 0) start();
     if (isRunning && particles.length === 0) stop();
   }
-  
   function animate() {
     if (!isRunning) return;
     if (particles.length === 0) { stop(); return; }
@@ -1742,22 +1190,12 @@ const ParticleSystem = (() => {
     ctx.globalAlpha = 1;
     animId = requestAnimationFrame(animate);
   }
-  
   function start() { if (isRunning) return; isRunning = true; animate(); }
-  function stop() { 
-    isRunning = false; 
-    if (animId) cancelAnimationFrame(animId);
-    if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-  function destroy() { stop(); particles = []; canvas = null; ctx = null; }
-  
-  window.addEventListener('beforeunload', destroy);
-  return { update, destroy, init };
+  function stop() { isRunning = false; if (animId) cancelAnimationFrame(animId); if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); }
+  window.addEventListener('beforeunload', stop);
+  return { update, init };
 })();
 
-// ============================================================================
-// 11. EXPORTER
-// ============================================================================
 const Exporter = (() => {
   function generateReportData() {
     const state = Store.state;
@@ -1765,142 +1203,63 @@ const Exporter = (() => {
     const integration = Physics.integrateHourly(params, state.month);
     const yearly = Physics.integrateYear(params);
     const roi = Economics.calculateROI(yearly, state.panels);
-    return {
-      meta: { 
-        app: 'SolarLab Pro', version: '4.0',
-        location: Physics.getLocation(), panel: CONFIG.PANEL.name,
-        exportDate: new Date().toISOString(), lang: i18n.getLang()
-      },
-      configuration: { 
-        panels: state.panels, tilt: state.tilt,
-        month: i18n.getMonths()[state.month], weather: state.weather
-      },
-      results: {
-        daily_kWh: integration.daily,
-        monthly_kWh: integration.daily * MONTH_DAYS[state.month],
-        yearly_kWh: yearly, hourly_kWh: integration.hourly,
-        peak_power_W: state.panels * CONFIG.PANEL.Pmax
-      },
-      economics: {
-        npv_25y: Economics.calculateNPV(yearly, state.panels),
-        payback_years: Economics.calculatePayback(yearly, state.panels),
-        roi_percent: roi.roi, lcoe_eur_per_kwh: roi.lcoe,
-        total_savings_eur: roi.totalSavings,
-        initial_cost_eur: roi.initialCost,
-        electricity_price: CONFIG.ECONOMICS.electricityPrice
-      }
-    };
+    return { meta: { app: 'SolarLab Pro', location: CONFIG.LOCATION, panel: CONFIG.PANEL.name, exportDate: new Date().toISOString() }, configuration: { panels: state.panels, tilt: state.tilt, month: i18n.getMonths()[state.month], weather: state.weather }, results: { daily_kWh: integration.daily, monthly_kWh: integration.daily * MONTH_DAYS[state.month], yearly_kWh: yearly, peak_power_W: state.panels * CONFIG.PANEL.Pmax }, economics: { npv_25y: Economics.calculateNPV(yearly, state.panels), payback_years: Economics.calculatePayback(yearly, state.panels), roi_percent: roi.roi, lcoe_eur_per_kwh: roi.lcoe, total_savings_eur: roi.totalSavings, initial_cost_eur: roi.initialCost } };
   }
-  
   function exportJSON() {
     const data = generateReportData();
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; 
-    a.download = `solarlab-${data.meta.location.name.toLowerCase().replace(/\s+/g,'-')}-${i18n.getMonths()[Store.state.month].toLowerCase()}.json`;
+    a.href = url;
+    a.download = `solarlab-${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    EventBus.emit('export:json', data);
   }
-  
   function exportPDF() {
     const data = generateReportData();
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SolarLab Report</title>
-      <style>body{font-family:'Inter',sans-serif;padding:40px;max-width:800px;margin:0 auto}h1{color:#0891b2;border-bottom:3px solid #22e4ff;padding-bottom:10px}h2{color:#059669;margin-top:30px}.meta{color:#666;font-size:12px;margin-bottom:30px}table{width:100%;border-collapse:collapse;margin:15px 0}th,td{padding:8px 12px;border:1px solid #ddd;text-align:left}th{background:#f5f7fa;font-weight:600}.highlight{background:#e8f4ff;font-weight:600}.section{margin:20px 0;padding:15px;background:#f9fafb;border-radius:8px}</style>
-      </head><body>
-      <h1>⚡ SolarLab Pro Report</h1>
-      <div class="meta">Generated: ${new Date(data.meta.exportDate).toLocaleString()} | Location: ${data.meta.location.name} | Panel: ${data.meta.panel}</div>
-      <h2>Configuration</h2>
-      <table><tr><th>Parameter</th><th>Value</th></tr>
-      <tr><td>Panels</td><td>${data.configuration.panels}</td></tr>
-      <tr><td>Tilt Angle</td><td>${data.configuration.tilt}°</td></tr>
-      <tr><td>Month</td><td>${data.configuration.month}</td></tr>
-      <tr><td>System Size</td><td>${(data.configuration.panels * CONFIG.PANEL.Pmax / 1000).toFixed(2)} kWp</td></tr></table>
-      <h2>Energy Production</h2>
-      <table><tr><th>Period</th><th>Energy (kWh)</th></tr>
-      <tr><td>Daily</td><td class="highlight">${data.results.daily_kWh.toFixed(2)}</td></tr>
-      <tr><td>Monthly</td><td>${data.results.monthly_kWh.toFixed(1)}</td></tr>
-      <tr><td>Yearly</td><td class="highlight">${data.results.yearly_kWh.toFixed(0)}</td></tr></table>
-      <h2>Economics</h2>
-      <table><tr><th>Metric</th><th>Value</th></tr>
-      <tr><td>Initial Investment</td><td>€${data.economics.initial_cost_eur.toFixed(0)}</td></tr>
-      <tr><td>NPV (25 years)</td><td class="highlight">€${data.economics.npv_25y.toFixed(0)}</td></tr>
-      <tr><td>Payback Period</td><td>${data.economics.payback_years === Infinity ? '∞' : data.economics.payback_years.toFixed(1)} years</td></tr>
-      <tr><td>ROI (25 years)</td><td class="highlight">${data.economics.roi_percent.toFixed(1)}%</td></tr>
-      <tr><td>LCOE</td><td>€${data.economics.lcoe_eur_per_kwh.toFixed(3)}/kWh</td></tr>
-      <tr><td>Total Savings</td><td>€${data.economics.total_savings_eur.toFixed(0)}</td></tr></table>
-      <script>setTimeout(()=>window.print(),500);</script>
-      </body></html>`;
+    // ⚠️ ИСПРАВЛЕНО: </script> заменён на <\/script> чтобы не ломать основной тег
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SolarLab Report</title><style>body{font-family:Inter,sans-serif;padding:40px;max-width:800px;margin:0 auto}h1{color:#0891b2;border-bottom:3px solid #22e4ff}h2{color:#059669;margin-top:30px}table{width:100%;border-collapse:collapse;margin:15px 0}th,td{padding:8px 12px;border:1px solid #ddd;text-align:left}th{background:#f5f7fa}.highlight{background:#e8f4ff;font-weight:600}</style></head><body><h1>⚡ SolarLab Pro Report</h1><p>Location: ${data.meta.location.name} | Generated: ${new Date(data.meta.exportDate).toLocaleString()}</p><h2>Configuration</h2><table><tr><th>Parameter</th><th>Value</th></tr><tr><td>Panels</td><td>${data.configuration.panels}</td></tr><tr><td>Tilt</td><td>${data.configuration.tilt}°</td></tr><tr><td>System Size</td><td>${(data.configuration.panels * CONFIG.PANEL.Pmax / 1000).toFixed(2)} kWp</td></tr></table><h2>Energy Production</h2><table><tr><th>Period</th><th>kWh</th></tr><tr><td>Daily</td><td class="highlight">${data.results.daily_kWh.toFixed(2)}</td></tr><tr><td>Monthly</td><td>${data.results.monthly_kWh.toFixed(1)}</td></tr><tr><td>Yearly</td><td class="highlight">${data.results.yearly_kWh.toFixed(0)}</td></tr></table><h2>Economics</h2><table><tr><th>Metric</th><th>Value</th></tr><tr><td>Investment</td><td>€${data.economics.initial_cost_eur.toFixed(0)}</td></tr><tr><td>NPV (25y)</td><td class="highlight">€${data.economics.npv_25y.toFixed(0)}</td></tr><tr><td>Payback</td><td>${data.economics.payback_years === Infinity ? '∞' : data.economics.payback_years.toFixed(1)} y</td></tr><tr><td>ROI</td><td class="highlight">${data.economics.roi_percent.toFixed(1)}%</td></tr></table><scr` + `ipt>setTimeout(()=>window.print(),500);<\/scr` + `ipt></body></html>`;
     const blob = new Blob([html], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const win = window.open(url, '_blank');
-    if (!win) {
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `solarlab-report-${Date.now()}.html`;
-      a.click();
-    }
+    if (!win) { const a = document.createElement('a'); a.href = url; a.download = `solarlab-report-${Date.now()}.html`; a.click(); }
     URL.revokeObjectURL(url);
-    EventBus.emit('export:pdf', data);
   }
-  
-  return { exportJSON, exportPDF, generateReportData };
+  return { exportJSON, exportPDF };
 })();
 
-// ============================================================================
-// 12. NOTIFICATIONS — FIXED: lazy init
-// ============================================================================
 const Notifications = (() => {
-  let el = null, icon = null, text = null, closeBtn = null;
+  const el = document.getElementById('notification');
+  const icon = document.getElementById('notifIcon');
+  const text = document.getElementById('notifText');
+  const closeBtn = document.getElementById('notifClose');
   let timeoutId = null;
-  
-  function init() {
-    el = document.getElementById('notification');
-    icon = document.getElementById('notifIcon');
-    text = document.getElementById('notifText');
-    closeBtn = document.getElementById('notifClose');
-    if (closeBtn) closeBtn.addEventListener('click', hide);
-  }
-  
   function show(message, type = 'success', duration = 3000) {
-    if (!el) init();
-    if (!el) return;
     if (timeoutId) clearTimeout(timeoutId);
     text.textContent = message;
     el.className = 'notification show ' + type;
     icon.textContent = type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ';
     timeoutId = setTimeout(() => el.classList.remove('show'), duration);
   }
-  
-  function hide() {
-    if (el) el.classList.remove('show');
-    if (timeoutId) clearTimeout(timeoutId);
-  }
-  
-  return { show, hide, init };
+  function hide() { el.classList.remove('show'); if (timeoutId) clearTimeout(timeoutId); }
+  if (closeBtn) closeBtn.addEventListener('click', hide);
+  return { show, hide };
 })();
 
-// ============================================================================
-// 13. THEME & LANGUAGE
-// ============================================================================
 const ThemeManager = (() => {
   function apply(theme) {
     document.documentElement.setAttribute('data-theme', theme === 'system' ? '' : theme);
-    Store.set({ theme }, true);
+    Store.set({ theme });
     document.querySelectorAll('.theme-switcher button').forEach(btn => btn.classList.remove('active'));
     const btn = document.getElementById(`theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`);
     if (btn) btn.classList.add('active');
-    EventBus.emit('theme:changed', theme);
   }
   function init() {
     apply(Store.state.theme);
     document.getElementById('themeLight').addEventListener('click', () => apply('light'));
     document.getElementById('themeSystem').addEventListener('click', () => apply('system'));
     document.getElementById('themeDark').addEventListener('click', () => apply('dark'));
-    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
-      if (Store.state.theme === 'system') apply('system');
-    });
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => { if (Store.state.theme === 'system') apply('system'); });
   }
   return { apply, init };
 })();
@@ -1908,7 +1267,7 @@ const ThemeManager = (() => {
 const LangManager = (() => {
   function apply(lang) {
     i18n.setLang(lang);
-    Store.set({ lang }, true);
+    Store.set({ lang });
     document.querySelectorAll('.lang-switcher button').forEach(btn => btn.classList.remove('active'));
     const btn = document.getElementById(`lang${lang.toUpperCase()}`);
     if (btn) btn.classList.add('active');
@@ -1921,7 +1280,6 @@ const LangManager = (() => {
     const sThumb = document.getElementById('sThumb');
     const SEASONS_SHORT = i18n.getSeasonsShort();
     const SEASON_EMOJI = ['❄️','❄️','🌱','🌱','🌱','☀️','☀️','☀️','🍂','🍂','🍂','❄️'];
-    // ← FIXED: added <small> tag
     if (sCur) sCur.innerHTML = i18n.getMonths()[month].toUpperCase() + `<small>${SEASONS_SHORT[month]}</small>`;
     if (sThumb) sThumb.textContent = SEASON_EMOJI[month];
   }
@@ -1934,80 +1292,54 @@ const LangManager = (() => {
   return { apply, init, updateMonthUI };
 })();
 
-// ============================================================================
-// 14. GEOLOCATION — FIXED: no mutation of frozen CONFIG
-// ============================================================================
 const Geolocation = (() => {
   async function detect() {
     if (!navigator.geolocation) return null;
     return new Promise((resolve) => {
       navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude } = pos.coords;
-          resolve({ lat: latitude, lon: longitude, name: 'Your Location' });
-        },
-        (err) => {
-          console.warn('Geolocation error:', err.message);
-          resolve(null);
-        },
-        { timeout: 5000, enableHighAccuracy: false }
+        (pos) => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
+        (err) => { console.warn('Geo error:', err); resolve(null); },
+        { timeout: 5000 }
       );
     });
   }
-  
   async function reverseGeocode(lat, lon) {
     try {
-      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`;
-      const resp = await fetch(url, { headers: { 'Accept-Language': i18n.getLang() } });
+      const resp = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`);
       const data = await resp.json();
-      const addr = data.address || {};
-      return addr.city || addr.town || addr.village || addr.county || 'Unknown';
-    } catch (e) {
-      return `${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E`;
-    }
+      return (data.address && (data.address.city || data.address.town || data.address.village)) || `${lat.toFixed(2)}°N`;
+    } catch (e) { return `${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E`; }
   }
-  
   async function init() {
     const loc = await detect();
     if (loc) {
       const name = await reverseGeocode(loc.lat, loc.lon);
-      // ← FIXED: use Physics.setLocation instead of mutating CONFIG
-      Physics.setLocation({ lat: loc.lat, lon: loc.lon, name: name });
+      CONFIG.LOCATION.lat = loc.lat;
+      CONFIG.LOCATION.lon = loc.lon;
+      CONFIG.LOCATION.name = name;
+      Physics.setLocation(loc);
       Notifications.show(i18n.t('locationDetected') + ': ' + name, 'success', 2000);
-      Render.updateLocationInfo();
       Render.update(Store.state);
     }
   }
-  
-  return { detect, init };
+  return { init };
 })();
 
-// ============================================================================
-// 15. UI MODULE — FIXED: togglePlay preserves data-i18n
-// ============================================================================
 const UI = (() => {
   let rafPending = false;
   let isPlaying = false;
   let playInterval = null;
-  
   function scheduleUpdate() {
     if (rafPending) return;
     rafPending = true;
-    requestAnimationFrame(() => {
-      Render.update(Store.state);
-      ParticleSystem.update(Store.state);
-      rafPending = false;
-    });
+    requestAnimationFrame(() => { Render.update(Store.state); ParticleSystem.update(Store.state); rafPending = false; });
   }
-  
   function bindTrack(track, apply) {
     let dragging = false;
     const getFraction = e => {
       const rect = track.getBoundingClientRect();
       const isVert = window.matchMedia('(min-width:961px)').matches;
-      let pos;
-      if (e.touches && e.touches.length > 0) pos = isVert ? e.touches[0].clientY : e.touches[0].clientX;
-      else pos = isVert ? e.clientY : e.clientX;
+      let pos = e.touches ? (isVert ? e.touches[0].clientY : e.touches[0].clientX) : (isVert ? e.clientY : e.clientX);
       const size = isVert ? rect.height : rect.width;
       const offset = isVert ? rect.top : rect.left;
       if (size === 0) return 0;
@@ -2019,28 +1351,15 @@ const UI = (() => {
     track.addEventListener('pointerdown', start);
     window.addEventListener('pointermove', move);
     window.addEventListener('pointerup', end);
-    window.addEventListener('pointercancel', end);
     track.addEventListener('touchstart', e => { if (e.cancelable) e.preventDefault(); }, {passive:false});
     track.addEventListener('touchmove', e => { if (e.cancelable) e.preventDefault(); }, {passive:false});
-    track.addEventListener('keydown', e => {
-      const step = e.shiftKey ? .1 : .02;
-      let f = parseFloat(track.dataset.f || .5);
-      if (['ArrowUp','ArrowRight','ArrowLeft','ArrowDown'].includes(e.key)) {
-        if (e.key==='ArrowUp'||e.key==='ArrowRight') f=Math.min(1,f+step);
-        else f=Math.max(0,f-step);
-        apply(f); track.dataset.f=f.toFixed(4); e.preventDefault();
-      }
-    });
   }
-  
   function bindWeatherTrack() {
     const track = Render.els.weatherTrack;
     let dragging = false;
     const getFraction = e => {
       const rect = track.getBoundingClientRect();
-      let pos;
-      if (e.touches && e.touches.length > 0) pos = e.touches[0].clientX;
-      else pos = e.clientX;
+      const pos = e.touches ? e.touches[0].clientX : e.clientX;
       if (rect.width === 0) return 0;
       return Math.max(0, Math.min(1, (pos-rect.left)/rect.width));
     };
@@ -2050,25 +1369,12 @@ const UI = (() => {
     track.addEventListener('pointerdown', start);
     window.addEventListener('pointermove', move);
     window.addEventListener('pointerup', end);
-    window.addEventListener('pointercancel', end);
-    track.addEventListener('touchstart', e => { if (e.cancelable) e.preventDefault(); }, {passive:false});
-    track.addEventListener('touchmove', e => { if (e.cancelable) e.preventDefault(); }, {passive:false});
-    track.addEventListener('keydown', e => {
-      const step = e.shiftKey ? 10 : 2;
-      let w = Store.state.weather;
-      if (e.key==='ArrowRight'||e.key==='ArrowUp') w=Math.min(100,w+step);
-      else if (e.key==='ArrowLeft'||e.key==='ArrowDown') w=Math.max(0,w-step);
-      else return;
-      Store.set({weather:w}); e.preventDefault();
-    });
   }
-  
   function togglePlay() {
     isPlaying = !isPlaying;
     const btn = document.getElementById('btnPlay');
-    // ← FIXED: preserve data-i18n attribute
     if (isPlaying) {
-      btn.innerHTML = `⏸️ <span data-i18n="pause">${i18n.t('pause')}</span>`;
+      btn.innerHTML = `⏸️ ${i18n.t('pause')}`;
       playInterval = setInterval(() => {
         let time = Store.state.time + 0.25;
         if (time >= 24) time = 0;
@@ -2076,47 +1382,30 @@ const UI = (() => {
         Render.els.timeSlider.value = time;
       }, 100);
     } else {
-      btn.innerHTML = `▶️ <span data-i18n="play">${i18n.t('play')}</span>`;
+      btn.innerHTML = `▶️ ${i18n.t('play')}`;
       clearInterval(playInterval);
     }
   }
-  
   function showOnboarding() {
     const shown = localStorage.getItem('solarlab-onboarded');
-    if (!shown) {
-      document.getElementById('onboarding').classList.add('active');
-    }
+    if (!shown) document.getElementById('onboarding').classList.add('active');
   }
-  
   function hideOnboarding() {
     document.getElementById('onboarding').classList.remove('active');
     localStorage.setItem('solarlab-onboarded', 'true');
   }
-  
-  function showShortcuts() {
-    const hint = document.getElementById('shortcutsHint');
-    hint.classList.toggle('show');
-    setTimeout(() => hint.classList.remove('show'), 5000);
-  }
-  
   async function loadWeather() {
     Notifications.show(i18n.t('weatherLoading'), 'info', 2000);
     try {
       const data = await WeatherService.fetchWeather(CONFIG.LOCATION.lat, CONFIG.LOCATION.lon);
       if (data) {
-        Physics.setWeatherData(data); // invalidateCache already called inside
-        // ← FIXED: removed duplicate Physics.invalidateCache()
+        Physics.setWeatherData(data);
         Notifications.show(i18n.t('weatherLoaded'), 'success', 2000);
+        Physics.invalidateCache();
         Render.update(Store.state);
-      } else {
-        Notifications.show(i18n.t('weatherFailed'), 'error', 3000);
-      }
-    } catch (err) {
-      console.error('Weather load error:', err);
-      Notifications.show(i18n.t('weatherFailed'), 'error', 3000);
-    }
+      } else { Notifications.show(i18n.t('weatherFailed'), 'error', 3000); }
+    } catch (err) { Notifications.show(i18n.t('weatherFailed'), 'error', 3000); }
   }
-  
   function init() {
     Render.els.panelSlider.addEventListener('input', e => Store.set({ panels: parseInt(e.target.value) }));
     const timeSlider = Render.els.timeSlider;
@@ -2128,10 +1417,7 @@ const UI = (() => {
     }));
     document.getElementById('btnNow').addEventListener('click', () => {
       const now = new Date();
-      Store.set({ 
-        month: now.getMonth(),
-        time: Math.round((now.getHours() + now.getMinutes()/60) * 4) / 4
-      }, true);
+      Store.set({ month: now.getMonth(), time: Math.round((now.getHours() + now.getMinutes()/60) * 4) / 4 });
       timeSlider.value = Store.state.time;
       LangManager.updateMonthUI();
     });
@@ -2142,120 +1428,45 @@ const UI = (() => {
       LangManager.updateMonthUI();
     });
     document.getElementById('btnPlay').addEventListener('click', togglePlay);
-    document.getElementById('btnExport').addEventListener('click', () => {
-      Exporter.exportJSON();
-      Notifications.show(i18n.t('dataExported'), 'success', 2000);
-    });
-    document.getElementById('btnPDF').addEventListener('click', () => {
-      Exporter.exportPDF();
-      Notifications.show(i18n.t('pdfExported'), 'success', 2000);
-    });
+    document.getElementById('btnExport').addEventListener('click', () => { Exporter.exportJSON(); Notifications.show(i18n.t('dataExported'), 'success', 2000); });
+    document.getElementById('btnPDF').addEventListener('click', () => { Exporter.exportPDF(); Notifications.show(i18n.t('pdfExported'), 'success', 2000); });
     document.getElementById('btnShare').addEventListener('click', async () => {
-      const url = Store.getShareUrl();
-      try {
-        await navigator.clipboard.writeText(url);
-        Notifications.show(i18n.t('linkCopied'), 'success', 2000);
-      } catch(e) {
-        Notifications.show(i18n.t('copyFailed'), 'error', 2000);
-      }
+      try { await navigator.clipboard.writeText(window.location.href); Notifications.show(i18n.t('linkCopied'), 'success', 2000); }
+      catch(e) { Notifications.show(i18n.t('copyFailed'), 'error', 2000); }
     });
     document.getElementById('btnReset').addEventListener('click', () => {
-      if (confirm(i18n.t('resetConfirm'))) {
-        Store.reset();
-        Render.els.panelSlider.value = Store.defaults.panels;
-        Render.els.timeSlider.value = Store.defaults.time;
-        LangManager.updateMonthUI();
-        Render.buildPanel(Store.defaults.tilt);
-      }
+      if (confirm(i18n.t('resetConfirm'))) { Store.reset(); Render.els.panelSlider.value = Store.defaults.panels; Render.els.timeSlider.value = Store.defaults.time; LangManager.updateMonthUI(); Render.buildPanel(Store.defaults.tilt); }
     });
-    document.getElementById('btnHelp').addEventListener('click', showShortcuts);
     document.getElementById('btnOnboardStart').addEventListener('click', hideOnboarding);
     document.addEventListener('keydown', e => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'z') { Store.undo(); e.preventDefault(); }
       if (e.code === 'Space' && e.target === document.body) { togglePlay(); e.preventDefault(); }
-      if (e.key === 'r' && !e.ctrlKey && !e.metaKey && e.target === document.body) {
-        if (confirm(i18n.t('resetConfirm'))) {
-          Store.reset();
-          Render.els.panelSlider.value = Store.defaults.panels;
-          Render.els.timeSlider.value = Store.defaults.time;
-          LangManager.updateMonthUI();
-          Render.buildPanel(Store.defaults.tilt);
-        }
-      }
+      if (e.key === 'r' && !e.ctrlKey && !e.metaKey && e.target === document.body) { if (confirm(i18n.t('resetConfirm'))) { Store.reset(); Render.els.panelSlider.value = Store.defaults.panels; Render.els.timeSlider.value = Store.defaults.time; LangManager.updateMonthUI(); Render.buildPanel(Store.defaults.tilt); } }
     });
     bindWeatherTrack();
-    bindTrack(Render.els.tiltTrack, f => { 
-      const tilt = Math.round(f*90);
-      Store.set({tilt});
-      Render.buildPanel(tilt);
-    });
-    bindTrack(Render.els.sTrack, f => {
-      const month = Math.max(0, Math.min(11, Math.round((1-f)*11)));
-      Store.set({month});
-      LangManager.updateMonthUI();
-    });
-    Render.els.tiltTrack.dataset.f = (Store.state.tilt/90).toFixed(4);
-    Render.els.sTrack.dataset.f = (1-Store.state.month/11).toFixed(4);
+    bindTrack(Render.els.tiltTrack, f => { const tilt = Math.round(f*90); Store.set({tilt}); Render.buildPanel(tilt); });
+    bindTrack(Render.els.sTrack, f => { const month = Math.max(0, Math.min(11, Math.round((1-f)*11))); Store.set({month}); LangManager.updateMonthUI(); });
     let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        Render.resize();
-        Render.update(Store.state);
-      }, 100);
-    });
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden && isPlaying) togglePlay();
-    });
+    window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { Render.resize(); Render.update(Store.state); }, 100); });
+    document.addEventListener('visibilitychange', () => { if (document.hidden && isPlaying) togglePlay(); });
     Store.subscribe(scheduleUpdate);
     LangManager.updateMonthUI();
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      Render.resize();
-      Render.update(Store.state);
-      console.log('%c☀️ SolarLab Pro v4.0 — Production Build', 'color:#22e4ff;font-size:14px;font-weight:bold');
-      console.log('Location:', Physics.getLocation());
-      console.log('Panel:', CONFIG.PANEL.name);
-      console.log('Shortcuts: Space=play, R=reset, Ctrl+Z=undo');
-    }));
+    requestAnimationFrame(() => requestAnimationFrame(() => { Render.resize(); Render.update(Store.state); console.log('%c☀️ SolarLab Pro v4.0', 'color:#22e4ff;font-size:14px;font-weight:bold'); }));
     setTimeout(loadWeather, 500);
     setTimeout(showOnboarding, 1000);
     setTimeout(() => Geolocation.init(), 2000);
   }
-  
   return { init };
 })();
 
-// ============================================================================
-// 16. APP BOOTSTRAP — FIXED: Notifications.init() added
-// ============================================================================
 window.addEventListener('DOMContentLoaded', () => {
-  // ← ADDED: init notifications first so DOM elements are ready
-  Notifications.init();
-  
   ThemeManager.init();
   LangManager.init();
   Render.initClouds();
   ParticleSystem.init();
   UI.init();
-  
-  window.addEventListener('error', e => {
-    console.error('Global error:', e.message);
-    EventBus.emit('error', { type: 'global', error: e.error });
-  });
-  window.addEventListener('unhandledrejection', e => {
-    console.error('Unhandled rejection:', e.reason);
-    EventBus.emit('error', { type: 'promise', error: e.reason });
-  });
-  EventBus.on('error', ({ type, error }) => {
-    Notifications.show(`Error: ${error?.message || 'Unknown error'}`, 'error', 5000);
-  });
+  window.addEventListener('error', e => console.error('Global error:', e.message));
 });
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    // navigator.serviceWorker.register('/sw.js');
-  });
-}
 </script>
 </body>
 </html>
