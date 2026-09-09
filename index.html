@@ -1197,35 +1197,52 @@ const ParticleSystem = (() => {
 })();
 
 const Exporter = (() => {
-  function generateReportData() {
-    const state = Store.state;
-    const params = { month: state.month, tilt: state.tilt, weather: state.weather, panelCount: state.panels };
-    const integration = Physics.integrateHourly(params, state.month);
-    const yearly = Physics.integrateYear(params);
-    const roi = Economics.calculateROI(yearly, state.panels);
-    return { meta: { app: 'SolarLab Pro', location: CONFIG.LOCATION, panel: CONFIG.PANEL.name, exportDate: new Date().toISOString() }, configuration: { panels: state.panels, tilt: state.tilt, month: i18n.getMonths()[state.month], weather: state.weather }, results: { daily_kWh: integration.daily, monthly_kWh: integration.daily * MONTH_DAYS[state.month], yearly_kWh: yearly, peak_power_W: state.panels * CONFIG.PANEL.Pmax }, economics: { npv_25y: Economics.calculateNPV(yearly, state.panels), payback_years: Economics.calculatePayback(yearly, state.panels), roi_percent: roi.roi, lcoe_eur_per_kwh: roi.lcoe, total_savings_eur: roi.totalSavings, initial_cost_eur: roi.initialCost } };
+  function genData() {
+    const s = Store.state;
+    const p = { month: s.month, tilt: s.tilt, weather: s.weather, panels: s.panels };
+    const int = Physics.hourly(p, s.month);
+    const y = Physics.yearly(p);
+    const r = Economics.roi(y, s.panels);
+    return { loc: CONFIG.LOCATION, panels: s.panels, tilt: s.tilt, month: i18n.getMonths()[s.month], daily: int.daily, monthly: int.daily * MONTH_DAYS[s.month], yearly: y, npv: Economics.npv(y, s.panels), payback: Economics.payback(y, s.panels), roi: r.roi, lcoe: r.lcoe, ic: r.ic };
   }
-  function exportJSON() {
-    const data = generateReportData();
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  function json() {
+    const d = genData();
+    const blob = new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = `solarlab-${Date.now()}.json`;
-    a.click();
+    a.href = url; a.download = 'solarlab-' + Date.now() + '.json'; a.click();
     URL.revokeObjectURL(url);
   }
-  function exportPDF() {
-    const data = generateReportData();
-    // ⚠️ ИСПРАВЛЕНО: </script> заменён на <\/script> чтобы не ломать основной тег
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SolarLab Report</title><style>body{font-family:Inter,sans-serif;padding:40px;max-width:800px;margin:0 auto}h1{color:#0891b2;border-bottom:3px solid #22e4ff}h2{color:#059669;margin-top:30px}table{width:100%;border-collapse:collapse;margin:15px 0}th,td{padding:8px 12px;border:1px solid #ddd;text-align:left}th{background:#f5f7fa}.highlight{background:#e8f4ff;font-weight:600}</style></head><body><h1>⚡ SolarLab Pro Report</h1><p>Location: ${data.meta.location.name} | Generated: ${new Date(data.meta.exportDate).toLocaleString()}</p><h2>Configuration</h2><table><tr><th>Parameter</th><th>Value</th></tr><tr><td>Panels</td><td>${data.configuration.panels}</td></tr><tr><td>Tilt</td><td>${data.configuration.tilt}°</td></tr><tr><td>System Size</td><td>${(data.configuration.panels * CONFIG.PANEL.Pmax / 1000).toFixed(2)} kWp</td></tr></table><h2>Energy Production</h2><table><tr><th>Period</th><th>kWh</th></tr><tr><td>Daily</td><td class="highlight">${data.results.daily_kWh.toFixed(2)}</td></tr><tr><td>Monthly</td><td>${data.results.monthly_kWh.toFixed(1)}</td></tr><tr><td>Yearly</td><td class="highlight">${data.results.yearly_kWh.toFixed(0)}</td></tr></table><h2>Economics</h2><table><tr><th>Metric</th><th>Value</th></tr><tr><td>Investment</td><td>€${data.economics.initial_cost_eur.toFixed(0)}</td></tr><tr><td>NPV (25y)</td><td class="highlight">€${data.economics.npv_25y.toFixed(0)}</td></tr><tr><td>Payback</td><td>${data.economics.payback_years === Infinity ? '∞' : data.economics.payback_years.toFixed(1)} y</td></tr><tr><td>ROI</td><td class="highlight">${data.economics.roi_percent.toFixed(1)}%</td></tr></table><scr` + `ipt>setTimeout(()=>window.print(),500);<\/scr` + `ipt></body></html>`;
-    const blob = new Blob([html], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const win = window.open(url, '_blank');
-    if (!win) { const a = document.createElement('a'); a.href = url; a.download = `solarlab-report-${Date.now()}.html`; a.click(); }
-    URL.revokeObjectURL(url);
+  function pdf() {
+    const d = genData();
+    const win = window.open('', '_blank');
+    if (!win) return;
+    const doc = win.document;
+    const rows = [
+      ['Panels', d.panels],
+      ['Tilt', d.tilt + ' deg'],
+      ['System', (d.panels * CONFIG.PANEL.Pmax / 1000).toFixed(2) + ' kWp'],
+      ['Daily kWh', d.daily.toFixed(2)],
+      ['Monthly kWh', d.monthly.toFixed(1)],
+      ['Yearly kWh', d.yearly.toFixed(0)],
+      ['Investment', d.ic.toFixed(0) + ' EUR'],
+      ['NPV 25y', d.npv.toFixed(0) + ' EUR'],
+      ['Payback', (d.payback === Infinity ? 'inf' : d.payback.toFixed(1)) + ' y'],
+      ['ROI', d.roi.toFixed(1) + ' %']
+    ];
+    let table = '<table border="1" cellpadding="8"><tr><th>Metric</th><th>Value</th></tr>';
+    rows.forEach(function(r) { table += '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>'; });
+    table += '</table>';
+    doc.open();
+    doc.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SolarLab Report</title></head><body>');
+    doc.write('<h1>SolarLab Pro Report</h1>');
+    doc.write('<p>Location: ' + d.loc.name + ' | ' + new Date().toLocaleString() + '</p>');
+    doc.write(table);
+    doc.write('<button onclick="window.print()">Print / PDF</button>');
+    doc.write('</body></html>');
+    doc.close();
   }
-  return { exportJSON, exportPDF };
+  return { json: json, pdf: pdf };
 })();
 
 const Notifications = (() => {
